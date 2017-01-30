@@ -53,8 +53,8 @@ namespace SCPatchDownloader
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            downloadDir.Text = Directory.GetCurrentDirectory() + "\\StarCitizen";
-            toolTip_check.SetToolTip(check_nativefile, "Sorts files into public/test directorys instead of using build number. Allows for easy copy/pasting. Note that files will not be overwritten if they already exist");
+            downloadDir.Text = Directory.GetCurrentDirectory() + "\\SCDownload";
+            toolTip_check.SetToolTip(check_nativefile, "Sorts files into public/test directories instead of using build number. Allows for easy copy/pasting or direct download into program files. Existing files will not be overwritten");
             downloadPatchList();
         }
 
@@ -76,6 +76,7 @@ namespace SCPatchDownloader
             releaseSelect.Enabled = false;
             downloadDir.Enabled = false;
             browseDir.Enabled = false;
+            check_nativefile.Enabled = false;
             downloadGameFiles();
 
 
@@ -184,7 +185,7 @@ namespace SCPatchDownloader
                 {
                     filename += "\\" + parts[i];
                 }
-                filename = "\\" + relSelector.SelectedItem as string + "\\" + filename;
+                filename = "\\StarCitizen\\" + relSelector.SelectedItem as string + "\\" + filename;
             }
             else
             {

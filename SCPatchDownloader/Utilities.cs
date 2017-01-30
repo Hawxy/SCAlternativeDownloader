@@ -43,7 +43,11 @@ namespace SCPatchDownloader
                     ProgressBar progressBar = (ProgressBar)control;
                     progressBar.Value = 0;
                 }
-                
+                if (control is CheckBox)
+                {
+                    CheckBox checkbox = (CheckBox)control;
+                    checkbox.Enabled = true;
+                }
 
             }
         }

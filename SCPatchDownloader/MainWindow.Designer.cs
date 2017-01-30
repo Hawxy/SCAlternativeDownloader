@@ -213,6 +213,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.downloadDir);
             this.Controls.Add(this.relSelector);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(397, 505);
             this.Name = "MainWindow";
             this.Text = "Star Citizen Alternative Patcher - C# Edition";
             this.Load += new System.EventHandler(this.MainWindow_Load);
