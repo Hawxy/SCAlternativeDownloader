@@ -65,18 +65,20 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(26, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(160, 13);
+            this.label1.Size = new System.Drawing.Size(158, 14);
             this.label1.TabIndex = 3;
             this.label1.Text = "Step One - Select Release Type";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(26, 94);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(142, 13);
+            this.label2.Size = new System.Drawing.Size(147, 14);
             this.label2.TabIndex = 4;
             this.label2.Text = "Step Two - Confirm Directory";
             // 
@@ -93,6 +95,7 @@
             // downloadSrt
             // 
             this.downloadSrt.Enabled = false;
+            this.downloadSrt.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.downloadSrt.Location = new System.Drawing.Point(64, 208);
             this.downloadSrt.Name = "downloadSrt";
             this.downloadSrt.Size = new System.Drawing.Size(75, 23);
@@ -110,6 +113,7 @@
             // 
             // label_status
             // 
+            this.label_status.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_status.Location = new System.Drawing.Point(29, 268);
             this.label_status.Name = "label_status";
             this.label_status.Size = new System.Drawing.Size(256, 24);
@@ -119,6 +123,7 @@
             // 
             // releaseSelect
             // 
+            this.releaseSelect.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.releaseSelect.Location = new System.Drawing.Point(177, 43);
             this.releaseSelect.Name = "releaseSelect";
             this.releaseSelect.Size = new System.Drawing.Size(98, 34);
@@ -130,16 +135,17 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(105, 255);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(93, 13);
+            this.label3.Size = new System.Drawing.Size(89, 14);
             this.label3.TabIndex = 11;
             this.label3.Text = "Program Status";
             // 
             // butCancel
             // 
             this.butCancel.Enabled = false;
+            this.butCancel.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.butCancel.Location = new System.Drawing.Point(171, 208);
             this.butCancel.Name = "butCancel";
             this.butCancel.Size = new System.Drawing.Size(75, 23);
@@ -150,6 +156,7 @@
             // 
             // label_MB
             // 
+            this.label_MB.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_MB.Location = new System.Drawing.Point(105, 321);
             this.label_MB.Name = "label_MB";
             this.label_MB.Size = new System.Drawing.Size(100, 23);
@@ -160,9 +167,10 @@
             // check_nativefile
             // 
             this.check_nativefile.AutoSize = true;
+            this.check_nativefile.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.check_nativefile.Location = new System.Drawing.Point(64, 156);
             this.check_nativefile.Name = "check_nativefile";
-            this.check_nativefile.Size = new System.Drawing.Size(167, 17);
+            this.check_nativefile.Size = new System.Drawing.Size(173, 18);
             this.check_nativefile.TabIndex = 14;
             this.check_nativefile.Text = "Preserve Native File Structure";
             this.check_nativefile.UseVisualStyleBackColor = true;
@@ -176,20 +184,20 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(12, 382);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(342, 17);
+            this.label4.Size = new System.Drawing.Size(334, 14);
             this.label4.TabIndex = 15;
             this.label4.Text = "Developed by Hawx. Based on VB.NET downloader by NimmoG";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(12, 408);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(216, 17);
+            this.label5.Size = new System.Drawing.Size(206, 14);
             this.label5.TabIndex = 16;
             this.label5.Text = "Supported by Zephyr Auxilary Services";
             // 

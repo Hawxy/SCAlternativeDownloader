@@ -15,40 +15,92 @@
 //Some components of this file are based on work by NimmoG
 
 //Move various functions out of main program and into seperate class
+
+using System.IO;
 using System.Windows.Forms;
 
 namespace SCPatchDownloader
 {
     public class Utilities
     {
+        //remove quotations from a line
+        public static object stripQuotations(string line)
+        {
+            string[] parts = line.Split('"');
+            return parts[1];
+        }
+
+        //seek to specific line in file
+        public static string seekToLine(StreamReader file, string lineContents)
+        {
+            string line = "";
+            while (!line.Contains(lineContents))
+            {
+                line = file.ReadLine();
+            }
+            return line;
+        }
+
+        //get filestructure
+        public static string getFileStructure(string url, bool native, ComboBox relSelector)
+        {
+            string[] parts = url.Split('/');
+            string filename = "";
+            if (native)
+            {
+                for (int i = 7; i < parts.Length - 1; i++)
+                {
+                    filename += "\\" + parts[i];
+                }
+                filename = "\\StarCitizen\\" + relSelector.SelectedItem as string + "\\" + filename;
+            }
+            else
+            {
+                for (int i = 5; i < parts.Length - 1; i++)
+                {
+                    filename += "\\" + parts[i];
+                }
+            }
+
+            return filename;
+        }
+
+        //get name of downloading file
+        public static string getFileName(string url)
+        {
+            string[] parts = url.Split('/');
+            string filename = parts[parts.Length - 1];
+            return filename;
+        }
+
+        //general cleanup on form reset
         public static void ResetAllBoxes(Control form)
         {
             foreach (Control control in form.Controls)
             {
                 if (control is TextBox)
                 {
-                    TextBox textBox = (TextBox)control;
-                   // textBox.Text = null;
+                    TextBox textBox = (TextBox) control;
+                    // textBox.Text = null;
                     textBox.Enabled = true;
                 }
 
                 if (control is ComboBox)
                 {
-                    ComboBox listBox = (ComboBox)control;
+                    ComboBox listBox = (ComboBox) control;
                     listBox.SelectedIndex = 0;
                     listBox.Enabled = true;
                 }
                 if (control is ProgressBar)
                 {
-                    ProgressBar progressBar = (ProgressBar)control;
+                    ProgressBar progressBar = (ProgressBar) control;
                     progressBar.Value = 0;
                 }
                 if (control is CheckBox)
                 {
-                    CheckBox checkbox = (CheckBox)control;
+                    CheckBox checkbox = (CheckBox) control;
                     checkbox.Enabled = true;
                 }
-
             }
         }
     }
