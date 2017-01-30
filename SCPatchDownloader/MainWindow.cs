@@ -53,7 +53,7 @@ namespace SCPatchDownloader
         {
             InitializeComponent();
         }
-
+        //loading application
         private void MainWindow_Load(object sender, EventArgs e)
         {
             if (!String.IsNullOrEmpty(Properties.Settings.Default.PrvDir))
@@ -79,7 +79,7 @@ namespace SCPatchDownloader
                 downloadDir.Text = folderDir.SelectedPath;
             }
         }
-
+        //download button
         private void downloadSrt_Click(object sender, EventArgs e)
         {
             butCancel.Enabled = true;
@@ -161,7 +161,7 @@ namespace SCPatchDownloader
                 }
             }
         }
-
+        //download speed calculator
         private void FileDownloadProgress(long bytesReceived)
         {
             label_MB.Text = $"{bytesReceived / 1024d / 1024d / sw.Elapsed.TotalSeconds:0.00} MB/s";
@@ -178,7 +178,7 @@ namespace SCPatchDownloader
             }
         }
 
-
+        //load available game version on application startup
         async Task downloadPatchList()
         {
             string fileLocation = "LauncherInfo.txt";
@@ -231,12 +231,12 @@ namespace SCPatchDownloader
                 MessageBox.Show("Connection Timed out", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+        //application load
         private void client_ProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             infoProg.Value = e.ProgressPercentage;
         }
-
+        //download file list when version is selected
         async void releaseSelect_Click(object sender, EventArgs e)
         {
             string requestedUniverse = relSelector.SelectedItem as string;
@@ -306,7 +306,7 @@ namespace SCPatchDownloader
                     writer.Close();
                     reader.Close();
 
-                    //File.Delete(fileName);
+                    File.Delete(fileName);
                     File.Delete("SC-URLs.txt");
                 }
                 else
@@ -320,7 +320,7 @@ namespace SCPatchDownloader
             }
         }
 
-
+        //cancel download
         private void butCancel_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Are you sure you want to cancel?", "Cancel Download",
@@ -337,7 +337,7 @@ namespace SCPatchDownloader
                 label_MB.Text = "N/A MB/s";
             }
         }
-
+        //save directory on form close
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.PrvDir = downloadDir.Text;
