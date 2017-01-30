@@ -43,6 +43,8 @@
             this.label_MB = new System.Windows.Forms.Label();
             this.check_nativefile = new System.Windows.Forms.CheckBox();
             this.toolTip_check = new System.Windows.Forms.ToolTip(this.components);
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // relSelector
@@ -171,11 +173,33 @@
             this.toolTip_check.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Warning;
             this.toolTip_check.ToolTipTitle = "Information";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(21, 403);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(305, 17);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "Developed by Hawx. Based on VB.NET work by NimmoG";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(21, 429);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(216, 17);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "Supported by Zephyr Auxilary Services";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(381, 375);
+            this.ClientSize = new System.Drawing.Size(381, 466);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.check_nativefile);
             this.Controls.Add(this.label_MB);
             this.Controls.Add(this.butCancel);
@@ -213,6 +237,8 @@
         private System.Windows.Forms.Label label_MB;
         private System.Windows.Forms.CheckBox check_nativefile;
         private System.Windows.Forms.ToolTip toolTip_check;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }
 
