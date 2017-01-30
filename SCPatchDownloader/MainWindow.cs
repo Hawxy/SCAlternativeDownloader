@@ -45,8 +45,6 @@ namespace SCPatchDownloader
         private string fulldir;
         readonly Stopwatch sw = new Stopwatch();
 
-
-
         readonly List<universe> versionList = new List<universe>();
         public MainWindow()
         {
@@ -55,7 +53,7 @@ namespace SCPatchDownloader
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            downloadDir.Text = Directory.GetCurrentDirectory() + "\\Star Citizen";
+            downloadDir.Text = Directory.GetCurrentDirectory() + "\\StarCitizen";
             toolTip_check.SetToolTip(check_nativefile, "Sorts files into public/test directorys instead of using build number. Allows for easy copy/pasting. Note that files will not be overwritten if they already exist");
             downloadPatchList();
         }
@@ -132,12 +130,12 @@ namespace SCPatchDownloader
                             "IOException", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
-                    catch (Exception x)
-                    {
-                    MessageBox.Show("Something unexpected happened and the program is unable to continue",
-                                          "General Exception " + x, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                      
-                    }
+//                    catch (Exception x)
+//                    {
+//                    MessageBox.Show("Something unexpected happened and the program is unable to continue",
+//                                          "General Exception " + x, MessageBoxButtons.OK, MessageBoxIcon.Error);
+//                                      
+//                    }
                 }
                 else
                 {
@@ -180,11 +178,22 @@ namespace SCPatchDownloader
         {
             string[] parts = url.Split('/');
             string filename = "";
-
-            for (int i = 5; i < parts.Length - 1; i++)
+            if (native)
             {
-                filename += "\\" + parts[i];
+                for (int i = 7; i < parts.Length - 1; i++)
+                {
+                    filename += "\\" + parts[i];
+                }
+                filename = "\\" + relSelector.SelectedItem as string + "\\" + filename;
             }
+            else
+            {
+                for (int i = 5; i < parts.Length - 1; i++)
+                {
+                    filename += "\\" + parts[i];
+                }
+            }
+            
             return filename;
         }
 

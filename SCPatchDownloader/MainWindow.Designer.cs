@@ -179,9 +179,9 @@
             this.label4.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(21, 403);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(305, 17);
+            this.label4.Size = new System.Drawing.Size(342, 17);
             this.label4.TabIndex = 15;
-            this.label4.Text = "Developed by Hawx. Based on VB.NET work by NimmoG";
+            this.label4.Text = "Developed by Hawx. Based on VB.NET downloader by NimmoG";
             // 
             // label5
             // 
