@@ -3,7 +3,7 @@ Star Citizen Patch Downloader written in C#. Some components based on VB.NET wor
 
 Downloadable binaries coming soon!
 
-Differences from original:
+Differences from original VB.NET downloader:
 
 - Option to maintain the normal SC file structure
 - Directory saving on exit
