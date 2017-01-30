@@ -177,7 +177,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(21, 403);
+            this.label4.Location = new System.Drawing.Point(12, 382);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(342, 17);
             this.label4.TabIndex = 15;
@@ -187,7 +187,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(21, 429);
+            this.label5.Location = new System.Drawing.Point(12, 408);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(216, 17);
             this.label5.TabIndex = 16;
@@ -197,7 +197,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(381, 466);
+            this.ClientSize = new System.Drawing.Size(381, 436);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.check_nativefile);
@@ -214,7 +214,7 @@
             this.Controls.Add(this.downloadDir);
             this.Controls.Add(this.relSelector);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(397, 505);
+            this.MaximumSize = new System.Drawing.Size(397, 700);
             this.Name = "MainWindow";
             this.Text = "Star Citizen Alternative Patcher - C# Edition";
             this.Load += new System.EventHandler(this.MainWindow_Load);
