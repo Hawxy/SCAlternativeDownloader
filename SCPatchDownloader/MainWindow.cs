@@ -32,9 +32,10 @@ namespace SCPatchDownloader
 {
     public partial class MainWindow : Form
     {
+        //stores list of URLs
         private readonly ArrayList urlList = new ArrayList();
 
-
+        //game versions
         struct universe
         {
             public string versionName;
@@ -43,6 +44,7 @@ namespace SCPatchDownloader
 
         private WebClient client;
         private string fulldir;
+
         readonly Stopwatch sw = new Stopwatch();
 
         readonly List<universe> versionList = new List<universe>();
@@ -53,11 +55,19 @@ namespace SCPatchDownloader
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            downloadDir.Text = Directory.GetCurrentDirectory() + "\\SCDownload";
+            if (!String.IsNullOrEmpty(Properties.Settings.Default.PrvDir))
+            {
+                downloadDir.Text = Properties.Settings.Default.PrvDir;
+            }
+            else
+            {
+                downloadDir.Text = Directory.GetCurrentDirectory() + "\\SCDownload";
+            }
+            
             toolTip_check.SetToolTip(check_nativefile, "Sorts files into public/test directories instead of using build number. Allows for easy copy/pasting or direct download into program files. Existing files will not be overwritten");
             downloadPatchList();
         }
-
+        //on Browse Directory click
         private void browseDir_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folderDir = new FolderBrowserDialog { ShowNewFolderButton = true };
@@ -379,8 +389,12 @@ namespace SCPatchDownloader
 
             }
 
+        }
 
-
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.PrvDir = downloadDir.Text;
+            Properties.Settings.Default.Save();
         }
     }
 }

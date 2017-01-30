@@ -217,6 +217,7 @@
             this.MaximumSize = new System.Drawing.Size(397, 700);
             this.Name = "MainWindow";
             this.Text = "Star Citizen Alternative Patcher - C# Edition";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
