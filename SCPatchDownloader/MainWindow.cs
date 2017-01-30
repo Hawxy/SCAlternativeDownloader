@@ -57,26 +57,7 @@ namespace SCPatchDownloader
         {
             downloadDir.Text = Directory.GetCurrentDirectory() + "\\Star Citizen";
             toolTip_check.SetToolTip(check_nativefile, "Sorts files into public/test directorys instead of using build number. Allows for easy copy/pasting. Note that files will not be overwritten if they already exist");
-            if (File.Exists("SC-URLs.txt"))
-                readExistingFile();
             downloadPatchList();
-        }
-
-        async void readExistingFile()
-        {
-            var reader = File.OpenText("SC-URLs.txt");
-            universe existingUniverse = new universe();
-
-            while (reader.Peek() != -1)
-            {
-                var line = await reader.ReadLineAsync();
-                urlList.Add(line);
-            }
-            existingUniverse.versionName = "Existing URL list";
-            existingUniverse.fileIndex = "";
-            versionList.Add(existingUniverse);
-            relSelector.Items.Add(existingUniverse.versionName);
-            reader.Close();
         }
 
         private void browseDir_Click(object sender, EventArgs e)
@@ -108,7 +89,10 @@ namespace SCPatchDownloader
                 int totfileNum = urlList.Count;
 
                 DirectorySecurity security = new DirectorySecurity();
-                security.AddAccessRule(new FileSystemAccessRule(new SecurityIdentifier(WellKnownSidType.WorldSid, null), FileSystemRights.FullControl, InheritanceFlags.ObjectInherit | InheritanceFlags.ContainerInherit, PropagationFlags.NoPropagateInherit, AccessControlType.Allow));
+                security.AddAccessRule(new FileSystemAccessRule(
+                    new SecurityIdentifier(WellKnownSidType.WorldSid, null), FileSystemRights.FullControl,
+                    InheritanceFlags.ObjectInherit | InheritanceFlags.ContainerInherit,
+                    PropagationFlags.NoPropagateInherit, AccessControlType.Allow));
 
                 if (urlList.Count > 0 && !String.IsNullOrWhiteSpace(downloadLocation))
                 {
@@ -129,18 +113,17 @@ namespace SCPatchDownloader
                                     client.DownloadFileCompleted += client_InstallFileCompleted;
                                     sw.Start();
                                     await client.DownloadFileTaskAsync(new Uri(file), fulldir);
-
                                 }
                             }
                             fileNum += 1;
                             infoProg.Value = (100 * fileNum) / totfileNum;
                             sw.Reset();
-
                         }
                     }
                     catch (DirectoryNotFoundException)
                     {
-                        MessageBox.Show("Unable to write to location, do you have permission?", "DirectoryNotFoundException",
+                        MessageBox.Show("Unable to write to location, do you have permission?",
+                            "DirectoryNotFoundException",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     catch (IOException x)
@@ -149,12 +132,12 @@ namespace SCPatchDownloader
                             "IOException", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
-                    //                catch (Exception x)
-                    //                {
-                    //                    MessageBox.Show("Something unexpected happened and the program is unable to continue",
-                    //                        "General Exception " + x, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //                    throw;
-                    //                }
+                    catch (Exception x)
+                    {
+                    MessageBox.Show("Something unexpected happened and the program is unable to continue",
+                                          "General Exception " + x, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                      
+                    }
                 }
                 else
                 {
@@ -165,7 +148,6 @@ namespace SCPatchDownloader
                 {
                     File.Delete("SC-URLs.txt");
                 }
-
             }
         }
 
@@ -283,16 +265,13 @@ namespace SCPatchDownloader
                 {
                     if (requestedUniverse.Equals(universe.versionName))
                         universeFileList = universe.fileIndex;
-                    else if (requestedUniverse == "Existing URL list")
-                        universeFileList = "local";
-
                 }
 
             }
             try
             {
                 //get file list
-                if (!universeFileList.Equals("") && !universeFileList.Equals("local"))
+                if (!string.IsNullOrEmpty(universeFileList))
                 {
 
                     using (client = new WebClient())
@@ -302,7 +281,7 @@ namespace SCPatchDownloader
                         await client.DownloadFileTaskAsync(new Uri(universeFileList), fileName);
                     }
                     var reader = File.OpenText(fileName);
-                    var writer = new StreamWriter("SC-URLs.txt", true);
+                    var writer = new StreamWriter("SC-URLs.txt", false);
 
                     seekToLine(reader, "file_list");
                     var line = reader.ReadLine();
@@ -340,18 +319,15 @@ namespace SCPatchDownloader
                     reader.Close();
 
                     File.Delete(fileName);
+                    File.Delete("SC-URLs.txt");
 
-                }
-                else if (universeFileList.Equals("local"))
-                {
-                    label_status.Text = "Program will resume from existing file list";
                 }
                 else
                 {
                     MessageBox.Show("Unable to find file list", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                downloadSrt.Visible = true;
+                
             }
             catch (WebException)
             {
