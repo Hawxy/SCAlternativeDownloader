@@ -1,5 +1,5 @@
-# SCAlternativePatcher
-Star Citizen Patch Downloader written in C#. Some components based on VB.NET work by Graeme Nimmo (NimmoG)
+# Star Citizen File Downloader
+Launcher file processing based on [original VB.NET downloader](https://bitbucket.org/nimmog/scpatchdownloader-vb.net/overview) by NimmoG
 
 Downloadable binaries coming soon!
 
@@ -9,11 +9,14 @@ Differences from original VB.NET downloader:
 - Directory saving on exit
 - Download speed indicator
 - General code structure changes
-- Proper file dialog (soon)
 - Other random stuff
 
+Upcoming changes:
+- Proper file dialog (folderbroswerdialog is terrible)
+- Visual overhaul
+
 Platform:
-- .NET 4.6.2
+- Uses .NET 4.6.2. Requires Windows 7 SP1 or newer.
 - 64-bit only
 
 http://zephyraux.com/
