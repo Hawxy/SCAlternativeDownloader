@@ -1,5 +1,4 @@
-# SCAlternativePatcher
-Star Citizen Patch Downloader written in C#. Some components based on VB.NET work by Graeme Nimmo (NimmoG)
+# Star Citizen File Downloader
 
 Downloadable binaries coming soon!
 
