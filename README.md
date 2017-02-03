@@ -12,7 +12,7 @@ Differences from original VB.NET downloader:
 - Other random stuff
 
 Upcoming changes:
-- Proper file dialog (folderbroswerdialog is terrible)
+- Proper file dialog (folderbrowserdialog is terrible)
 - Visual overhaul
 
 Platform:
