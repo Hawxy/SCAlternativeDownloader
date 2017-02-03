@@ -1,7 +1,7 @@
 # Star Citizen File Downloader
 Launcher file processing based on [original VB.NET downloader](https://bitbucket.org/nimmog/scpatchdownloader-vb.net/overview) by NimmoG
 
-Downloadable binaries coming soon!
+Downloadable binaries are available in [releases](https://github.com/Hawxy/SCAlternativePatcher/releases)
 
 Differences from original VB.NET downloader:
 
