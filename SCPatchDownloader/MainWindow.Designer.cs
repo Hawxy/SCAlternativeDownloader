@@ -46,19 +46,21 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.gitButton = new System.Windows.Forms.Button();
+            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.SuspendLayout();
             // 
             // relSelector
             // 
             this.relSelector.FormattingEnabled = true;
-            this.relSelector.Location = new System.Drawing.Point(29, 51);
+            this.relSelector.Location = new System.Drawing.Point(15, 105);
             this.relSelector.Name = "relSelector";
             this.relSelector.Size = new System.Drawing.Size(121, 21);
             this.relSelector.TabIndex = 0;
             // 
             // downloadDir
             // 
-            this.downloadDir.Location = new System.Drawing.Point(29, 119);
+            this.downloadDir.Location = new System.Drawing.Point(392, 275);
             this.downloadDir.Name = "downloadDir";
             this.downloadDir.Size = new System.Drawing.Size(217, 20);
             this.downloadDir.TabIndex = 1;
@@ -67,7 +69,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(35, 23);
+            this.label1.Location = new System.Drawing.Point(398, 179);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(104, 14);
             this.label1.TabIndex = 3;
@@ -77,7 +79,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(41, 92);
+            this.label2.Location = new System.Drawing.Point(404, 248);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(86, 14);
             this.label2.TabIndex = 4;
@@ -85,7 +87,7 @@
             // 
             // browseDir
             // 
-            this.browseDir.Location = new System.Drawing.Point(252, 119);
+            this.browseDir.Location = new System.Drawing.Point(615, 275);
             this.browseDir.Name = "browseDir";
             this.browseDir.Size = new System.Drawing.Size(33, 21);
             this.browseDir.TabIndex = 6;
@@ -97,7 +99,7 @@
             // 
             this.downloadSrt.Enabled = false;
             this.downloadSrt.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.downloadSrt.Location = new System.Drawing.Point(64, 208);
+            this.downloadSrt.Location = new System.Drawing.Point(427, 364);
             this.downloadSrt.Name = "downloadSrt";
             this.downloadSrt.Size = new System.Drawing.Size(75, 23);
             this.downloadSrt.TabIndex = 7;
@@ -107,7 +109,7 @@
             // 
             // infoProg
             // 
-            this.infoProg.Location = new System.Drawing.Point(29, 295);
+            this.infoProg.Location = new System.Drawing.Point(392, 451);
             this.infoProg.Name = "infoProg";
             this.infoProg.Size = new System.Drawing.Size(256, 23);
             this.infoProg.TabIndex = 8;
@@ -115,7 +117,7 @@
             // label_status
             // 
             this.label_status.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_status.Location = new System.Drawing.Point(29, 268);
+            this.label_status.Location = new System.Drawing.Point(392, 424);
             this.label_status.Name = "label_status";
             this.label_status.Size = new System.Drawing.Size(256, 24);
             this.label_status.TabIndex = 9;
@@ -125,7 +127,7 @@
             // releaseSelect
             // 
             this.releaseSelect.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.releaseSelect.Location = new System.Drawing.Point(177, 43);
+            this.releaseSelect.Location = new System.Drawing.Point(540, 199);
             this.releaseSelect.Name = "releaseSelect";
             this.releaseSelect.Size = new System.Drawing.Size(98, 34);
             this.releaseSelect.TabIndex = 10;
@@ -137,7 +139,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(105, 255);
+            this.label3.Location = new System.Drawing.Point(468, 411);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(89, 14);
             this.label3.TabIndex = 11;
@@ -147,7 +149,7 @@
             // 
             this.butCancel.Enabled = false;
             this.butCancel.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.butCancel.Location = new System.Drawing.Point(171, 208);
+            this.butCancel.Location = new System.Drawing.Point(534, 364);
             this.butCancel.Name = "butCancel";
             this.butCancel.Size = new System.Drawing.Size(75, 23);
             this.butCancel.TabIndex = 12;
@@ -158,7 +160,7 @@
             // label_MB
             // 
             this.label_MB.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_MB.Location = new System.Drawing.Point(105, 321);
+            this.label_MB.Location = new System.Drawing.Point(468, 477);
             this.label_MB.Name = "label_MB";
             this.label_MB.Size = new System.Drawing.Size(100, 23);
             this.label_MB.TabIndex = 13;
@@ -169,7 +171,7 @@
             // 
             this.check_nativefile.AutoSize = true;
             this.check_nativefile.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.check_nativefile.Location = new System.Drawing.Point(64, 156);
+            this.check_nativefile.Location = new System.Drawing.Point(427, 312);
             this.check_nativefile.Name = "check_nativefile";
             this.check_nativefile.Size = new System.Drawing.Size(173, 18);
             this.check_nativefile.TabIndex = 14;
@@ -186,7 +188,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(12, 382);
+            this.label4.Location = new System.Drawing.Point(375, 538);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(258, 14);
             this.label4.TabIndex = 15;
@@ -196,7 +198,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(12, 408);
+            this.label5.Location = new System.Drawing.Point(375, 564);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(206, 14);
             this.label5.TabIndex = 16;
@@ -204,7 +206,7 @@
             // 
             // gitButton
             // 
-            this.gitButton.Location = new System.Drawing.Point(236, 403);
+            this.gitButton.Location = new System.Drawing.Point(599, 559);
             this.gitButton.Name = "gitButton";
             this.gitButton.Size = new System.Drawing.Size(67, 23);
             this.gitButton.TabIndex = 17;
@@ -212,11 +214,39 @@
             this.gitButton.UseVisualStyleBackColor = true;
             this.gitButton.Click += new System.EventHandler(this.gitButton_Click);
             // 
+            // materialLabel1
+            // 
+            this.materialLabel1.AutoSize = true;
+            this.materialLabel1.Depth = 0;
+            this.materialLabel1.Font = new System.Drawing.Font("Roboto Medium", 11F);
+            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel1.Location = new System.Drawing.Point(12, 74);
+            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel1.Name = "materialLabel1";
+            this.materialLabel1.Size = new System.Drawing.Size(142, 18);
+            this.materialLabel1.TabIndex = 18;
+            this.materialLabel1.Text = "Select Release Type";
+            // 
+            // materialLabel2
+            // 
+            this.materialLabel2.AutoSize = true;
+            this.materialLabel2.Depth = 0;
+            this.materialLabel2.Font = new System.Drawing.Font("Roboto Medium", 11F);
+            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel2.Location = new System.Drawing.Point(16, 189);
+            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel2.Name = "materialLabel2";
+            this.materialLabel2.Size = new System.Drawing.Size(115, 18);
+            this.materialLabel2.TabIndex = 19;
+            this.materialLabel2.Text = "Select Directory";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(364, 441);
+            this.ClientSize = new System.Drawing.Size(693, 631);
+            this.Controls.Add(this.materialLabel2);
+            this.Controls.Add(this.materialLabel1);
             this.Controls.Add(this.gitButton);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -234,7 +264,6 @@
             this.Controls.Add(this.downloadDir);
             this.Controls.Add(this.relSelector);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(380, 480);
             this.MinimumSize = new System.Drawing.Size(380, 480);
             this.Name = "MainWindow";
             this.Text = "Star Citizen Alternative Patcher - C# Edition";
@@ -264,6 +293,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button gitButton;
+        private MaterialSkin.Controls.MaterialLabel materialLabel1;
+        private MaterialSkin.Controls.MaterialLabel materialLabel2;
     }
 }
 
