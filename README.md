@@ -1,4 +1,5 @@
 # Star Citizen File Downloader
+File processing based on [original VB.NET downloader](https://bitbucket.org/nimmog/scpatchdownloader-vb.net/overview) by NimmoG
 
 Downloadable binaries coming soon!
 
@@ -8,7 +9,7 @@ Differences from original VB.NET downloader:
 - Directory saving on exit
 - Download speed indicator
 - General code structure changes
-- Proper file dialog (soon)
+- Proper file dialog (TO-DO)
 - Other random stuff
 
 Platform:
