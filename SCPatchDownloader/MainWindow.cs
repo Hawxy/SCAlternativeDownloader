@@ -19,6 +19,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Security.AccessControl;
@@ -56,6 +57,7 @@ namespace SCPatchDownloader
         //loading application
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            
             if (!String.IsNullOrEmpty(Properties.Settings.Default.PrvDir))
             {
                 downloadDir.Text = Properties.Settings.Default.PrvDir;
@@ -90,58 +92,59 @@ namespace SCPatchDownloader
             browseDir.Enabled = false;
             check_nativefile.Enabled = false;
             downloadGameFiles();
+        }
 
 
-            async Task downloadGameFiles()
+        async Task downloadGameFiles()
+        {
+            bool native = check_nativefile.Checked;
+            string downloadLocation = downloadDir.Text;
+            int fileNum = 1;
+            int totfileNum = urlList.Count;
+
+            DirectorySecurity security = new DirectorySecurity();
+            security.AddAccessRule(new FileSystemAccessRule(
+                new SecurityIdentifier(WellKnownSidType.WorldSid, null), FileSystemRights.FullControl,
+                InheritanceFlags.ObjectInherit | InheritanceFlags.ContainerInherit,
+                PropagationFlags.NoPropagateInherit, AccessControlType.Allow));
+
+            if (urlList.Count > 0 && !String.IsNullOrWhiteSpace(downloadLocation))
             {
-                bool native = check_nativefile.Checked;
-                string downloadLocation = downloadDir.Text;
-                int fileNum = 1;
-                int totfileNum = urlList.Count;
-
-                DirectorySecurity security = new DirectorySecurity();
-                security.AddAccessRule(new FileSystemAccessRule(
-                    new SecurityIdentifier(WellKnownSidType.WorldSid, null), FileSystemRights.FullControl,
-                    InheritanceFlags.ObjectInherit | InheritanceFlags.ContainerInherit,
-                    PropagationFlags.NoPropagateInherit, AccessControlType.Allow));
-
-                if (urlList.Count > 0 && !String.IsNullOrWhiteSpace(downloadLocation))
+                try
                 {
-                    try
+                    foreach (string file in urlList)
                     {
-                        foreach (string file in urlList)
+                        string filename = getFileName(file);
+                        label_status.Text = "Downloading file " + fileNum + " of " + totfileNum;
+                        var dest = downloadLocation + getFileStructure(file, native, relSelector);
+                        fulldir = Path.Combine(dest, filename);
+                        if (!File.Exists(fulldir))
                         {
-                            string filename = getFileName(file);
-                            label_status.Text = "Downloading file " + fileNum + " of " + totfileNum;
-                            var dest = downloadLocation + getFileStructure(file, native, relSelector);
-                            fulldir = Path.Combine(dest, filename);
-                            if (!File.Exists(fulldir))
+                            Directory.CreateDirectory(dest, security);
+                            using (client = new WebClient())
                             {
-                                Directory.CreateDirectory(dest, security);
-                                using (client = new WebClient())
-                                {
-                                    client.DownloadProgressChanged += (send, x) => FileDownloadProgress(x.BytesReceived);
-                                    client.DownloadFileCompleted += client_InstallFileCompleted;
-                                    sw.Start();
-                                    await client.DownloadFileTaskAsync(new Uri(file), fulldir);
-                                }
+                                client.DownloadProgressChanged += (send, x) => FileDownloadProgress(x.BytesReceived);
+                                client.DownloadFileCompleted += client_InstallFileCompleted;
+                                sw.Start();
+                                await client.DownloadFileTaskAsync(new Uri(file), fulldir);
                             }
-                            fileNum += 1;
-                            infoProg.Value = (100 * fileNum) / totfileNum;
-                            sw.Reset();
                         }
+                        fileNum += 1;
+                        infoProg.Value = (100 * fileNum) / totfileNum;
+                        sw.Reset();
                     }
-                    catch (DirectoryNotFoundException)
-                    {
-                        MessageBox.Show("Unable to write to location, do you have permission?",
-                            "DirectoryNotFoundException",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    catch (IOException x)
-                    {
-                        MessageBox.Show("Unable to write to disk. Do you have enough space? Full Exception: " + x,
-                            "IOException", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                }
+                catch (DirectoryNotFoundException)
+                {
+                    MessageBox.Show("Unable to write to location, do you have permission?",
+                        "DirectoryNotFoundException",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (IOException x)
+                {
+                    MessageBox.Show("Unable to write to disk. Do you have enough space? Full Exception: " + x,
+                        "IOException", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
 //                    catch (Exception x)
 //                    {
@@ -149,18 +152,18 @@ namespace SCPatchDownloader
 //                                          "General Exception " + x, MessageBoxButtons.OK, MessageBoxIcon.Error);
 //                                      
 //                    }
-                }
-                else
-                {
-                    MessageBox.Show("Please provide a valid download location", "Error", MessageBoxButtons.OK,
-                        MessageBoxIcon.Exclamation);
-                }
-                if (fileNum - 1 == urlList.Count)
-                {
-                    File.Delete("SC-URLs.txt");
-                }
+            }
+            else
+            {
+                MessageBox.Show("Please provide a valid download location", "Error", MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+            }
+            if (fileNum - 1 == urlList.Count)
+            {
+                File.Delete("SC-URLs.txt");
             }
         }
+    
         //download speed calculator
         private void FileDownloadProgress(long bytesReceived)
         {
@@ -342,6 +345,11 @@ namespace SCPatchDownloader
         {
             Properties.Settings.Default.PrvDir = downloadDir.Text;
             Properties.Settings.Default.Save();
+        }
+
+        private void gitButton_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/Hawxy/SCAlternativePatcher/");
         }
     }
 }

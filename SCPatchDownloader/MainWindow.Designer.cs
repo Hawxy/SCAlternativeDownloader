@@ -45,6 +45,7 @@
             this.toolTip_check = new System.Windows.Forms.ToolTip(this.components);
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.gitButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // relSelector
@@ -66,21 +67,21 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(26, 22);
+            this.label1.Location = new System.Drawing.Point(35, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(158, 14);
+            this.label1.Size = new System.Drawing.Size(104, 14);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Step One - Select Release Type";
+            this.label1.Text = "Select Release Type";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(26, 94);
+            this.label2.Location = new System.Drawing.Point(41, 92);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(139, 14);
+            this.label2.Size = new System.Drawing.Size(86, 14);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Step Two - Select Directory";
+            this.label2.Text = "Select Directory";
             // 
             // browseDir
             // 
@@ -187,9 +188,9 @@
             this.label4.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(12, 382);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(334, 14);
+            this.label4.Size = new System.Drawing.Size(258, 14);
             this.label4.TabIndex = 15;
-            this.label4.Text = "Developed by Hawx. Based on VB.NET downloader by NimmoG";
+            this.label4.Text = "Developed by Hawx. Based on work by NimmoG.";
             // 
             // label5
             // 
@@ -201,11 +202,22 @@
             this.label5.TabIndex = 16;
             this.label5.Text = "Supported by Zephyr Auxilary Services";
             // 
+            // gitButton
+            // 
+            this.gitButton.Location = new System.Drawing.Point(236, 403);
+            this.gitButton.Name = "gitButton";
+            this.gitButton.Size = new System.Drawing.Size(67, 23);
+            this.gitButton.TabIndex = 17;
+            this.gitButton.Text = "Github";
+            this.gitButton.UseVisualStyleBackColor = true;
+            this.gitButton.Click += new System.EventHandler(this.gitButton_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(381, 436);
+            this.ClientSize = new System.Drawing.Size(364, 441);
+            this.Controls.Add(this.gitButton);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.check_nativefile);
@@ -222,7 +234,8 @@
             this.Controls.Add(this.downloadDir);
             this.Controls.Add(this.relSelector);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(397, 700);
+            this.MaximumSize = new System.Drawing.Size(380, 480);
+            this.MinimumSize = new System.Drawing.Size(380, 480);
             this.Name = "MainWindow";
             this.Text = "Star Citizen Alternative Patcher - C# Edition";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
@@ -250,6 +263,7 @@
         private System.Windows.Forms.ToolTip toolTip_check;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button gitButton;
     }
 }
 
