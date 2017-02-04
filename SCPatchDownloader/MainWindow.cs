@@ -62,7 +62,8 @@ namespace SCPatchDownloader
         //loading application
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            
+
+           
             if (!String.IsNullOrEmpty(Properties.Settings.Default.PrvDir))
             {
                 downloadDir.Text = Properties.Settings.Default.PrvDir;
