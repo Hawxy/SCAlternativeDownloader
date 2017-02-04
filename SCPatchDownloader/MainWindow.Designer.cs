@@ -50,10 +50,11 @@
             // 
             // relSelector
             // 
+            this.relSelector.Font = new System.Drawing.Font("Roboto", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.relSelector.FormattingEnabled = true;
             this.relSelector.Location = new System.Drawing.Point(15, 105);
             this.relSelector.Name = "relSelector";
-            this.relSelector.Size = new System.Drawing.Size(141, 21);
+            this.relSelector.Size = new System.Drawing.Size(141, 25);
             this.relSelector.TabIndex = 0;
             // 
             // toolTip_check
@@ -94,7 +95,7 @@
             this.releaseSelect.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.releaseSelect.Depth = 0;
             this.releaseSelect.Icon = null;
-            this.releaseSelect.Location = new System.Drawing.Point(192, 96);
+            this.releaseSelect.Location = new System.Drawing.Point(164, 98);
             this.releaseSelect.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.releaseSelect.MouseState = MaterialSkin.MouseState.HOVER;
             this.releaseSelect.Name = "releaseSelect";
@@ -108,6 +109,7 @@
             // downloadDir
             // 
             this.downloadDir.Depth = 0;
+            this.downloadDir.Font = new System.Drawing.Font("Roboto", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.downloadDir.Hint = "";
             this.downloadDir.Location = new System.Drawing.Point(12, 184);
             this.downloadDir.MaxLength = 32767;
@@ -140,14 +142,16 @@
             // 
             // browseDir
             // 
+            this.browseDir.AutoSize = true;
             this.browseDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.browseDir.Depth = 0;
+            this.browseDir.Font = new System.Drawing.Font("Roboto", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.browseDir.Icon = null;
             this.browseDir.Location = new System.Drawing.Point(290, 184);
             this.browseDir.MouseState = MaterialSkin.MouseState.HOVER;
             this.browseDir.Name = "browseDir";
             this.browseDir.Primary = true;
-            this.browseDir.Size = new System.Drawing.Size(32, 23);
+            this.browseDir.Size = new System.Drawing.Size(32, 36);
             this.browseDir.TabIndex = 24;
             this.browseDir.Text = "...";
             this.browseDir.UseVisualStyleBackColor = true;
@@ -190,12 +194,12 @@
             // 
             this.materialLabel3.AutoSize = true;
             this.materialLabel3.Depth = 0;
-            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F, System.Drawing.FontStyle.Bold);
+            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel3.Location = new System.Drawing.Point(101, 337);
             this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel3.Name = "materialLabel3";
-            this.materialLabel3.Size = new System.Drawing.Size(113, 18);
+            this.materialLabel3.Size = new System.Drawing.Size(113, 19);
             this.materialLabel3.TabIndex = 27;
             this.materialLabel3.Text = "Program Status";
             // 
@@ -238,12 +242,12 @@
             // 
             this.materialLabel4.AutoSize = true;
             this.materialLabel4.Depth = 0;
-            this.materialLabel4.Font = new System.Drawing.Font("Roboto", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.materialLabel4.Font = new System.Drawing.Font("Roboto", 9F);
             this.materialLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel4.Location = new System.Drawing.Point(13, 462);
             this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel4.Name = "materialLabel4";
-            this.materialLabel4.Size = new System.Drawing.Size(281, 17);
+            this.materialLabel4.Size = new System.Drawing.Size(269, 15);
             this.materialLabel4.TabIndex = 31;
             this.materialLabel4.Text = "Developed by Hawx. Based on work by NimmoG.";
             // 
@@ -251,12 +255,12 @@
             // 
             this.materialLabel5.AutoSize = true;
             this.materialLabel5.Depth = 0;
-            this.materialLabel5.Font = new System.Drawing.Font("Roboto", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.materialLabel5.Font = new System.Drawing.Font("Roboto", 9F);
             this.materialLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel5.Location = new System.Drawing.Point(13, 495);
             this.materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel5.Name = "materialLabel5";
-            this.materialLabel5.Size = new System.Drawing.Size(226, 17);
+            this.materialLabel5.Size = new System.Drawing.Size(216, 15);
             this.materialLabel5.TabIndex = 32;
             this.materialLabel5.Text = "Supported by Zephyr Auxiliary Services";
             // 
