@@ -194,19 +194,19 @@
             // 
             this.materialLabel3.AutoSize = true;
             this.materialLabel3.Depth = 0;
-            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.materialLabel3.Font = new System.Drawing.Font("Roboto Medium", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel3.Location = new System.Drawing.Point(101, 337);
             this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel3.Name = "materialLabel3";
-            this.materialLabel3.Size = new System.Drawing.Size(113, 18);
+            this.materialLabel3.Size = new System.Drawing.Size(128, 18);
             this.materialLabel3.TabIndex = 27;
             this.materialLabel3.Text = "Program Status";
             // 
             // label_status
             // 
             this.label_status.Depth = 0;
-            this.label_status.Font = new System.Drawing.Font("Roboto", 11F);
+            this.label_status.Font = new System.Drawing.Font("Roboto Medium", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_status.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label_status.Location = new System.Drawing.Point(16, 355);
             this.label_status.MouseState = MaterialSkin.MouseState.HOVER;
@@ -229,12 +229,12 @@
             // 
             this.label_MB.AutoSize = true;
             this.label_MB.Depth = 0;
-            this.label_MB.Font = new System.Drawing.Font("Roboto", 11F);
+            this.label_MB.Font = new System.Drawing.Font("Roboto Medium", 11F);
             this.label_MB.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label_MB.Location = new System.Drawing.Point(118, 410);
+            this.label_MB.Location = new System.Drawing.Point(128, 399);
             this.label_MB.MouseState = MaterialSkin.MouseState.HOVER;
             this.label_MB.Name = "label_MB";
-            this.label_MB.Size = new System.Drawing.Size(76, 19);
+            this.label_MB.Size = new System.Drawing.Size(75, 18);
             this.label_MB.TabIndex = 30;
             this.label_MB.Text = "N/A MB/s";
             // 
