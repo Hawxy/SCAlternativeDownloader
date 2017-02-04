@@ -30,24 +30,22 @@
         {
             this.components = new System.ComponentModel.Container();
             this.relSelector = new System.Windows.Forms.ComboBox();
-            this.downloadDir = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.browseDir = new System.Windows.Forms.Button();
-            this.downloadSrt = new System.Windows.Forms.Button();
-            this.infoProg = new System.Windows.Forms.ProgressBar();
-            this.label_status = new System.Windows.Forms.Label();
-            this.releaseSelect = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.butCancel = new System.Windows.Forms.Button();
-            this.label_MB = new System.Windows.Forms.Label();
-            this.check_nativefile = new System.Windows.Forms.CheckBox();
             this.toolTip_check = new System.Windows.Forms.ToolTip(this.components);
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.gitButton = new System.Windows.Forms.Button();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
+            this.releaseSelect = new MaterialSkin.Controls.MaterialFlatButton();
+            this.downloadDir = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.check_nativefile = new MaterialSkin.Controls.MaterialCheckBox();
+            this.browseDir = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.downloadSrt = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.butCancel = new MaterialSkin.Controls.MaterialFlatButton();
+            this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
+            this.label_status = new MaterialSkin.Controls.MaterialLabel();
+            this.infoProg = new MaterialSkin.Controls.MaterialProgressBar();
+            this.label_MB = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
+            this.gitButton = new MaterialSkin.Controls.MaterialFlatButton();
             this.SuspendLayout();
             // 
             // relSelector
@@ -55,128 +53,8 @@
             this.relSelector.FormattingEnabled = true;
             this.relSelector.Location = new System.Drawing.Point(15, 105);
             this.relSelector.Name = "relSelector";
-            this.relSelector.Size = new System.Drawing.Size(121, 21);
+            this.relSelector.Size = new System.Drawing.Size(141, 21);
             this.relSelector.TabIndex = 0;
-            // 
-            // downloadDir
-            // 
-            this.downloadDir.Location = new System.Drawing.Point(392, 275);
-            this.downloadDir.Name = "downloadDir";
-            this.downloadDir.Size = new System.Drawing.Size(217, 20);
-            this.downloadDir.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(398, 179);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(104, 14);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Select Release Type";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(404, 248);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 14);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Select Directory";
-            // 
-            // browseDir
-            // 
-            this.browseDir.Location = new System.Drawing.Point(615, 275);
-            this.browseDir.Name = "browseDir";
-            this.browseDir.Size = new System.Drawing.Size(33, 21);
-            this.browseDir.TabIndex = 6;
-            this.browseDir.Text = "...";
-            this.browseDir.UseVisualStyleBackColor = true;
-            this.browseDir.Click += new System.EventHandler(this.browseDir_Click);
-            // 
-            // downloadSrt
-            // 
-            this.downloadSrt.Enabled = false;
-            this.downloadSrt.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.downloadSrt.Location = new System.Drawing.Point(427, 364);
-            this.downloadSrt.Name = "downloadSrt";
-            this.downloadSrt.Size = new System.Drawing.Size(75, 23);
-            this.downloadSrt.TabIndex = 7;
-            this.downloadSrt.Text = "Download";
-            this.downloadSrt.UseVisualStyleBackColor = true;
-            this.downloadSrt.Click += new System.EventHandler(this.downloadSrt_Click);
-            // 
-            // infoProg
-            // 
-            this.infoProg.Location = new System.Drawing.Point(392, 451);
-            this.infoProg.Name = "infoProg";
-            this.infoProg.Size = new System.Drawing.Size(256, 23);
-            this.infoProg.TabIndex = 8;
-            // 
-            // label_status
-            // 
-            this.label_status.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_status.Location = new System.Drawing.Point(392, 424);
-            this.label_status.Name = "label_status";
-            this.label_status.Size = new System.Drawing.Size(256, 24);
-            this.label_status.TabIndex = 9;
-            this.label_status.Text = "Loading Manifest...";
-            this.label_status.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // releaseSelect
-            // 
-            this.releaseSelect.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.releaseSelect.Location = new System.Drawing.Point(540, 199);
-            this.releaseSelect.Name = "releaseSelect";
-            this.releaseSelect.Size = new System.Drawing.Size(98, 34);
-            this.releaseSelect.TabIndex = 10;
-            this.releaseSelect.Text = "Select Release";
-            this.releaseSelect.UseVisualStyleBackColor = true;
-            this.releaseSelect.Click += new System.EventHandler(this.releaseSelect_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(468, 411);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(89, 14);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "Program Status";
-            // 
-            // butCancel
-            // 
-            this.butCancel.Enabled = false;
-            this.butCancel.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.butCancel.Location = new System.Drawing.Point(534, 364);
-            this.butCancel.Name = "butCancel";
-            this.butCancel.Size = new System.Drawing.Size(75, 23);
-            this.butCancel.TabIndex = 12;
-            this.butCancel.Text = "Cancel";
-            this.butCancel.UseVisualStyleBackColor = true;
-            this.butCancel.Click += new System.EventHandler(this.butCancel_Click);
-            // 
-            // label_MB
-            // 
-            this.label_MB.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_MB.Location = new System.Drawing.Point(468, 477);
-            this.label_MB.Name = "label_MB";
-            this.label_MB.Size = new System.Drawing.Size(100, 23);
-            this.label_MB.TabIndex = 13;
-            this.label_MB.Text = "N/A MB/s";
-            this.label_MB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // check_nativefile
-            // 
-            this.check_nativefile.AutoSize = true;
-            this.check_nativefile.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.check_nativefile.Location = new System.Drawing.Point(427, 312);
-            this.check_nativefile.Name = "check_nativefile";
-            this.check_nativefile.Size = new System.Drawing.Size(173, 18);
-            this.check_nativefile.TabIndex = 14;
-            this.check_nativefile.Text = "Preserve Native File Structure";
-            this.check_nativefile.UseVisualStyleBackColor = true;
             // 
             // toolTip_check
             // 
@@ -184,46 +62,16 @@
             this.toolTip_check.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Warning;
             this.toolTip_check.ToolTipTitle = "Information";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(375, 538);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(258, 14);
-            this.label4.TabIndex = 15;
-            this.label4.Text = "Developed by Hawx. Based on work by NimmoG.";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(375, 564);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(206, 14);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "Supported by Zephyr Auxilary Services";
-            // 
-            // gitButton
-            // 
-            this.gitButton.Location = new System.Drawing.Point(599, 559);
-            this.gitButton.Name = "gitButton";
-            this.gitButton.Size = new System.Drawing.Size(67, 23);
-            this.gitButton.TabIndex = 17;
-            this.gitButton.Text = "Github";
-            this.gitButton.UseVisualStyleBackColor = true;
-            this.gitButton.Click += new System.EventHandler(this.gitButton_Click);
-            // 
             // materialLabel1
             // 
             this.materialLabel1.AutoSize = true;
             this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Roboto Medium", 11F);
+            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel1.Location = new System.Drawing.Point(12, 74);
             this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(142, 18);
+            this.materialLabel1.Size = new System.Drawing.Size(144, 19);
             this.materialLabel1.TabIndex = 18;
             this.materialLabel1.Text = "Select Release Type";
             // 
@@ -231,42 +79,229 @@
             // 
             this.materialLabel2.AutoSize = true;
             this.materialLabel2.Depth = 0;
-            this.materialLabel2.Font = new System.Drawing.Font("Roboto Medium", 11F);
+            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel2.Location = new System.Drawing.Point(16, 189);
+            this.materialLabel2.Location = new System.Drawing.Point(12, 153);
             this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel2.Name = "materialLabel2";
-            this.materialLabel2.Size = new System.Drawing.Size(115, 18);
+            this.materialLabel2.Size = new System.Drawing.Size(116, 19);
             this.materialLabel2.TabIndex = 19;
             this.materialLabel2.Text = "Select Directory";
+            // 
+            // releaseSelect
+            // 
+            this.releaseSelect.AutoSize = true;
+            this.releaseSelect.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.releaseSelect.Depth = 0;
+            this.releaseSelect.Icon = null;
+            this.releaseSelect.Location = new System.Drawing.Point(192, 96);
+            this.releaseSelect.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.releaseSelect.MouseState = MaterialSkin.MouseState.HOVER;
+            this.releaseSelect.Name = "releaseSelect";
+            this.releaseSelect.Primary = false;
+            this.releaseSelect.Size = new System.Drawing.Size(130, 36);
+            this.releaseSelect.TabIndex = 20;
+            this.releaseSelect.Text = "Select Release";
+            this.releaseSelect.UseVisualStyleBackColor = true;
+            this.releaseSelect.Click += new System.EventHandler(this.releaseSelect_Click);
+            // 
+            // downloadDir
+            // 
+            this.downloadDir.Depth = 0;
+            this.downloadDir.Hint = "";
+            this.downloadDir.Location = new System.Drawing.Point(12, 184);
+            this.downloadDir.MaxLength = 32767;
+            this.downloadDir.MouseState = MaterialSkin.MouseState.HOVER;
+            this.downloadDir.Name = "downloadDir";
+            this.downloadDir.PasswordChar = '\0';
+            this.downloadDir.SelectedText = "";
+            this.downloadDir.SelectionLength = 0;
+            this.downloadDir.SelectionStart = 0;
+            this.downloadDir.Size = new System.Drawing.Size(268, 23);
+            this.downloadDir.TabIndex = 21;
+            this.downloadDir.TabStop = false;
+            this.downloadDir.UseSystemPasswordChar = false;
+            // 
+            // check_nativefile
+            // 
+            this.check_nativefile.AutoSize = true;
+            this.check_nativefile.Depth = 0;
+            this.check_nativefile.Font = new System.Drawing.Font("Roboto", 10F);
+            this.check_nativefile.Location = new System.Drawing.Point(16, 222);
+            this.check_nativefile.Margin = new System.Windows.Forms.Padding(0);
+            this.check_nativefile.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.check_nativefile.MouseState = MaterialSkin.MouseState.HOVER;
+            this.check_nativefile.Name = "check_nativefile";
+            this.check_nativefile.Ripple = true;
+            this.check_nativefile.Size = new System.Drawing.Size(213, 30);
+            this.check_nativefile.TabIndex = 23;
+            this.check_nativefile.Text = "Preserve Native File Structure";
+            this.check_nativefile.UseVisualStyleBackColor = true;
+            // 
+            // browseDir
+            // 
+            this.browseDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.browseDir.Depth = 0;
+            this.browseDir.Icon = null;
+            this.browseDir.Location = new System.Drawing.Point(290, 184);
+            this.browseDir.MouseState = MaterialSkin.MouseState.HOVER;
+            this.browseDir.Name = "browseDir";
+            this.browseDir.Primary = true;
+            this.browseDir.Size = new System.Drawing.Size(32, 23);
+            this.browseDir.TabIndex = 24;
+            this.browseDir.Text = "...";
+            this.browseDir.UseVisualStyleBackColor = true;
+            this.browseDir.Click += new System.EventHandler(this.browseDir_Click);
+            // 
+            // downloadSrt
+            // 
+            this.downloadSrt.AutoSize = true;
+            this.downloadSrt.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.downloadSrt.Depth = 0;
+            this.downloadSrt.Icon = null;
+            this.downloadSrt.Location = new System.Drawing.Point(32, 273);
+            this.downloadSrt.MouseState = MaterialSkin.MouseState.HOVER;
+            this.downloadSrt.Name = "downloadSrt";
+            this.downloadSrt.Primary = true;
+            this.downloadSrt.Size = new System.Drawing.Size(96, 36);
+            this.downloadSrt.TabIndex = 25;
+            this.downloadSrt.Text = "Download";
+            this.downloadSrt.UseVisualStyleBackColor = true;
+            this.downloadSrt.Click += new System.EventHandler(this.downloadSrt_Click);
+            // 
+            // butCancel
+            // 
+            this.butCancel.AutoSize = true;
+            this.butCancel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.butCancel.Depth = 0;
+            this.butCancel.Icon = null;
+            this.butCancel.Location = new System.Drawing.Point(211, 273);
+            this.butCancel.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.butCancel.MouseState = MaterialSkin.MouseState.HOVER;
+            this.butCancel.Name = "butCancel";
+            this.butCancel.Primary = false;
+            this.butCancel.Size = new System.Drawing.Size(73, 36);
+            this.butCancel.TabIndex = 26;
+            this.butCancel.Text = "Cancel";
+            this.butCancel.UseVisualStyleBackColor = true;
+            this.butCancel.Click += new System.EventHandler(this.butCancel_Click);
+            // 
+            // materialLabel3
+            // 
+            this.materialLabel3.AutoSize = true;
+            this.materialLabel3.Depth = 0;
+            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F, System.Drawing.FontStyle.Bold);
+            this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel3.Location = new System.Drawing.Point(101, 337);
+            this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel3.Name = "materialLabel3";
+            this.materialLabel3.Size = new System.Drawing.Size(113, 18);
+            this.materialLabel3.TabIndex = 27;
+            this.materialLabel3.Text = "Program Status";
+            // 
+            // label_status
+            // 
+            this.label_status.Depth = 0;
+            this.label_status.Font = new System.Drawing.Font("Roboto", 11F);
+            this.label_status.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label_status.Location = new System.Drawing.Point(16, 355);
+            this.label_status.MouseState = MaterialSkin.MouseState.HOVER;
+            this.label_status.Name = "label_status";
+            this.label_status.Size = new System.Drawing.Size(306, 33);
+            this.label_status.TabIndex = 28;
+            this.label_status.Text = "Loading Manifest...";
+            this.label_status.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // infoProg
+            // 
+            this.infoProg.Depth = 0;
+            this.infoProg.Location = new System.Drawing.Point(16, 391);
+            this.infoProg.MouseState = MaterialSkin.MouseState.HOVER;
+            this.infoProg.Name = "infoProg";
+            this.infoProg.Size = new System.Drawing.Size(306, 5);
+            this.infoProg.TabIndex = 29;
+            // 
+            // label_MB
+            // 
+            this.label_MB.AutoSize = true;
+            this.label_MB.Depth = 0;
+            this.label_MB.Font = new System.Drawing.Font("Roboto", 11F);
+            this.label_MB.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label_MB.Location = new System.Drawing.Point(118, 410);
+            this.label_MB.MouseState = MaterialSkin.MouseState.HOVER;
+            this.label_MB.Name = "label_MB";
+            this.label_MB.Size = new System.Drawing.Size(76, 19);
+            this.label_MB.TabIndex = 30;
+            this.label_MB.Text = "N/A MB/s";
+            // 
+            // materialLabel4
+            // 
+            this.materialLabel4.AutoSize = true;
+            this.materialLabel4.Depth = 0;
+            this.materialLabel4.Font = new System.Drawing.Font("Roboto", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.materialLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel4.Location = new System.Drawing.Point(13, 462);
+            this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel4.Name = "materialLabel4";
+            this.materialLabel4.Size = new System.Drawing.Size(281, 17);
+            this.materialLabel4.TabIndex = 31;
+            this.materialLabel4.Text = "Developed by Hawx. Based on work by NimmoG.";
+            // 
+            // materialLabel5
+            // 
+            this.materialLabel5.AutoSize = true;
+            this.materialLabel5.Depth = 0;
+            this.materialLabel5.Font = new System.Drawing.Font("Roboto", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.materialLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel5.Location = new System.Drawing.Point(13, 495);
+            this.materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel5.Name = "materialLabel5";
+            this.materialLabel5.Size = new System.Drawing.Size(226, 17);
+            this.materialLabel5.TabIndex = 32;
+            this.materialLabel5.Text = "Supported by Zephyr Auxiliary Services";
+            // 
+            // gitButton
+            // 
+            this.gitButton.AutoSize = true;
+            this.gitButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gitButton.Depth = 0;
+            this.gitButton.Icon = null;
+            this.gitButton.Location = new System.Drawing.Point(246, 485);
+            this.gitButton.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.gitButton.MouseState = MaterialSkin.MouseState.HOVER;
+            this.gitButton.Name = "gitButton";
+            this.gitButton.Primary = false;
+            this.gitButton.Size = new System.Drawing.Size(70, 36);
+            this.gitButton.TabIndex = 33;
+            this.gitButton.Text = "Github";
+            this.gitButton.UseVisualStyleBackColor = true;
+            this.gitButton.Click += new System.EventHandler(this.gitButton_Click);
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(693, 631);
-            this.Controls.Add(this.materialLabel2);
-            this.Controls.Add(this.materialLabel1);
+            this.ClientSize = new System.Drawing.Size(345, 530);
             this.Controls.Add(this.gitButton);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.check_nativefile);
+            this.Controls.Add(this.materialLabel5);
+            this.Controls.Add(this.materialLabel4);
             this.Controls.Add(this.label_MB);
-            this.Controls.Add(this.butCancel);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.releaseSelect);
-            this.Controls.Add(this.label_status);
             this.Controls.Add(this.infoProg);
+            this.Controls.Add(this.label_status);
+            this.Controls.Add(this.materialLabel3);
+            this.Controls.Add(this.butCancel);
             this.Controls.Add(this.downloadSrt);
             this.Controls.Add(this.browseDir);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.check_nativefile);
             this.Controls.Add(this.downloadDir);
+            this.Controls.Add(this.releaseSelect);
+            this.Controls.Add(this.materialLabel2);
+            this.Controls.Add(this.materialLabel1);
             this.Controls.Add(this.relSelector);
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(380, 480);
+            this.MinimumSize = new System.Drawing.Size(345, 530);
             this.Name = "MainWindow";
-            this.Text = "Star Citizen Alternative Patcher - C# Edition";
+            this.Text = "Star Citizen Alternative Patcher";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.ResumeLayout(false);
@@ -277,24 +312,22 @@
         #endregion
 
         private System.Windows.Forms.ComboBox relSelector;
-        private System.Windows.Forms.TextBox downloadDir;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button browseDir;
-        private System.Windows.Forms.Button downloadSrt;
-        private System.Windows.Forms.ProgressBar infoProg;
-        private System.Windows.Forms.Label label_status;
-        private System.Windows.Forms.Button releaseSelect;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button butCancel;
-        private System.Windows.Forms.Label label_MB;
-        private System.Windows.Forms.CheckBox check_nativefile;
         private System.Windows.Forms.ToolTip toolTip_check;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button gitButton;
         private MaterialSkin.Controls.MaterialLabel materialLabel1;
         private MaterialSkin.Controls.MaterialLabel materialLabel2;
+        private MaterialSkin.Controls.MaterialFlatButton releaseSelect;
+        private MaterialSkin.Controls.MaterialSingleLineTextField downloadDir;
+        private MaterialSkin.Controls.MaterialCheckBox check_nativefile;
+        private MaterialSkin.Controls.MaterialRaisedButton browseDir;
+        private MaterialSkin.Controls.MaterialRaisedButton downloadSrt;
+        private MaterialSkin.Controls.MaterialFlatButton butCancel;
+        private MaterialSkin.Controls.MaterialLabel materialLabel3;
+        private MaterialSkin.Controls.MaterialLabel label_status;
+        private MaterialSkin.Controls.MaterialProgressBar infoProg;
+        private MaterialSkin.Controls.MaterialLabel label_MB;
+        private MaterialSkin.Controls.MaterialLabel materialLabel4;
+        private MaterialSkin.Controls.MaterialLabel materialLabel5;
+        private MaterialSkin.Controls.MaterialFlatButton gitButton;
     }
 }
 
