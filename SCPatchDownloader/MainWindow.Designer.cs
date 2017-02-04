@@ -142,6 +142,7 @@
             // 
             // browseDir
             // 
+            this.browseDir.AutoSize = true;
             this.browseDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.browseDir.Depth = 0;
             this.browseDir.Font = new System.Drawing.Font("Roboto", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -150,7 +151,7 @@
             this.browseDir.MouseState = MaterialSkin.MouseState.HOVER;
             this.browseDir.Name = "browseDir";
             this.browseDir.Primary = true;
-            this.browseDir.Size = new System.Drawing.Size(32, 23);
+            this.browseDir.Size = new System.Drawing.Size(32, 36);
             this.browseDir.TabIndex = 24;
             this.browseDir.Text = "...";
             this.browseDir.UseVisualStyleBackColor = true;
