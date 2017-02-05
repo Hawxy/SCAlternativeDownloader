@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.relSelector = new System.Windows.Forms.ComboBox();
             this.toolTip_check = new System.Windows.Forms.ToolTip(this.components);
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
@@ -72,9 +73,10 @@
             this.materialLabel1.Location = new System.Drawing.Point(12, 74);
             this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(143, 18);
+            this.materialLabel1.Size = new System.Drawing.Size(142, 18);
             this.materialLabel1.TabIndex = 18;
             this.materialLabel1.Text = "Select Release Type";
+            this.materialLabel1.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             // 
             // materialLabel2
             // 
@@ -88,6 +90,7 @@
             this.materialLabel2.Size = new System.Drawing.Size(115, 18);
             this.materialLabel2.TabIndex = 19;
             this.materialLabel2.Text = "Select Directory";
+            this.materialLabel2.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             // 
             // releaseSelect
             // 
@@ -142,6 +145,7 @@
             // 
             // browseDir
             // 
+            this.browseDir.AutoSize = true;
             this.browseDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.browseDir.Depth = 0;
             this.browseDir.Font = new System.Drawing.Font("Roboto", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -162,6 +166,7 @@
             this.downloadSrt.AutoSize = true;
             this.downloadSrt.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.downloadSrt.Depth = 0;
+            this.downloadSrt.Enabled = false;
             this.downloadSrt.Icon = null;
             this.downloadSrt.Location = new System.Drawing.Point(32, 273);
             this.downloadSrt.MouseState = MaterialSkin.MouseState.HOVER;
@@ -178,6 +183,7 @@
             this.butCancel.AutoSize = true;
             this.butCancel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.butCancel.Depth = 0;
+            this.butCancel.Enabled = false;
             this.butCancel.Icon = null;
             this.butCancel.Location = new System.Drawing.Point(211, 273);
             this.butCancel.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
@@ -202,6 +208,7 @@
             this.materialLabel3.Size = new System.Drawing.Size(128, 18);
             this.materialLabel3.TabIndex = 27;
             this.materialLabel3.Text = "Program Status";
+            this.materialLabel3.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             // 
             // label_status
             // 
@@ -215,6 +222,7 @@
             this.label_status.TabIndex = 28;
             this.label_status.Text = "Loading Manifest...";
             this.label_status.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label_status.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             // 
             // infoProg
             // 
@@ -237,6 +245,7 @@
             this.label_MB.Size = new System.Drawing.Size(75, 18);
             this.label_MB.TabIndex = 30;
             this.label_MB.Text = "N/A MB/s";
+            this.label_MB.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             // 
             // materialLabel4
             // 
@@ -249,6 +258,7 @@
             this.materialLabel4.Size = new System.Drawing.Size(281, 19);
             this.materialLabel4.TabIndex = 31;
             this.materialLabel4.Text = "Developed by Hawx. Based on work by NimmoG.";
+            this.materialLabel4.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             // 
             // materialLabel5
             // 
@@ -261,6 +271,7 @@
             this.materialLabel5.Size = new System.Drawing.Size(226, 19);
             this.materialLabel5.TabIndex = 32;
             this.materialLabel5.Text = "Supported by Zephyr Auxiliary Services";
+            this.materialLabel5.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             // 
             // gitButton
             // 
@@ -300,6 +311,7 @@
             this.Controls.Add(this.materialLabel2);
             this.Controls.Add(this.materialLabel1);
             this.Controls.Add(this.relSelector);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(345, 530);
             this.Name = "MainWindow";
