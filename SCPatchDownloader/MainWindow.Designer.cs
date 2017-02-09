@@ -29,152 +29,34 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.relSelector = new System.Windows.Forms.ComboBox();
-            this.downloadDir = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.browseDir = new System.Windows.Forms.Button();
-            this.downloadSrt = new System.Windows.Forms.Button();
-            this.infoProg = new System.Windows.Forms.ProgressBar();
-            this.label_status = new System.Windows.Forms.Label();
-            this.releaseSelect = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.butCancel = new System.Windows.Forms.Button();
-            this.label_MB = new System.Windows.Forms.Label();
-            this.check_nativefile = new System.Windows.Forms.CheckBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
+            this.comboReleaseSelector = new System.Windows.Forms.ComboBox();
             this.toolTip_check = new System.Windows.Forms.ToolTip(this.components);
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.gitButton = new System.Windows.Forms.Button();
+            this.labelRT = new MaterialSkin.Controls.MaterialLabel();
+            this.DirLabel = new MaterialSkin.Controls.MaterialLabel();
+            this.buttonSelectRelease = new MaterialSkin.Controls.MaterialFlatButton();
+            this.textBoxDownloadDirectory = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.checkBoxNativeFile = new MaterialSkin.Controls.MaterialCheckBox();
+            this.buttonBrowseDirectory = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.buttonDownloadStart = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.buttonCancel = new MaterialSkin.Controls.MaterialFlatButton();
+            this.labelPS = new MaterialSkin.Controls.MaterialLabel();
+            this.labelCurrentStatus = new MaterialSkin.Controls.MaterialLabel();
+            this.progressBarStatus = new MaterialSkin.Controls.MaterialProgressBar();
+            this.labelMegaBytes = new MaterialSkin.Controls.MaterialLabel();
+            this.labelDBH = new MaterialSkin.Controls.MaterialLabel();
+            this.labelZAS = new MaterialSkin.Controls.MaterialLabel();
+            this.buttonGithub = new MaterialSkin.Controls.MaterialFlatButton();
             this.SuspendLayout();
             // 
-            // relSelector
+            // comboReleaseSelector
             // 
-            this.relSelector.FormattingEnabled = true;
-            this.relSelector.Location = new System.Drawing.Point(29, 51);
-            this.relSelector.Name = "relSelector";
-            this.relSelector.Size = new System.Drawing.Size(121, 21);
-            this.relSelector.TabIndex = 0;
-            // 
-            // downloadDir
-            // 
-            this.downloadDir.Location = new System.Drawing.Point(29, 119);
-            this.downloadDir.Name = "downloadDir";
-            this.downloadDir.Size = new System.Drawing.Size(217, 20);
-            this.downloadDir.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(35, 23);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(104, 14);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Select Release Type";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(41, 92);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 14);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Select Directory";
-            // 
-            // browseDir
-            // 
-            this.browseDir.Location = new System.Drawing.Point(252, 119);
-            this.browseDir.Name = "browseDir";
-            this.browseDir.Size = new System.Drawing.Size(33, 21);
-            this.browseDir.TabIndex = 6;
-            this.browseDir.Text = "...";
-            this.browseDir.UseVisualStyleBackColor = true;
-            this.browseDir.Click += new System.EventHandler(this.browseDir_Click);
-            // 
-            // downloadSrt
-            // 
-            this.downloadSrt.Enabled = false;
-            this.downloadSrt.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.downloadSrt.Location = new System.Drawing.Point(64, 208);
-            this.downloadSrt.Name = "downloadSrt";
-            this.downloadSrt.Size = new System.Drawing.Size(75, 23);
-            this.downloadSrt.TabIndex = 7;
-            this.downloadSrt.Text = "Download";
-            this.downloadSrt.UseVisualStyleBackColor = true;
-            this.downloadSrt.Click += new System.EventHandler(this.downloadSrt_Click);
-            // 
-            // infoProg
-            // 
-            this.infoProg.Location = new System.Drawing.Point(29, 295);
-            this.infoProg.Name = "infoProg";
-            this.infoProg.Size = new System.Drawing.Size(256, 23);
-            this.infoProg.TabIndex = 8;
-            // 
-            // label_status
-            // 
-            this.label_status.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_status.Location = new System.Drawing.Point(29, 268);
-            this.label_status.Name = "label_status";
-            this.label_status.Size = new System.Drawing.Size(256, 24);
-            this.label_status.TabIndex = 9;
-            this.label_status.Text = "Loading Manifest...";
-            this.label_status.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // releaseSelect
-            // 
-            this.releaseSelect.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.releaseSelect.Location = new System.Drawing.Point(177, 43);
-            this.releaseSelect.Name = "releaseSelect";
-            this.releaseSelect.Size = new System.Drawing.Size(98, 34);
-            this.releaseSelect.TabIndex = 10;
-            this.releaseSelect.Text = "Select Release";
-            this.releaseSelect.UseVisualStyleBackColor = true;
-            this.releaseSelect.Click += new System.EventHandler(this.releaseSelect_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(105, 255);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(89, 14);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "Program Status";
-            // 
-            // butCancel
-            // 
-            this.butCancel.Enabled = false;
-            this.butCancel.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.butCancel.Location = new System.Drawing.Point(171, 208);
-            this.butCancel.Name = "butCancel";
-            this.butCancel.Size = new System.Drawing.Size(75, 23);
-            this.butCancel.TabIndex = 12;
-            this.butCancel.Text = "Cancel";
-            this.butCancel.UseVisualStyleBackColor = true;
-            this.butCancel.Click += new System.EventHandler(this.butCancel_Click);
-            // 
-            // label_MB
-            // 
-            this.label_MB.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_MB.Location = new System.Drawing.Point(105, 321);
-            this.label_MB.Name = "label_MB";
-            this.label_MB.Size = new System.Drawing.Size(100, 23);
-            this.label_MB.TabIndex = 13;
-            this.label_MB.Text = "N/A MB/s";
-            this.label_MB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // check_nativefile
-            // 
-            this.check_nativefile.AutoSize = true;
-            this.check_nativefile.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.check_nativefile.Location = new System.Drawing.Point(64, 156);
-            this.check_nativefile.Name = "check_nativefile";
-            this.check_nativefile.Size = new System.Drawing.Size(173, 18);
-            this.check_nativefile.TabIndex = 14;
-            this.check_nativefile.Text = "Preserve Native File Structure";
-            this.check_nativefile.UseVisualStyleBackColor = true;
+            this.comboReleaseSelector.Font = new System.Drawing.Font("Roboto", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboReleaseSelector.FormattingEnabled = true;
+            this.comboReleaseSelector.Location = new System.Drawing.Point(15, 105);
+            this.comboReleaseSelector.Name = "comboReleaseSelector";
+            this.comboReleaseSelector.Size = new System.Drawing.Size(141, 25);
+            this.comboReleaseSelector.TabIndex = 0;
             // 
             // toolTip_check
             // 
@@ -182,62 +64,258 @@
             this.toolTip_check.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Warning;
             this.toolTip_check.ToolTipTitle = "Information";
             // 
-            // label4
+            // labelRT
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(12, 382);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(258, 14);
-            this.label4.TabIndex = 15;
-            this.label4.Text = "Developed by Hawx. Based on work by NimmoG.";
+            this.labelRT.AutoSize = true;
+            this.labelRT.Depth = 0;
+            this.labelRT.Font = new System.Drawing.Font("Roboto Medium", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelRT.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelRT.Location = new System.Drawing.Point(12, 74);
+            this.labelRT.MouseState = MaterialSkin.MouseState.HOVER;
+            this.labelRT.Name = "labelRT";
+            this.labelRT.Size = new System.Drawing.Size(142, 18);
+            this.labelRT.TabIndex = 18;
+            this.labelRT.Text = "Select Release Type";
+            this.labelRT.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             // 
-            // label5
+            // DirLabel
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(12, 408);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(206, 14);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "Supported by Zephyr Auxilary Services";
+            this.DirLabel.AutoSize = true;
+            this.DirLabel.Depth = 0;
+            this.DirLabel.Font = new System.Drawing.Font("Roboto Medium", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DirLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.DirLabel.Location = new System.Drawing.Point(12, 153);
+            this.DirLabel.MouseState = MaterialSkin.MouseState.HOVER;
+            this.DirLabel.Name = "DirLabel";
+            this.DirLabel.Size = new System.Drawing.Size(115, 18);
+            this.DirLabel.TabIndex = 19;
+            this.DirLabel.Text = "Select Directory";
+            this.DirLabel.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             // 
-            // gitButton
+            // buttonSelectRelease
             // 
-            this.gitButton.Location = new System.Drawing.Point(236, 403);
-            this.gitButton.Name = "gitButton";
-            this.gitButton.Size = new System.Drawing.Size(67, 23);
-            this.gitButton.TabIndex = 17;
-            this.gitButton.Text = "Github";
-            this.gitButton.UseVisualStyleBackColor = true;
-            this.gitButton.Click += new System.EventHandler(this.gitButton_Click);
+            this.buttonSelectRelease.AutoSize = true;
+            this.buttonSelectRelease.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonSelectRelease.Depth = 0;
+            this.buttonSelectRelease.Icon = null;
+            this.buttonSelectRelease.Location = new System.Drawing.Point(164, 98);
+            this.buttonSelectRelease.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.buttonSelectRelease.MouseState = MaterialSkin.MouseState.HOVER;
+            this.buttonSelectRelease.Name = "buttonSelectRelease";
+            this.buttonSelectRelease.Primary = false;
+            this.buttonSelectRelease.Size = new System.Drawing.Size(130, 36);
+            this.buttonSelectRelease.TabIndex = 20;
+            this.buttonSelectRelease.Text = "Select Release";
+            this.buttonSelectRelease.UseVisualStyleBackColor = true;
+            this.buttonSelectRelease.Click += new System.EventHandler(this.SelectReleaseButtonClick);
+            // 
+            // textBoxDownloadDirectory
+            // 
+            this.textBoxDownloadDirectory.Depth = 0;
+            this.textBoxDownloadDirectory.Font = new System.Drawing.Font("Roboto", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxDownloadDirectory.Hint = "";
+            this.textBoxDownloadDirectory.Location = new System.Drawing.Point(12, 184);
+            this.textBoxDownloadDirectory.MaxLength = 32767;
+            this.textBoxDownloadDirectory.MouseState = MaterialSkin.MouseState.HOVER;
+            this.textBoxDownloadDirectory.Name = "textBoxDownloadDirectory";
+            this.textBoxDownloadDirectory.PasswordChar = '\0';
+            this.textBoxDownloadDirectory.SelectedText = "";
+            this.textBoxDownloadDirectory.SelectionLength = 0;
+            this.textBoxDownloadDirectory.SelectionStart = 0;
+            this.textBoxDownloadDirectory.Size = new System.Drawing.Size(268, 23);
+            this.textBoxDownloadDirectory.TabIndex = 21;
+            this.textBoxDownloadDirectory.TabStop = false;
+            this.textBoxDownloadDirectory.UseSystemPasswordChar = false;
+            // 
+            // checkBoxNativeFile
+            // 
+            this.checkBoxNativeFile.AutoSize = true;
+            this.checkBoxNativeFile.Depth = 0;
+            this.checkBoxNativeFile.Font = new System.Drawing.Font("Roboto", 10F);
+            this.checkBoxNativeFile.Location = new System.Drawing.Point(16, 222);
+            this.checkBoxNativeFile.Margin = new System.Windows.Forms.Padding(0);
+            this.checkBoxNativeFile.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.checkBoxNativeFile.MouseState = MaterialSkin.MouseState.HOVER;
+            this.checkBoxNativeFile.Name = "checkBoxNativeFile";
+            this.checkBoxNativeFile.Ripple = true;
+            this.checkBoxNativeFile.Size = new System.Drawing.Size(213, 30);
+            this.checkBoxNativeFile.TabIndex = 23;
+            this.checkBoxNativeFile.Text = "Preserve Native File Structure";
+            this.checkBoxNativeFile.UseVisualStyleBackColor = true;
+            // 
+            // buttonBrowseDirectory
+            // 
+            this.buttonBrowseDirectory.AutoSize = true;
+            this.buttonBrowseDirectory.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonBrowseDirectory.Depth = 0;
+            this.buttonBrowseDirectory.Font = new System.Drawing.Font("Roboto", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonBrowseDirectory.Icon = null;
+            this.buttonBrowseDirectory.Location = new System.Drawing.Point(290, 184);
+            this.buttonBrowseDirectory.MaximumSize = new System.Drawing.Size(32, 23);
+            this.buttonBrowseDirectory.MouseState = MaterialSkin.MouseState.HOVER;
+            this.buttonBrowseDirectory.Name = "buttonBrowseDirectory";
+            this.buttonBrowseDirectory.Primary = true;
+            this.buttonBrowseDirectory.Size = new System.Drawing.Size(32, 23);
+            this.buttonBrowseDirectory.TabIndex = 24;
+            this.buttonBrowseDirectory.Text = "...";
+            this.buttonBrowseDirectory.UseVisualStyleBackColor = true;
+            this.buttonBrowseDirectory.Click += new System.EventHandler(this.BrowseDirectoryButtonClick);
+            // 
+            // buttonDownloadStart
+            // 
+            this.buttonDownloadStart.AutoSize = true;
+            this.buttonDownloadStart.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonDownloadStart.Depth = 0;
+            this.buttonDownloadStart.Enabled = false;
+            this.buttonDownloadStart.Icon = null;
+            this.buttonDownloadStart.Location = new System.Drawing.Point(32, 273);
+            this.buttonDownloadStart.MouseState = MaterialSkin.MouseState.HOVER;
+            this.buttonDownloadStart.Name = "buttonDownloadStart";
+            this.buttonDownloadStart.Primary = true;
+            this.buttonDownloadStart.Size = new System.Drawing.Size(96, 36);
+            this.buttonDownloadStart.TabIndex = 25;
+            this.buttonDownloadStart.Text = "Download";
+            this.buttonDownloadStart.UseVisualStyleBackColor = true;
+            this.buttonDownloadStart.Click += new System.EventHandler(this.DownloadStartButtonClick);
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.AutoSize = true;
+            this.buttonCancel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonCancel.Depth = 0;
+            this.buttonCancel.Enabled = false;
+            this.buttonCancel.Icon = null;
+            this.buttonCancel.Location = new System.Drawing.Point(211, 273);
+            this.buttonCancel.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.buttonCancel.MouseState = MaterialSkin.MouseState.HOVER;
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Primary = false;
+            this.buttonCancel.Size = new System.Drawing.Size(73, 36);
+            this.buttonCancel.TabIndex = 26;
+            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.CancelButtonClick);
+            // 
+            // labelPS
+            // 
+            this.labelPS.AutoSize = true;
+            this.labelPS.Depth = 0;
+            this.labelPS.Font = new System.Drawing.Font("Roboto Medium", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelPS.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelPS.Location = new System.Drawing.Point(101, 337);
+            this.labelPS.MouseState = MaterialSkin.MouseState.HOVER;
+            this.labelPS.Name = "labelPS";
+            this.labelPS.Size = new System.Drawing.Size(128, 18);
+            this.labelPS.TabIndex = 27;
+            this.labelPS.Text = "Program Status";
+            this.labelPS.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            // 
+            // labelCurrentStatus
+            // 
+            this.labelCurrentStatus.Depth = 0;
+            this.labelCurrentStatus.Font = new System.Drawing.Font("Roboto Medium", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCurrentStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelCurrentStatus.Location = new System.Drawing.Point(16, 355);
+            this.labelCurrentStatus.MouseState = MaterialSkin.MouseState.HOVER;
+            this.labelCurrentStatus.Name = "labelCurrentStatus";
+            this.labelCurrentStatus.Size = new System.Drawing.Size(306, 33);
+            this.labelCurrentStatus.TabIndex = 28;
+            this.labelCurrentStatus.Text = "Loading Manifest...";
+            this.labelCurrentStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelCurrentStatus.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            // 
+            // progressBarStatus
+            // 
+            this.progressBarStatus.Depth = 0;
+            this.progressBarStatus.Location = new System.Drawing.Point(16, 391);
+            this.progressBarStatus.MouseState = MaterialSkin.MouseState.HOVER;
+            this.progressBarStatus.Name = "progressBarStatus";
+            this.progressBarStatus.Size = new System.Drawing.Size(306, 5);
+            this.progressBarStatus.TabIndex = 29;
+            // 
+            // labelMegaBytes
+            // 
+            this.labelMegaBytes.AutoSize = true;
+            this.labelMegaBytes.Depth = 0;
+            this.labelMegaBytes.Font = new System.Drawing.Font("Roboto Medium", 11F);
+            this.labelMegaBytes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelMegaBytes.Location = new System.Drawing.Point(128, 399);
+            this.labelMegaBytes.MouseState = MaterialSkin.MouseState.HOVER;
+            this.labelMegaBytes.Name = "labelMegaBytes";
+            this.labelMegaBytes.Size = new System.Drawing.Size(75, 18);
+            this.labelMegaBytes.TabIndex = 30;
+            this.labelMegaBytes.Text = "N/A MB/s";
+            this.labelMegaBytes.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            // 
+            // labelDBH
+            // 
+            this.labelDBH.Depth = 0;
+            this.labelDBH.Font = new System.Drawing.Font("Roboto Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDBH.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelDBH.Location = new System.Drawing.Point(13, 462);
+            this.labelDBH.MouseState = MaterialSkin.MouseState.HOVER;
+            this.labelDBH.Name = "labelDBH";
+            this.labelDBH.Size = new System.Drawing.Size(281, 19);
+            this.labelDBH.TabIndex = 31;
+            this.labelDBH.Text = "Developed by Hawx. Based on work by NimmoG.";
+            this.labelDBH.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            // 
+            // labelZAS
+            // 
+            this.labelZAS.Depth = 0;
+            this.labelZAS.Font = new System.Drawing.Font("Roboto Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelZAS.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelZAS.Location = new System.Drawing.Point(13, 495);
+            this.labelZAS.MouseState = MaterialSkin.MouseState.HOVER;
+            this.labelZAS.Name = "labelZAS";
+            this.labelZAS.Size = new System.Drawing.Size(226, 19);
+            this.labelZAS.TabIndex = 32;
+            this.labelZAS.Text = "Supported by Zephyr Auxiliary Services";
+            this.labelZAS.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            // 
+            // buttonGithub
+            // 
+            this.buttonGithub.AutoSize = true;
+            this.buttonGithub.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonGithub.Depth = 0;
+            this.buttonGithub.Icon = null;
+            this.buttonGithub.Location = new System.Drawing.Point(233, 483);
+            this.buttonGithub.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.buttonGithub.MouseState = MaterialSkin.MouseState.HOVER;
+            this.buttonGithub.Name = "buttonGithub";
+            this.buttonGithub.Primary = false;
+            this.buttonGithub.Size = new System.Drawing.Size(70, 36);
+            this.buttonGithub.TabIndex = 33;
+            this.buttonGithub.Text = "Github";
+            this.buttonGithub.UseVisualStyleBackColor = true;
+            this.buttonGithub.Click += new System.EventHandler(this.GitHubButtonClick);
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(364, 441);
-            this.Controls.Add(this.gitButton);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.check_nativefile);
-            this.Controls.Add(this.label_MB);
-            this.Controls.Add(this.butCancel);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.releaseSelect);
-            this.Controls.Add(this.label_status);
-            this.Controls.Add(this.infoProg);
-            this.Controls.Add(this.downloadSrt);
-            this.Controls.Add(this.browseDir);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.downloadDir);
-            this.Controls.Add(this.relSelector);
+            this.ClientSize = new System.Drawing.Size(345, 530);
+            this.Controls.Add(this.buttonGithub);
+            this.Controls.Add(this.labelZAS);
+            this.Controls.Add(this.labelDBH);
+            this.Controls.Add(this.labelMegaBytes);
+            this.Controls.Add(this.progressBarStatus);
+            this.Controls.Add(this.labelCurrentStatus);
+            this.Controls.Add(this.labelPS);
+            this.Controls.Add(this.buttonCancel);
+            this.Controls.Add(this.buttonDownloadStart);
+            this.Controls.Add(this.buttonBrowseDirectory);
+            this.Controls.Add(this.checkBoxNativeFile);
+            this.Controls.Add(this.textBoxDownloadDirectory);
+            this.Controls.Add(this.buttonSelectRelease);
+            this.Controls.Add(this.DirLabel);
+            this.Controls.Add(this.labelRT);
+            this.Controls.Add(this.comboReleaseSelector);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(380, 480);
-            this.MinimumSize = new System.Drawing.Size(380, 480);
+            this.MinimumSize = new System.Drawing.Size(345, 530);
             this.Name = "MainWindow";
-            this.Text = "Star Citizen Alternative Patcher - C# Edition";
+            this.Text = "Star Citizen Alternative Patcher";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.ResumeLayout(false);
@@ -247,23 +325,23 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox relSelector;
-        private System.Windows.Forms.TextBox downloadDir;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button browseDir;
-        private System.Windows.Forms.Button downloadSrt;
-        private System.Windows.Forms.ProgressBar infoProg;
-        private System.Windows.Forms.Label label_status;
-        private System.Windows.Forms.Button releaseSelect;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button butCancel;
-        private System.Windows.Forms.Label label_MB;
-        private System.Windows.Forms.CheckBox check_nativefile;
+        private System.Windows.Forms.ComboBox comboReleaseSelector;
         private System.Windows.Forms.ToolTip toolTip_check;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button gitButton;
+        private MaterialSkin.Controls.MaterialLabel labelRT;
+        private MaterialSkin.Controls.MaterialLabel DirLabel;
+        private MaterialSkin.Controls.MaterialFlatButton buttonSelectRelease;
+        private MaterialSkin.Controls.MaterialSingleLineTextField textBoxDownloadDirectory;
+        private MaterialSkin.Controls.MaterialCheckBox checkBoxNativeFile;
+        private MaterialSkin.Controls.MaterialRaisedButton buttonBrowseDirectory;
+        private MaterialSkin.Controls.MaterialRaisedButton buttonDownloadStart;
+        private MaterialSkin.Controls.MaterialFlatButton buttonCancel;
+        private MaterialSkin.Controls.MaterialLabel labelPS;
+        private MaterialSkin.Controls.MaterialLabel labelCurrentStatus;
+        private MaterialSkin.Controls.MaterialProgressBar progressBarStatus;
+        private MaterialSkin.Controls.MaterialLabel labelMegaBytes;
+        private MaterialSkin.Controls.MaterialLabel labelDBH;
+        private MaterialSkin.Controls.MaterialLabel labelZAS;
+        private MaterialSkin.Controls.MaterialFlatButton buttonGithub;
     }
 }
 

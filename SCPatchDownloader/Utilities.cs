@@ -18,20 +18,21 @@
 
 using System.IO;
 using System.Windows.Forms;
+using MaterialSkin.Controls;
 
 namespace SCPatchDownloader
 {
     public class Utilities
     {
         //remove quotations from a line
-        public static object stripQuotations(string line)
+        public static object StripQuotations(string line)
         {
             string[] parts = line.Split('"');
             return parts[1];
         }
 
         //seek to specific line in file
-        public static string seekToLine(StreamReader file, string lineContents)
+        public static string SeekToLine(StreamReader file, string lineContents)
         {
             string line = "";
             while (!line.Contains(lineContents))
@@ -42,7 +43,7 @@ namespace SCPatchDownloader
         }
 
         //get filestructure
-        public static string getFileStructure(string url, bool native, ComboBox relSelector)
+        public static string GetFileStructure(string url, bool native, ComboBox relSelector)
         {
             string[] parts = url.Split('/');
             string filename = "";
@@ -66,7 +67,7 @@ namespace SCPatchDownloader
         }
 
         //get name of downloading file
-        public static string getFileName(string url)
+        public static string GetFileName(string url)
         {
             string[] parts = url.Split('/');
             string filename = parts[parts.Length - 1];
@@ -78,27 +79,27 @@ namespace SCPatchDownloader
         {
             foreach (Control control in form.Controls)
             {
-                if (control is TextBox)
+                if (control is MaterialSingleLineTextField x)
                 {
-                    TextBox textBox = (TextBox) control;
+                    MaterialSingleLineTextField textField = x;
                     // textBox.Text = null;
-                    textBox.Enabled = true;
+                    textField.Enabled = true;
                 }
 
-                if (control is ComboBox)
+                if (control is ComboBox c)
                 {
-                    ComboBox listBox = (ComboBox) control;
+                    ComboBox listBox = c;
                     listBox.SelectedIndex = 0;
                     listBox.Enabled = true;
                 }
-                if (control is ProgressBar)
+                if (control is ProgressBar p)
                 {
-                    ProgressBar progressBar = (ProgressBar) control;
+                    ProgressBar progressBar = p;
                     progressBar.Value = 0;
                 }
-                if (control is CheckBox)
+                if (control is CheckBox b)
                 {
-                    CheckBox checkbox = (CheckBox) control;
+                    CheckBox checkbox = b;
                     checkbox.Enabled = true;
                 }
             }
