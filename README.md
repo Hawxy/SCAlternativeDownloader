@@ -9,14 +9,15 @@ Differences from original VB.NET downloader:
 - Directory saving on exit
 - Download speed indicator
 - General code structure changes
+- Material design
 - Other random stuff
 
 Upcoming changes:
 - Proper file dialog (folderbrowserdialog is terrible)
-- Visual overhaul
 
 Platform:
-- Uses .NET 4.6.2. Requires Windows 7 SP1 or newer.
+- Uses .NET 4.6.2 | C# 7.0
+- Requires Windows 7 SP1 or newer.
 - 64-bit only
 
 http://zephyraux.com/
