@@ -18,6 +18,7 @@
 
 using System.IO;
 using System.Windows.Forms;
+using MaterialSkin.Controls;
 
 namespace SCPatchDownloader
 {
@@ -78,27 +79,27 @@ namespace SCPatchDownloader
         {
             foreach (Control control in form.Controls)
             {
-                if (control is TextBox)
+                if (control is MaterialSingleLineTextField x)
                 {
-                    TextBox textBox = (TextBox) control;
+                    MaterialSingleLineTextField textField = x;
                     // textBox.Text = null;
-                    textBox.Enabled = true;
+                    textField.Enabled = true;
                 }
 
-                if (control is ComboBox)
+                if (control is ComboBox c)
                 {
-                    ComboBox listBox = (ComboBox) control;
+                    ComboBox listBox = c;
                     listBox.SelectedIndex = 0;
                     listBox.Enabled = true;
                 }
-                if (control is ProgressBar)
+                if (control is ProgressBar p)
                 {
-                    ProgressBar progressBar = (ProgressBar) control;
+                    ProgressBar progressBar = p;
                     progressBar.Value = 0;
                 }
-                if (control is CheckBox)
+                if (control is CheckBox b)
                 {
-                    CheckBox checkbox = (CheckBox) control;
+                    CheckBox checkbox = b;
                     checkbox.Enabled = true;
                 }
             }
