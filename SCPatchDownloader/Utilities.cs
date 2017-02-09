@@ -24,14 +24,14 @@ namespace SCPatchDownloader
     public class Utilities
     {
         //remove quotations from a line
-        public static object stripQuotations(string line)
+        public static object StripQuotations(string line)
         {
             string[] parts = line.Split('"');
             return parts[1];
         }
 
         //seek to specific line in file
-        public static string seekToLine(StreamReader file, string lineContents)
+        public static string SeekToLine(StreamReader file, string lineContents)
         {
             string line = "";
             while (!line.Contains(lineContents))
@@ -42,7 +42,7 @@ namespace SCPatchDownloader
         }
 
         //get filestructure
-        public static string getFileStructure(string url, bool native, ComboBox relSelector)
+        public static string GetFileStructure(string url, bool native, ComboBox relSelector)
         {
             string[] parts = url.Split('/');
             string filename = "";
@@ -66,7 +66,7 @@ namespace SCPatchDownloader
         }
 
         //get name of downloading file
-        public static string getFileName(string url)
+        public static string GetFileName(string url)
         {
             string[] parts = url.Split('/');
             string filename = parts[parts.Length - 1];

@@ -40,7 +40,7 @@ namespace SCPatchDownloader
         //stores list of URLs
         private readonly ArrayList urlList = new ArrayList();
 
-        private readonly List<universe> versionList = new List<universe>();
+        private readonly List<Universe> versionList = new List<Universe>();
 
         private WebClient client;
         private string fulldir;
@@ -60,42 +60,42 @@ namespace SCPatchDownloader
         private void MainWindow_Load(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(Settings.Default.PrvDir))
-                downloadDir.Text = Settings.Default.PrvDir;
+                textBoxDownloadDirectory.Text = Settings.Default.PrvDir;
             else
-                downloadDir.Text = Directory.GetCurrentDirectory() + "\\SCDownload";
+                textBoxDownloadDirectory.Text = Directory.GetCurrentDirectory() + "\\SCDownload";
             
 
-            toolTip_check.SetToolTip(check_nativefile,
+            toolTip_check.SetToolTip(checkBoxNativeFile,
                 "Sorts files into public/test directories instead of using build number. Allows for easy copy/pasting or direct download into program files. Existing files will not be overwritten");
-            downloadPatchList();
+            DownloadPatchList();
         }
 
         //on Browse Directory click
-        private void browseDir_Click(object sender, EventArgs e)
+        private void BrowseDirectoryButtonClick(object sender, EventArgs e)
         {
             var folderDir = new FolderBrowserDialog {ShowNewFolderButton = true};
             if (folderDir.ShowDialog() == DialogResult.OK)
-                downloadDir.Text = folderDir.SelectedPath;
+                textBoxDownloadDirectory.Text = folderDir.SelectedPath;
         }
 
         //download button
-        private void downloadSrt_Click(object sender, EventArgs e)
+        private void DownloadStartButtonClick(object sender, EventArgs e)
         {
-            butCancel.Enabled = true;
-            downloadSrt.Enabled = false;
-            relSelector.Enabled = false;
-            releaseSelect.Enabled = false;
-            downloadDir.Enabled = false;
-            browseDir.Enabled = false;
-            check_nativefile.Enabled = false;
-            downloadGameFiles();
+            buttonCancel.Enabled = true;
+            buttonDownloadStart.Enabled = false;
+            comboReleaseSelector.Enabled = false;
+            buttonSelectRelease.Enabled = false;
+            textBoxDownloadDirectory.Enabled = false;
+            buttonBrowseDirectory.Enabled = false;
+            checkBoxNativeFile.Enabled = false;
+            DownloadGameFiles();
         }
 
 
-        private async Task downloadGameFiles()
+        private async Task DownloadGameFiles()
         {
-            bool native = check_nativefile.Checked;
-            string downloadLocation = downloadDir.Text;
+            bool native = checkBoxNativeFile.Checked;
+            string downloadLocation = textBoxDownloadDirectory.Text;
             int fileNum = 1;
             int totfileNum = urlList.Count;
 
@@ -110,9 +110,9 @@ namespace SCPatchDownloader
                 {
                     foreach (string file in urlList)
                     {
-                        string filename = getFileName(file);
-                        label_status.Text = "Downloading file " + fileNum + " of " + totfileNum;
-                        string dest = downloadLocation + getFileStructure(file, native, relSelector);
+                        string filename = GetFileName(file);
+                        labelCurrentStatus.Text = "Downloading file " + fileNum + " of " + totfileNum;
+                        string dest = downloadLocation + GetFileStructure(file, native, comboReleaseSelector);
                         fulldir = Path.Combine(dest, filename);
                         if (!File.Exists(fulldir))
                         {
@@ -120,13 +120,13 @@ namespace SCPatchDownloader
                             using (client = new WebClient())
                             {
                                 client.DownloadProgressChanged += (send, x) => FileDownloadProgress(x.BytesReceived);
-                                client.DownloadFileCompleted += client_InstallFileCompleted;
+                                client.DownloadFileCompleted += Client_InstallFileCompleted;
                                 sw.Start();
                                 await client.DownloadFileTaskAsync(new Uri(file), fulldir);
                             }
                         }
                         fileNum += 1;
-                        infoProg.Value = 100 * fileNum / totfileNum;
+                        progressBarStatus.Value = 100 * fileNum / totfileNum;
                         sw.Reset();
                     }
                 }
@@ -145,18 +145,27 @@ namespace SCPatchDownloader
                 MessageBox.Show("Please provide a valid download location", "Error", MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
             if (fileNum - 1 == urlList.Count)
-                File.Delete("SC-URLs.txt");
+            {
+                MessageBox.Show("Download Complete!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ResetAllBoxes(this);
+                labelCurrentStatus.Text = "Download Complete!";
+                buttonCancel.Enabled = false;
+                buttonSelectRelease.Enabled = true;
+                buttonBrowseDirectory.Enabled = true;
+                labelMegaBytes.Text = "N/A MB/s";
+            }
+                
         }
 
         //download speed calculator
         private void FileDownloadProgress(long bytesReceived)
         {
-            label_MB.Text = $"{bytesReceived / 1024d / 1024d / sw.Elapsed.TotalSeconds:0.00} MB/s";
+            labelMegaBytes.Text = $"{bytesReceived / 1024d / 1024d / sw.Elapsed.TotalSeconds:0.00} MB/s";
         }
 
 
         //handle cancelled download
-        private void client_InstallFileCompleted(object sender, AsyncCompletedEventArgs e)
+        private void Client_InstallFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             if (e.Cancelled)
             {
@@ -166,17 +175,17 @@ namespace SCPatchDownloader
         }
 
         //load available game version on application startup
-        private async Task downloadPatchList()
+        private async Task DownloadPatchList()
         {
             string fileLocation = "LauncherInfo.txt";
             try
             {
                 using (client = new WebClient())
                 {
-                    client.DownloadProgressChanged += client_ProgressChanged;
+                    client.DownloadProgressChanged += Client_ProgressChanged;
                     await client.DownloadFileTaskAsync(
                         new Uri("http://manifest.robertsspaceindustries.com/Launcher/_LauncherInfo"), fileLocation);
-                    label_status.Text = "Loading Manifest...Complete";
+                    labelCurrentStatus.Text = "Loading Manifest...Complete";
                 }
                 if (File.Exists(fileLocation))
                 {
@@ -196,16 +205,16 @@ namespace SCPatchDownloader
                         parts = line.Split('=');
                         string filePrefix = parts[1].Substring(1);
                         //store version name and prefix in universe object
-                        universe currentUniverse;
+                        Universe currentUniverse;
                         currentUniverse.versionName = versionName;
                         currentUniverse.fileIndex = filePrefix;
                         versionList.Add(currentUniverse);
                         //add version names to list
-                        relSelector.Items.Add(versionName);
+                        comboReleaseSelector.Items.Add(versionName);
                     }
 
-                    if (relSelector.Items.Count > 0)
-                        relSelector.SelectedIndex = 0;
+                    if (comboReleaseSelector.Items.Count > 0)
+                        comboReleaseSelector.SelectedIndex = 0;
 
                     reader.Close();
                 }
@@ -218,18 +227,17 @@ namespace SCPatchDownloader
         }
 
         //application load
-        private void client_ProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        private void Client_ProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            infoProg.Value = e.ProgressPercentage;
+            progressBarStatus.Value = e.ProgressPercentage;
         }
 
         //download file list when version is selected
-        private async void releaseSelect_Click(object sender, EventArgs e)
+        private async void SelectReleaseButtonClick(object sender, EventArgs e)
         {
-            string requestedUniverse = relSelector.SelectedItem as string;
+            string requestedUniverse = comboReleaseSelector.SelectedItem as string;
             string universeFileList = "";
-            string prefix;
-            downloadSrt.Enabled = true;
+            buttonDownloadStart.Enabled = true;
             var fileList = new ArrayList();
 
             //file handling
@@ -237,7 +245,7 @@ namespace SCPatchDownloader
             var baseURLS = new ArrayList();
 
             if (!string.IsNullOrEmpty(requestedUniverse))
-                foreach (universe universe in versionList)
+                foreach (Universe universe in versionList)
                     if (requestedUniverse.Equals(universe.versionName))
                         universeFileList = universe.fileIndex;
             try
@@ -247,34 +255,34 @@ namespace SCPatchDownloader
                 {
                     using (client = new WebClient())
                     {
-                        label_status.Text = "Downloading file list";
-                        client.DownloadProgressChanged += client_ProgressChanged;
+                        labelCurrentStatus.Text = "Downloading file list";
+                        client.DownloadProgressChanged += Client_ProgressChanged;
                         await client.DownloadFileTaskAsync(new Uri(universeFileList), fileName);
                     }
                     StreamReader reader = File.OpenText(fileName);
                     var writer = new StreamWriter("SC-URLs.txt", false);
 
-                    seekToLine(reader, "file_list");
+                    SeekToLine(reader, "file_list");
                     string line = reader.ReadLine();
                     while (!line.Contains("],"))
                     {
-                        fileList.Add(stripQuotations(line));
+                        fileList.Add(StripQuotations(line));
                         line = reader.ReadLine();
                     }
 
-                    label_status.Text = fileList.Count + " files are ready for download";
+                    labelCurrentStatus.Text = fileList.Count + " files are ready for download";
 
                     //find prefix
-                    line = seekToLine(reader, "key_prefix");
+                    line = SeekToLine(reader, "key_prefix");
                     string[] parts = line.Split((char) 34);
-                    prefix = parts[3];
+                    string prefix = parts[3];
 
                     //base url
-                    seekToLine(reader, "webseed_urls");
+                    SeekToLine(reader, "webseed_urls");
                     line = reader.ReadLine();
                     while (!line.Contains("]"))
                     {
-                        baseURLS.Add(stripQuotations(line));
+                        baseURLS.Add(StripQuotations(line));
                         line = reader.ReadLine();
                     }
 
@@ -304,7 +312,7 @@ namespace SCPatchDownloader
         }
 
         //cancel download
-        private void butCancel_Click(object sender, EventArgs e)
+        private void CancelButtonClick(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Are you sure you want to cancel?", "Cancel Download",
                 MessageBoxButtons.YesNo,
@@ -313,28 +321,28 @@ namespace SCPatchDownloader
             {
                 client.CancelAsync();
                 ResetAllBoxes(this);
-                label_status.Text = "Download Cancelled";
-                butCancel.Enabled = false;
-                releaseSelect.Enabled = true;
-                browseDir.Enabled = true;
-                label_MB.Text = "N/A MB/s";
+                labelCurrentStatus.Text = "Download Cancelled";
+                buttonCancel.Enabled = false;
+                buttonSelectRelease.Enabled = true;
+                buttonBrowseDirectory.Enabled = true;
+                labelMegaBytes.Text = "N/A MB/s";
             }
         }
 
         //save directory on form close
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Settings.Default.PrvDir = downloadDir.Text;
+            Settings.Default.PrvDir = textBoxDownloadDirectory.Text;
             Settings.Default.Save();
         }
 
-        private void gitButton_Click(object sender, EventArgs e)
+        private void GitHubButtonClick(object sender, EventArgs e)
         {
             Process.Start("https://github.com/Hawxy/SCAlternativePatcher/");
         }
 
         //game versions
-        private struct universe
+        private struct Universe
         {
             public string versionName;
             public string fileIndex;
