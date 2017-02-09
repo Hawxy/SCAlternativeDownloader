@@ -81,26 +81,21 @@ namespace SCPatchDownloader
             {
                 if (control is MaterialSingleLineTextField x)
                 {
-                    MaterialSingleLineTextField textField = x;
-                    // textBox.Text = null;
-                    textField.Enabled = true;
+                    x.Enabled = true;
                 }
 
                 if (control is ComboBox c)
                 {
-                    ComboBox listBox = c;
-                    listBox.SelectedIndex = 0;
-                    listBox.Enabled = true;
+                    c.SelectedIndex = 0;
+                    c.Enabled = true;
                 }
                 if (control is ProgressBar p)
                 {
-                    ProgressBar progressBar = p;
-                    progressBar.Value = 0;
+                    p.Value = 0;
                 }
                 if (control is CheckBox b)
                 {
-                    CheckBox checkbox = b;
-                    checkbox.Enabled = true;
+                    b.Enabled = true;
                 }
             }
         }
