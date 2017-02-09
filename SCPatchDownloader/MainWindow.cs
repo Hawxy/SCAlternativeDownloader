@@ -31,6 +31,7 @@ using SCPatchDownloader.Properties;
 using static SCPatchDownloader.Utilities;
 
 
+
 namespace SCPatchDownloader
 {
     public partial class MainWindow : MaterialForm
@@ -47,6 +48,7 @@ namespace SCPatchDownloader
         public MainWindow()
         {
             InitializeComponent();
+            
             MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
@@ -61,6 +63,7 @@ namespace SCPatchDownloader
                 downloadDir.Text = Settings.Default.PrvDir;
             else
                 downloadDir.Text = Directory.GetCurrentDirectory() + "\\SCDownload";
+            
 
             toolTip_check.SetToolTip(check_nativefile,
                 "Sorts files into public/test directories instead of using build number. Allows for easy copy/pasting or direct download into program files. Existing files will not be overwritten");
