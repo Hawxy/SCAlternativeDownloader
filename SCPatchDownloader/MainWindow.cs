@@ -119,6 +119,7 @@ namespace SCPatchDownloader
                             Directory.CreateDirectory(dest, security);
                             using (client = new WebClient())
                             {
+                                client.Proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
                                 client.DownloadProgressChanged += (send, x) => FileDownloadProgress(x.BytesReceived);
                                 client.DownloadFileCompleted += Client_InstallFileCompleted;
                                 sw.Start();
@@ -182,6 +183,7 @@ namespace SCPatchDownloader
             {
                 using (client = new WebClient())
                 {
+                    client.Proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
                     client.DownloadProgressChanged += Client_ProgressChanged;
                     await client.DownloadFileTaskAsync(
                         new Uri("http://manifest.robertsspaceindustries.com/Launcher/_LauncherInfo"), fileLocation);
@@ -255,6 +257,7 @@ namespace SCPatchDownloader
                 {
                     using (client = new WebClient())
                     {
+                        client.Proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
                         labelCurrentStatus.Text = "Downloading file list";
                         client.DownloadProgressChanged += Client_ProgressChanged;
                         await client.DownloadFileTaskAsync(new Uri(universeFileList), fileName);
