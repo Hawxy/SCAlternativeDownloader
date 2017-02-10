@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.comboReleaseSelector = new System.Windows.Forms.ComboBox();
-            this.toolTip_check = new System.Windows.Forms.ToolTip(this.components);
             this.labelRT = new MaterialSkin.Controls.MaterialLabel();
             this.DirLabel = new MaterialSkin.Controls.MaterialLabel();
             this.buttonSelectRelease = new MaterialSkin.Controls.MaterialFlatButton();
@@ -47,6 +46,7 @@
             this.labelDBH = new MaterialSkin.Controls.MaterialLabel();
             this.labelZAS = new MaterialSkin.Controls.MaterialLabel();
             this.buttonGithub = new MaterialSkin.Controls.MaterialFlatButton();
+            this.toolTip_Native = new MaterialSkin.Controls.MaterialToolTip(this.components);
             this.SuspendLayout();
             // 
             // comboReleaseSelector
@@ -57,12 +57,6 @@
             this.comboReleaseSelector.Name = "comboReleaseSelector";
             this.comboReleaseSelector.Size = new System.Drawing.Size(141, 25);
             this.comboReleaseSelector.TabIndex = 0;
-            // 
-            // toolTip_check
-            // 
-            this.toolTip_check.IsBalloon = true;
-            this.toolTip_check.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Warning;
-            this.toolTip_check.ToolTipTitle = "Information";
             // 
             // labelRT
             // 
@@ -290,6 +284,12 @@
             this.buttonGithub.UseVisualStyleBackColor = true;
             this.buttonGithub.Click += new System.EventHandler(this.GitHubButtonClick);
             // 
+            // toolTip_Native
+            // 
+            this.toolTip_Native.Depth = 0;
+            this.toolTip_Native.MouseState = MaterialSkin.MouseState.HOVER;
+            this.toolTip_Native.OwnerDraw = true;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -326,7 +326,6 @@
         #endregion
 
         private System.Windows.Forms.ComboBox comboReleaseSelector;
-        private System.Windows.Forms.ToolTip toolTip_check;
         private MaterialSkin.Controls.MaterialLabel labelRT;
         private MaterialSkin.Controls.MaterialLabel DirLabel;
         private MaterialSkin.Controls.MaterialFlatButton buttonSelectRelease;
@@ -342,6 +341,7 @@
         private MaterialSkin.Controls.MaterialLabel labelDBH;
         private MaterialSkin.Controls.MaterialLabel labelZAS;
         private MaterialSkin.Controls.MaterialFlatButton buttonGithub;
+        private MaterialSkin.Controls.MaterialToolTip toolTip_Native;
     }
 }
 

@@ -65,8 +65,7 @@ namespace SCPatchDownloader
                 textBoxDownloadDirectory.Text = Directory.GetCurrentDirectory() + "\\SCDownload";
             
 
-            toolTip_check.SetToolTip(checkBoxNativeFile,
-                "Sorts files into public/test directories instead of using build number. Allows for easy copy/pasting or direct download into program files. Existing files will not be overwritten");
+            toolTip_Native.SetToolTip(checkBoxNativeFile, "Sorts files into public/test directories instead of using build number. Allows for easy copy/pasting or direct download into program files. Existing files will not be overwritten");
             DownloadPatchList();
         }
 
