@@ -315,7 +315,7 @@
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(345, 530);
             this.Name = "MainWindow";
-            this.Text = "Star Citizen Alternative Patcher";
+            this.Text = "Star Citizen Alternative Downloader";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.ResumeLayout(false);
