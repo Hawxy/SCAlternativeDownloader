@@ -152,6 +152,7 @@ namespace SCPatchDownloader
                 buttonCancel.Enabled = false;
                 buttonSelectRelease.Enabled = true;
                 buttonBrowseDirectory.Enabled = true;
+                urlList.Clear();
                 labelMegaBytes.Text = "N/A MB/s";
             }
                 
@@ -327,6 +328,7 @@ namespace SCPatchDownloader
                 buttonCancel.Enabled = false;
                 buttonSelectRelease.Enabled = true;
                 buttonBrowseDirectory.Enabled = true;
+                urlList.Clear();
                 labelMegaBytes.Text = "N/A MB/s";
             }
         }
