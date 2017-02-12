@@ -47,6 +47,8 @@
             this.labelZAS = new MaterialSkin.Controls.MaterialLabel();
             this.buttonGithub = new MaterialSkin.Controls.MaterialFlatButton();
             this.toolTip_Native = new MaterialSkin.Controls.MaterialToolTip(this.components);
+            this.progressBarFile = new MaterialSkin.Controls.MaterialProgressBar();
+            this.labelCurrentFile = new MaterialSkin.Controls.MaterialLabel();
             this.SuspendLayout();
             // 
             // comboReleaseSelector
@@ -233,7 +235,7 @@
             this.labelMegaBytes.Depth = 0;
             this.labelMegaBytes.Font = new System.Drawing.Font("Roboto Medium", 11F);
             this.labelMegaBytes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.labelMegaBytes.Location = new System.Drawing.Point(128, 399);
+            this.labelMegaBytes.Location = new System.Drawing.Point(134, 465);
             this.labelMegaBytes.MouseState = MaterialSkin.MouseState.HOVER;
             this.labelMegaBytes.Name = "labelMegaBytes";
             this.labelMegaBytes.Size = new System.Drawing.Size(75, 18);
@@ -246,7 +248,7 @@
             this.labelDBH.Depth = 0;
             this.labelDBH.Font = new System.Drawing.Font("Roboto Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDBH.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.labelDBH.Location = new System.Drawing.Point(13, 462);
+            this.labelDBH.Location = new System.Drawing.Point(16, 507);
             this.labelDBH.MouseState = MaterialSkin.MouseState.HOVER;
             this.labelDBH.Name = "labelDBH";
             this.labelDBH.Size = new System.Drawing.Size(281, 19);
@@ -259,7 +261,7 @@
             this.labelZAS.Depth = 0;
             this.labelZAS.Font = new System.Drawing.Font("Roboto Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelZAS.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.labelZAS.Location = new System.Drawing.Point(13, 495);
+            this.labelZAS.Location = new System.Drawing.Point(16, 540);
             this.labelZAS.MouseState = MaterialSkin.MouseState.HOVER;
             this.labelZAS.Name = "labelZAS";
             this.labelZAS.Size = new System.Drawing.Size(226, 19);
@@ -273,7 +275,7 @@
             this.buttonGithub.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.buttonGithub.Depth = 0;
             this.buttonGithub.Icon = null;
-            this.buttonGithub.Location = new System.Drawing.Point(233, 483);
+            this.buttonGithub.Location = new System.Drawing.Point(236, 528);
             this.buttonGithub.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.buttonGithub.MouseState = MaterialSkin.MouseState.HOVER;
             this.buttonGithub.Name = "buttonGithub";
@@ -290,11 +292,36 @@
             this.toolTip_Native.MouseState = MaterialSkin.MouseState.HOVER;
             this.toolTip_Native.OwnerDraw = true;
             // 
+            // progressBarFile
+            // 
+            this.progressBarFile.Depth = 0;
+            this.progressBarFile.Location = new System.Drawing.Point(15, 457);
+            this.progressBarFile.MouseState = MaterialSkin.MouseState.HOVER;
+            this.progressBarFile.Name = "progressBarFile";
+            this.progressBarFile.Size = new System.Drawing.Size(306, 5);
+            this.progressBarFile.TabIndex = 34;
+            // 
+            // labelCurrentFile
+            // 
+            this.labelCurrentFile.Depth = 0;
+            this.labelCurrentFile.Font = new System.Drawing.Font("Roboto Medium", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCurrentFile.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelCurrentFile.Location = new System.Drawing.Point(16, 402);
+            this.labelCurrentFile.MouseState = MaterialSkin.MouseState.HOVER;
+            this.labelCurrentFile.Name = "labelCurrentFile";
+            this.labelCurrentFile.Size = new System.Drawing.Size(305, 52);
+            this.labelCurrentFile.TabIndex = 35;
+            this.labelCurrentFile.Text = "...";
+            this.labelCurrentFile.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelCurrentFile.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(345, 530);
+            this.ClientSize = new System.Drawing.Size(345, 571);
+            this.Controls.Add(this.labelCurrentFile);
+            this.Controls.Add(this.progressBarFile);
             this.Controls.Add(this.buttonGithub);
             this.Controls.Add(this.labelZAS);
             this.Controls.Add(this.labelDBH);
@@ -313,7 +340,7 @@
             this.Controls.Add(this.comboReleaseSelector);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(345, 530);
+            this.MinimumSize = new System.Drawing.Size(345, 571);
             this.Name = "MainWindow";
             this.Text = "Star Citizen Alternative Downloader";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
@@ -342,6 +369,8 @@
         private MaterialSkin.Controls.MaterialLabel labelZAS;
         private MaterialSkin.Controls.MaterialFlatButton buttonGithub;
         private MaterialSkin.Controls.MaterialToolTip toolTip_Native;
+        private MaterialSkin.Controls.MaterialProgressBar progressBarFile;
+        private MaterialSkin.Controls.MaterialLabel labelCurrentFile;
     }
 }
 

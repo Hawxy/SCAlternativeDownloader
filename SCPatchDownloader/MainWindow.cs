@@ -19,6 +19,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Security.AccessControl;
@@ -111,6 +112,8 @@ namespace SCPatchDownloader
                     {
                         string filename = GetFileName(file);
                         labelCurrentStatus.Text = "Downloading file " + fileNum + " of " + totfileNum;
+                        string filedir = GetCoreDirectory(file);
+                        labelCurrentFile.Text = filedir + "\\" + filename;
                         string dest = downloadLocation + GetFileStructure(file, native, comboReleaseSelector);
                         fulldir = Path.Combine(dest, filename);
                         if (!File.Exists(fulldir))
@@ -119,13 +122,14 @@ namespace SCPatchDownloader
                             using (client = new WebClient())
                             {
                                 client.Proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
-                                client.DownloadProgressChanged += (send, x) => FileDownloadProgress(x.BytesReceived);
+                                client.DownloadProgressChanged += FileDownloadProgress;
                                 client.DownloadFileCompleted += Client_InstallFileCompleted;
                                 sw.Start();
                                 await client.DownloadFileTaskAsync(new Uri(file), fulldir);
                             }
                         }
                         fileNum += 1;
+                        //overall status bar
                         progressBarStatus.Value = 100 * fileNum / totfileNum;
                         sw.Reset();
                     }
@@ -152,16 +156,19 @@ namespace SCPatchDownloader
                 buttonCancel.Enabled = false;
                 buttonSelectRelease.Enabled = true;
                 buttonBrowseDirectory.Enabled = true;
-                urlList.Clear();
+                labelCurrentFile.Text = "...";
                 labelMegaBytes.Text = "N/A MB/s";
             }
                 
         }
 
-        //download speed calculator
-        private void FileDownloadProgress(long bytesReceived)
+        //download speed calculator + progress bar
+        private void FileDownloadProgress(object sender, DownloadProgressChangedEventArgs e)
         {
-            labelMegaBytes.Text = $"{bytesReceived / 1024d / 1024d / sw.Elapsed.TotalSeconds:0.00} MB/s";
+            labelMegaBytes.Text = $"{e.BytesReceived / 1024d / 1024d / sw.Elapsed.TotalSeconds:0.00} MB/s";
+            progressBarFile.Maximum = (int) e.TotalBytesToReceive / 100;
+            progressBarFile.Value = (int) e.BytesReceived / 100;
+
         }
 
 
@@ -172,8 +179,12 @@ namespace SCPatchDownloader
             {
                 if (fulldir != null) File.Delete(fulldir);
                 client.Dispose();
+                labelMegaBytes.Text = "N/A MB/s";
+               
             }
         }
+
+
 
         //load available game version on application startup
         private async Task DownloadPatchList()
@@ -241,7 +252,7 @@ namespace SCPatchDownloader
             string universeFileList = "";
             buttonDownloadStart.Enabled = true;
             var fileList = new ArrayList();
-
+            urlList.Clear();
             //file handling
             string fileName = "fileList.json";
             var baseURLS = new ArrayList();
@@ -325,11 +336,12 @@ namespace SCPatchDownloader
                 client.CancelAsync();
                 ResetAllBoxes(this);
                 labelCurrentStatus.Text = "Download Cancelled";
+                labelCurrentFile.Text = "...";
+                progressBarFile.Value = 0;
                 buttonCancel.Enabled = false;
                 buttonSelectRelease.Enabled = true;
                 buttonBrowseDirectory.Enabled = true;
-                urlList.Clear();
-                labelMegaBytes.Text = "N/A MB/s";
+                
             }
         }
 
