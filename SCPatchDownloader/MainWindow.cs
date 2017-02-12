@@ -19,7 +19,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Security.AccessControl;
@@ -28,6 +27,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
+using Ookii.Dialogs;
 using SCPatchDownloader.Properties;
 using static SCPatchDownloader.Utilities;
 
@@ -73,7 +73,7 @@ namespace SCPatchDownloader
         //on Browse Directory click
         private void BrowseDirectoryButtonClick(object sender, EventArgs e)
         {
-            var folderDir = new FolderBrowserDialog {ShowNewFolderButton = true};
+            var folderDir = new VistaFolderBrowserDialog {ShowNewFolderButton = true};
             if (folderDir.ShowDialog() == DialogResult.OK)
                 textBoxDownloadDirectory.Text = folderDir.SelectedPath;
         }
@@ -180,7 +180,8 @@ namespace SCPatchDownloader
                 if (fulldir != null) File.Delete(fulldir);
                 client.Dispose();
                 labelMegaBytes.Text = "N/A MB/s";
-               
+                ResetAllBoxes(this);
+
             }
         }
 
@@ -334,10 +335,8 @@ namespace SCPatchDownloader
             if (result == DialogResult.Yes)
             {
                 client.CancelAsync();
-                ResetAllBoxes(this);
                 labelCurrentStatus.Text = "Download Cancelled";
                 labelCurrentFile.Text = "...";
-                progressBarFile.Value = 0;
                 buttonCancel.Enabled = false;
                 buttonSelectRelease.Enabled = true;
                 buttonBrowseDirectory.Enabled = true;

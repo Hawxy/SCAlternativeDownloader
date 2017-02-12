@@ -18,7 +18,6 @@
 
 using System.IO;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using MaterialSkin.Controls;
 
 namespace SCPatchDownloader
@@ -43,7 +42,8 @@ namespace SCPatchDownloader
             return line;
         }
 
-        //get filestructure
+        //get entire file structure
+        //cleanup this section at some point
         public static string GetFileStructure(string url, bool native, ComboBox relSelector)
         {
             string[] parts = url.Split('/');
@@ -54,7 +54,7 @@ namespace SCPatchDownloader
                 {
                     filename += "\\" + parts[i];
                 }
-                filename = "\\StarCitizen\\" + relSelector.SelectedItem as string + "\\" + filename;
+                filename = "\\StarCitizen\\" + relSelector.SelectedItem + "\\" + filename;
             }
             else
             {
