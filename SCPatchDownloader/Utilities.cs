@@ -42,7 +42,8 @@ namespace SCPatchDownloader
             return line;
         }
 
-        //get filestructure
+        //get entire file structure
+        //cleanup this section at some point
         public static string GetFileStructure(string url, bool native, ComboBox relSelector)
         {
             string[] parts = url.Split('/');
@@ -53,7 +54,7 @@ namespace SCPatchDownloader
                 {
                     filename += "\\" + parts[i];
                 }
-                filename = "\\StarCitizen\\" + relSelector.SelectedItem as string + "\\" + filename;
+                filename = "\\StarCitizen\\" + relSelector.SelectedItem + "\\" + filename;
             }
             else
             {
@@ -64,6 +65,17 @@ namespace SCPatchDownloader
             }
 
             return filename;
+        }
+        //last 3 parts of directory to display in the UI
+        public static string GetCoreDirectory(string url)
+        {
+            string[] parts = url.Split('/');
+            string filedir = "";
+            for (int i = parts.Length-3; i < parts.Length - 1; i++)
+            {
+                filedir += "\\" + parts[i];
+            }
+            return filedir.Remove(0,1);
         }
 
         //get name of downloading file
