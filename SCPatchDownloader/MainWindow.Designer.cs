@@ -33,7 +33,6 @@
             this.comboReleaseSelector = new System.Windows.Forms.ComboBox();
             this.labelRT = new MaterialSkin.Controls.MaterialLabel();
             this.DirLabel = new MaterialSkin.Controls.MaterialLabel();
-            this.buttonSelectRelease = new MaterialSkin.Controls.MaterialFlatButton();
             this.textBoxDownloadDirectory = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.checkBoxNativeFile = new MaterialSkin.Controls.MaterialCheckBox();
             this.buttonBrowseDirectory = new MaterialSkin.Controls.MaterialRaisedButton();
@@ -49,6 +48,7 @@
             this.toolTip_Native = new MaterialSkin.Controls.MaterialToolTip(this.components);
             this.progressBarFile = new MaterialSkin.Controls.MaterialProgressBar();
             this.labelCurrentFile = new MaterialSkin.Controls.MaterialLabel();
+            this.buttonSelectRelease = new MaterialSkin.Controls.MaterialRaisedButton();
             this.SuspendLayout();
             // 
             // comboReleaseSelector
@@ -88,23 +88,6 @@
             this.DirLabel.Text = "Select Directory";
             this.DirLabel.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             // 
-            // buttonSelectRelease
-            // 
-            this.buttonSelectRelease.AutoSize = true;
-            this.buttonSelectRelease.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.buttonSelectRelease.Depth = 0;
-            this.buttonSelectRelease.Icon = null;
-            this.buttonSelectRelease.Location = new System.Drawing.Point(164, 98);
-            this.buttonSelectRelease.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.buttonSelectRelease.MouseState = MaterialSkin.MouseState.HOVER;
-            this.buttonSelectRelease.Name = "buttonSelectRelease";
-            this.buttonSelectRelease.Primary = false;
-            this.buttonSelectRelease.Size = new System.Drawing.Size(130, 36);
-            this.buttonSelectRelease.TabIndex = 20;
-            this.buttonSelectRelease.Text = "Select Release";
-            this.buttonSelectRelease.UseVisualStyleBackColor = true;
-            this.buttonSelectRelease.Click += new System.EventHandler(this.SelectReleaseButtonClick);
-            // 
             // textBoxDownloadDirectory
             // 
             this.textBoxDownloadDirectory.Depth = 0;
@@ -126,6 +109,8 @@
             // checkBoxNativeFile
             // 
             this.checkBoxNativeFile.AutoSize = true;
+            this.checkBoxNativeFile.Checked = true;
+            this.checkBoxNativeFile.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxNativeFile.Depth = 0;
             this.checkBoxNativeFile.Font = new System.Drawing.Font("Roboto", 10F);
             this.checkBoxNativeFile.Location = new System.Drawing.Point(16, 222);
@@ -315,11 +300,28 @@
             this.labelCurrentFile.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.labelCurrentFile.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             // 
+            // buttonSelectRelease
+            // 
+            this.buttonSelectRelease.AutoSize = true;
+            this.buttonSelectRelease.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonSelectRelease.Depth = 0;
+            this.buttonSelectRelease.Icon = null;
+            this.buttonSelectRelease.Location = new System.Drawing.Point(167, 98);
+            this.buttonSelectRelease.MouseState = MaterialSkin.MouseState.HOVER;
+            this.buttonSelectRelease.Name = "buttonSelectRelease";
+            this.buttonSelectRelease.Primary = true;
+            this.buttonSelectRelease.Size = new System.Drawing.Size(130, 36);
+            this.buttonSelectRelease.TabIndex = 36;
+            this.buttonSelectRelease.Text = "Select Release";
+            this.buttonSelectRelease.UseVisualStyleBackColor = true;
+            this.buttonSelectRelease.Click += new System.EventHandler(this.SelectReleaseButtonClick);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(345, 571);
+            this.Controls.Add(this.buttonSelectRelease);
             this.Controls.Add(this.labelCurrentFile);
             this.Controls.Add(this.progressBarFile);
             this.Controls.Add(this.buttonGithub);
@@ -334,7 +336,6 @@
             this.Controls.Add(this.buttonBrowseDirectory);
             this.Controls.Add(this.checkBoxNativeFile);
             this.Controls.Add(this.textBoxDownloadDirectory);
-            this.Controls.Add(this.buttonSelectRelease);
             this.Controls.Add(this.DirLabel);
             this.Controls.Add(this.labelRT);
             this.Controls.Add(this.comboReleaseSelector);
@@ -355,7 +356,6 @@
         private System.Windows.Forms.ComboBox comboReleaseSelector;
         private MaterialSkin.Controls.MaterialLabel labelRT;
         private MaterialSkin.Controls.MaterialLabel DirLabel;
-        private MaterialSkin.Controls.MaterialFlatButton buttonSelectRelease;
         private MaterialSkin.Controls.MaterialSingleLineTextField textBoxDownloadDirectory;
         private MaterialSkin.Controls.MaterialCheckBox checkBoxNativeFile;
         private MaterialSkin.Controls.MaterialRaisedButton buttonBrowseDirectory;
@@ -371,6 +371,7 @@
         private MaterialSkin.Controls.MaterialToolTip toolTip_Native;
         private MaterialSkin.Controls.MaterialProgressBar progressBarFile;
         private MaterialSkin.Controls.MaterialLabel labelCurrentFile;
+        private MaterialSkin.Controls.MaterialRaisedButton buttonSelectRelease;
     }
 }
 
