@@ -3,6 +3,8 @@ Launcher file processing based on [original VB.NET downloader](https://bitbucket
 
 Downloadable binaries are available in [releases](https://github.com/Hawxy/SCAlternativePatcher/releases)
 
+The GUI is pretty straight forward, but if you get confused, see [INSTRUCTIONS.txt](https://github.com/Hawxy/SCAlternativeDownloader/blob/master/SCPatchDownloader/INSTRUCTIONS.txt)
+
 Differences from original VB.NET downloader:
 
 - Option to maintain the normal SC file structure
