@@ -166,9 +166,10 @@ namespace SCPatchDownloader
         private void FileDownloadProgress(object sender, DownloadProgressChangedEventArgs e)
         {
             labelMegaBytes.Text = $"{e.BytesReceived / 1024d / 1024d / sw.Elapsed.TotalSeconds:0.00} MB/s";
-            progressBarFile.Maximum = (int) e.TotalBytesToReceive / 100;
-            progressBarFile.Value = (int) e.BytesReceived / 100;
-
+            progressBarFile.Maximum = (int)e.TotalBytesToReceive;
+            progressBarFile.Value = (int)e.BytesReceived;
+            
+           
         }
 
 
