@@ -23,7 +23,6 @@ using System.IO;
 using System.Net;
 using System.Security.AccessControl;
 using System.Security.Principal;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
@@ -92,7 +91,7 @@ namespace SCPatchDownloader
         }
 
 
-        private async Task DownloadGameFiles()
+        private async void DownloadGameFiles()
         {
             bool native = checkBoxNativeFile.Checked;
             string downloadLocation = textBoxDownloadDirectory.Text;
@@ -189,7 +188,7 @@ namespace SCPatchDownloader
 
 
         //load available game version on application startup
-        private async Task DownloadPatchList()
+        private async void DownloadPatchList()
         {
             string fileLocation = "LauncherInfo.txt";
             try
