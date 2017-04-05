@@ -17,10 +17,16 @@ Differences from original VB.NET downloader:
 - Other random stuff
 
 Platform:
-- .NET 4.6.2 | C# 7.0 | Visual Studio 2017
 - Requires Windows 7 SP1 or newer
 - 64-bit only
 
+Contributions are welcome:
+- .NET 4.6.2 | C# 7.0 | Visual Studio 2017 
+- Please run any major modifications by me first on the ZephyrDev server: https://discord.gg/Mjb8Pda
+- To use the material library, drag the MaterialSkin.dll in the "ref" folder to your toolbox
+
 This is a personal project of mine so you'll probably see some pointless overengineering
+
+All Star Citizen assets & files are copyrighted to Cloud Imperium Games & Foundry 42.
 
 http://zephyraux.com/
