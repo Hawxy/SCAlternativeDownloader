@@ -58,7 +58,7 @@ namespace SCPatchDownloader
         }
 
         //loading application
-        private void MainWindow_Load(object sender, EventArgs e)
+        private async void MainWindow_Load(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(Settings.Default.PrvDir))
                 textBoxDownloadDirectory.Text = Settings.Default.PrvDir;
@@ -68,7 +68,7 @@ namespace SCPatchDownloader
 
             toolTip_Native.SetToolTip(checkBoxNativeFile,
                 "Sorts files into public/test directories instead of using build number. Allows for easy copy/pasting or direct download into program files. Existing files will not be overwritten");
-            DownloadPatchList();
+            await DownloadPatchList();
         }
 
         //on Browse Directory click
@@ -80,7 +80,7 @@ namespace SCPatchDownloader
         }
 
         //download button
-        private void DownloadStartButtonClick(object sender, EventArgs e)
+        private async void DownloadStartButtonClick(object sender, EventArgs e)
         {
             buttonCancel.Enabled = true;
             buttonDownloadStart.Enabled = false;
@@ -89,7 +89,7 @@ namespace SCPatchDownloader
             textBoxDownloadDirectory.Enabled = false;
             buttonBrowseDirectory.Enabled = false;
             checkBoxNativeFile.Enabled = false;
-            DownloadGameFiles();
+            await DownloadGameFiles();
         }
 
 
@@ -146,6 +146,17 @@ namespace SCPatchDownloader
                     MessageBox.Show("Unable to write to disk. Do you have enough space? Full Exception: " + x,
                         "IOException", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+               catch (WebException x)
+               {
+                   //Handle the cancel event
+                   if (x.Message == "The request was aborted: The request was canceled.")
+                   {
+                        return;
+                   }
+                   MessageBox.Show($"Download failure, unable to continue. \nFull exception: {x.Message}", "WebException",
+                       MessageBoxButtons.OK, MessageBoxIcon.Error);
+               }
+
             else
                 MessageBox.Show("Please provide a valid download location", "Error", MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
@@ -170,8 +181,8 @@ namespace SCPatchDownloader
         {
             if (e.Cancelled)
             {
-                if (fulldir != null) File.Delete(fulldir);
                 client.Dispose();
+                if (fulldir != null) File.Delete(fulldir);
                 labelMegaBytes.Text = "N/A MB/s";
                 ResetAllBoxes(this);
             }
