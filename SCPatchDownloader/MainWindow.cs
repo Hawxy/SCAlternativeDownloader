@@ -1,4 +1,5 @@
 ﻿//Copyright 2017 Hawx & Zephyr Auxiliary Services
+//https://github.com/Hawxy/SCAlternativeDownloader
 
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
@@ -23,13 +24,13 @@ using System.IO;
 using System.Net;
 using System.Security.AccessControl;
 using System.Security.Principal;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using Ookii.Dialogs;
 using SCPatchDownloader.Properties;
 using static SCPatchDownloader.Utilities;
-
 
 
 namespace SCPatchDownloader
@@ -48,7 +49,7 @@ namespace SCPatchDownloader
         public MainWindow()
         {
             InitializeComponent();
-            
+
             MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
@@ -63,9 +64,10 @@ namespace SCPatchDownloader
                 textBoxDownloadDirectory.Text = Settings.Default.PrvDir;
             else
                 textBoxDownloadDirectory.Text = Directory.GetCurrentDirectory() + "\\SCDownload";
-            
 
-            toolTip_Native.SetToolTip(checkBoxNativeFile, "Sorts files into public/test directories instead of using build number. Allows for easy copy/pasting or direct download into program files. Existing files will not be overwritten");
+
+            toolTip_Native.SetToolTip(checkBoxNativeFile,
+                "Sorts files into public/test directories instead of using build number. Allows for easy copy/pasting or direct download into program files. Existing files will not be overwritten");
             DownloadPatchList();
         }
 
@@ -91,7 +93,7 @@ namespace SCPatchDownloader
         }
 
 
-        private async void DownloadGameFiles()
+        private async Task DownloadGameFiles()
         {
             bool native = checkBoxNativeFile.Checked;
             string downloadLocation = textBoxDownloadDirectory.Text;
@@ -110,7 +112,7 @@ namespace SCPatchDownloader
                     foreach (string file in urlList)
                     {
                         string filename = GetFileName(file);
-                        labelCurrentStatus.Text = "Downloading file " + fileNum + " of " + totfileNum;
+                        labelCurrentStatus.Text = $"Downloading file {fileNum} of {totfileNum}";
                         string filedir = GetCoreDirectory(file);
                         labelCurrentFile.Text = filedir + "\\" + filename;
                         string dest = downloadLocation + GetFileStructure(file, native, comboReleaseSelector);
@@ -152,25 +154,16 @@ namespace SCPatchDownloader
                 MessageBox.Show("Download Complete!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 ResetAllBoxes(this);
                 labelCurrentStatus.Text = "Download Complete!";
-                buttonCancel.Enabled = false;
-                buttonSelectRelease.Enabled = true;
-                buttonBrowseDirectory.Enabled = true;
-                labelCurrentFile.Text = "...";
-                labelMegaBytes.Text = "N/A MB/s";
             }
-                
         }
 
         //download speed calculator + progress bar
         private void FileDownloadProgress(object sender, DownloadProgressChangedEventArgs e)
         {
             labelMegaBytes.Text = $"{e.BytesReceived / 1024d / 1024d / sw.Elapsed.TotalSeconds:0.00} MB/s";
-            progressBarFile.Maximum = (int)e.TotalBytesToReceive;
-            progressBarFile.Value = (int)e.BytesReceived;
-            
-           
+            progressBarFile.Maximum = (int) e.TotalBytesToReceive;
+            progressBarFile.Value = (int) e.BytesReceived;
         }
-
 
         //handle cancelled download
         private void Client_InstallFileCompleted(object sender, AsyncCompletedEventArgs e)
@@ -181,14 +174,11 @@ namespace SCPatchDownloader
                 client.Dispose();
                 labelMegaBytes.Text = "N/A MB/s";
                 ResetAllBoxes(this);
-
             }
         }
 
-
-
         //load available game version on application startup
-        private async void DownloadPatchList()
+        private async Task DownloadPatchList()
         {
             string fileLocation = "LauncherInfo.txt";
             try
@@ -336,11 +326,6 @@ namespace SCPatchDownloader
             {
                 client.CancelAsync();
                 labelCurrentStatus.Text = "Download Cancelled";
-                labelCurrentFile.Text = "...";
-                buttonCancel.Enabled = false;
-                buttonSelectRelease.Enabled = true;
-                buttonBrowseDirectory.Enabled = true;
-                
             }
         }
 

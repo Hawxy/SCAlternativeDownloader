@@ -3,6 +3,7 @@ License for Star Citizen Alternative Patcher
 ------------------------------------------------------------------------
 
 Copyright 2017 Hawx & Zephyr Auxiliary Services
+https://github.com/Hawxy/SCAlternativeDownloader
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

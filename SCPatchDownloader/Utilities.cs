@@ -1,4 +1,5 @@
 ﻿//Copyright 2017 Hawx & Zephyr Auxiliary Services
+//https://github.com/Hawxy/SCAlternativeDownloader
 
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
@@ -66,16 +67,17 @@ namespace SCPatchDownloader
 
             return filename;
         }
+
         //last 3 parts of directory to display in the UI
         public static string GetCoreDirectory(string url)
         {
             string[] parts = url.Split('/');
             string filedir = "";
-            for (int i = parts.Length-3; i < parts.Length - 1; i++)
+            for (int i = parts.Length - 3; i < parts.Length - 1; i++)
             {
                 filedir += "\\" + parts[i];
             }
-            return filedir.Remove(0,1);
+            return filedir.Remove(0, 1);
         }
 
         //get name of downloading file
@@ -95,7 +97,6 @@ namespace SCPatchDownloader
                 {
                     x.Enabled = true;
                 }
-
                 if (control is ComboBox c)
                 {
                     c.SelectedIndex = 0;
@@ -108,6 +109,23 @@ namespace SCPatchDownloader
                 if (control is CheckBox b)
                 {
                     b.Enabled = true;
+                }
+                //Gotta do this manually
+                if (control.Name.Equals("ButtonCancel"))
+                {
+                    control.Enabled = false;
+                }
+                if (control.Name.Equals("buttonSelectRelease") || control.Name.Equals("buttonBrowseDirectory"))
+                {
+                    control.Enabled = true;
+                }
+                if (control.Name.Equals("labelCurrentFile"))
+                {
+                    control.Text = "...";
+                }
+                if (control.Name.Equals("labelMegaBytes.Text"))
+                {
+                    control.Text = "N/A MB/s";
                 }
             }
         }

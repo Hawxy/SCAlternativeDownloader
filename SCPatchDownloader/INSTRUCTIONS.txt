@@ -11,3 +11,8 @@
 6. Once done, your file structure will look something like [DownloadFolder]/StarCitizen/Public, copy the StarCitizen folder into the Cloud Imperium Games directory (C:\Program Files\Cloud Imperium Games by default).
 
 7. Sign into the launcher as usual and you should be ready to play
+
+NOTE:
+If your launcher doesn't work properly/gets stuck, open up PatcherState in C:\Program Files\Cloud Imperium Games\Patcher, and set Public/Test_downloadFinished = true
+
+Optionally you can sign into the launcher once and then use Bin64\StarCitizen.exe to launch the game directly
