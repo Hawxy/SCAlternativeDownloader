@@ -1,4 +1,4 @@
-# Star Citizen File Downloader
+# Star Citizen Downloader with GUI
 Launcher file processing based on [original VB.NET downloader](https://bitbucket.org/nimmog/scpatchdownloader-vb.net/overview) by NimmoG
 
 Downloadable binaries are available in [releases](https://github.com/Hawxy/SCAlternativePatcher/releases)
