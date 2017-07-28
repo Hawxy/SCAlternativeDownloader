@@ -49,6 +49,7 @@
             this.progressBarFile = new MaterialSkin.Controls.MaterialProgressBar();
             this.labelCurrentFile = new MaterialSkin.Controls.MaterialLabel();
             this.buttonSelectRelease = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.customBuildSelect = new MaterialSkin.Controls.MaterialRaisedButton();
             this.SuspendLayout();
             // 
             // comboReleaseSelector
@@ -316,11 +317,28 @@
             this.buttonSelectRelease.UseVisualStyleBackColor = true;
             this.buttonSelectRelease.Click += new System.EventHandler(this.SelectReleaseButtonClick);
             // 
+            // customBuildSelect
+            // 
+            this.customBuildSelect.AutoSize = true;
+            this.customBuildSelect.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.customBuildSelect.Depth = 0;
+            this.customBuildSelect.Icon = null;
+            this.customBuildSelect.Location = new System.Drawing.Point(303, 98);
+            this.customBuildSelect.MouseState = MaterialSkin.MouseState.HOVER;
+            this.customBuildSelect.Name = "customBuildSelect";
+            this.customBuildSelect.Primary = true;
+            this.customBuildSelect.Size = new System.Drawing.Size(32, 36);
+            this.customBuildSelect.TabIndex = 37;
+            this.customBuildSelect.Text = "...";
+            this.customBuildSelect.UseVisualStyleBackColor = true;
+            this.customBuildSelect.Click += new System.EventHandler(this.customBuildSelect_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(345, 571);
+            this.Controls.Add(this.customBuildSelect);
             this.Controls.Add(this.buttonSelectRelease);
             this.Controls.Add(this.labelCurrentFile);
             this.Controls.Add(this.progressBarFile);
@@ -372,6 +390,7 @@
         private MaterialSkin.Controls.MaterialProgressBar progressBarFile;
         private MaterialSkin.Controls.MaterialLabel labelCurrentFile;
         private MaterialSkin.Controls.MaterialRaisedButton buttonSelectRelease;
+        private MaterialSkin.Controls.MaterialRaisedButton customBuildSelect;
     }
 }
 

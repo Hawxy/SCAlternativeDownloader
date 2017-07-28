@@ -26,7 +26,7 @@ namespace SCPatchDownloader
     public class Utilities
     {
         //remove quotations from a line
-        public static object StripQuotations(string line)
+        public static string StripQuotations(string line)
         {
             string[] parts = line.Split('"');
             return parts[1];

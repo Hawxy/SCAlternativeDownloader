@@ -253,11 +253,9 @@ namespace SCPatchDownloader
             string requestedUniverse = comboReleaseSelector.SelectedItem as string;
             string universeFileList = "";
             buttonDownloadStart.Enabled = true;
-            var fileList = new ArrayList();
             urlList.Clear();
             //file handling
             string fileName = "fileList.json";
-            var baseURLS = new ArrayList();
 
             if (!string.IsNullOrEmpty(requestedUniverse))
                 foreach (Universe universe in versionList)
@@ -274,47 +272,11 @@ namespace SCPatchDownloader
                         labelCurrentStatus.Text = "Downloading file list";
                         client.DownloadProgressChanged += Client_ProgressChanged;
                         await client.DownloadFileTaskAsync(new Uri(universeFileList), fileName);
+                        
                     }
-                    StreamReader reader = File.OpenText(fileName);
-                    var writer = new StreamWriter("SC-URLs.txt", false);
-
-                    SeekToLine(reader, "file_list");
-                    string line = reader.ReadLine();
-                    while (!line.Contains("],"))
-                    {
-                        fileList.Add(StripQuotations(line));
-                        line = reader.ReadLine();
-                    }
-
-                    labelCurrentStatus.Text = fileList.Count + " files are ready for download";
-
-                    //find prefix
-                    line = SeekToLine(reader, "key_prefix");
-                    string[] parts = line.Split((char) 34);
-                    string prefix = parts[3];
-
-                    //base url
-                    SeekToLine(reader, "webseed_urls");
-                    line = reader.ReadLine();
-                    while (!line.Contains("]"))
-                    {
-                        baseURLS.Add(StripQuotations(line));
-                        line = reader.ReadLine();
-                    }
-
-                    foreach (object i in fileList)
-                    {
-                        var rand = new Random();
-                        int randomBase = rand.Next(0, baseURLS.Count - 1);
-
-                        urlList.Add(baseURLS[randomBase] + "/" + prefix + "/" + i);
-                        await writer.WriteLineAsync(baseURLS[randomBase] + "/" + prefix + "/" + i);
-                    }
-                    writer.Close();
-                    reader.Close();
+                    ProcessFileList(fileName);
 
                     File.Delete(fileName);
-                    File.Delete("SC-URLs.txt");
                 }
                 else
                 {
@@ -340,6 +302,47 @@ namespace SCPatchDownloader
             }
         }
 
+        private void ProcessFileList(string fileName)
+        {
+            List<string> fileList = new List<string>();
+            List<string> baseURLS = new List<string>();
+            string prefix;
+
+            using (StreamReader reader = File.OpenText(fileName))
+            {
+                SeekToLine(reader, "file_list");
+                string line = reader.ReadLine();
+                while (!line.Contains("],"))
+                {
+                    fileList.Add(StripQuotations(line));
+                    line = reader.ReadLine();
+                }
+
+                labelCurrentStatus.Text = fileList.Count + " files are ready for download";
+
+                //find prefix
+                line = SeekToLine(reader, "key_prefix");
+                string[] parts = line.Split((char)34);
+                prefix = parts[3];
+
+                //base url
+                SeekToLine(reader, "webseed_urls");
+                line = reader.ReadLine();
+                while (!line.Contains("]"))
+                {
+                    baseURLS.Add(StripQuotations(line));
+                    line = reader.ReadLine();
+                }
+            }
+           
+           foreach (string i in fileList)
+           {
+                var rand = new Random();
+                int randomBase = rand.Next(0, baseURLS.Count - 1);
+                urlList.Add(baseURLS[randomBase] + "/" + prefix + "/" + i);
+           }
+        }
+
         //save directory on form close
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -357,6 +360,27 @@ namespace SCPatchDownloader
         {
             public string versionName;
             public string fileIndex;
+        }
+
+        private void customBuildSelect_Click(object sender, EventArgs e)
+        {
+            using (var selectFileDialog = new OpenFileDialog{Title = "Select build JSON", Filter = "JSON files|*.json"})
+            {
+                if (selectFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    buttonDownloadStart.Enabled = true;
+                    comboReleaseSelector.Enabled = false;
+                    buttonSelectRelease.Enabled = false;
+                    checkBoxNativeFile.Checked = false;
+                    checkBoxNativeFile.Enabled = false;
+                    comboReleaseSelector.Items.Clear();
+                    comboReleaseSelector.Items.Add(Path.GetFileNameWithoutExtension(selectFileDialog.FileName));
+                    comboReleaseSelector.SelectedIndex = 0;
+                    urlList.Clear();
+                    ProcessFileList(selectFileDialog.FileName);
+                }
+            }
+
         }
     }
 }
