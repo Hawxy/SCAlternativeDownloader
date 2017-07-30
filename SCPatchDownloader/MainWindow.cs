@@ -21,6 +21,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -38,8 +39,9 @@ namespace SCPatchDownloader
 {
     public partial class MainWindow : MaterialForm
     {
+        private readonly Dictionary<string, LauncherInfo> launcherInfoDict = new Dictionary<string, LauncherInfo>();
 
-        private LauncherInfo launcherinfo = new LauncherInfo();
+        private readonly BuildData buildData = new BuildData();
 
         private readonly Stopwatch sw = new Stopwatch();
         //stores list of URLs
@@ -81,6 +83,159 @@ namespace SCPatchDownloader
             var folderDir = new VistaFolderBrowserDialog {ShowNewFolderButton = true};
             if (folderDir.ShowDialog() == DialogResult.OK)
                 textBoxDownloadDirectory.Text = folderDir.SelectedPath;
+        }
+
+        //load available game version on application startup
+        private async Task DownloadPatchList()
+        {
+            try
+            {
+                string launcherInfoStr;
+                using (client = new WebClient())
+                {
+                    client.Proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
+                    client.DownloadProgressChanged += Client_ProgressChanged;
+                    launcherInfoStr = await client.DownloadStringTaskAsync(new Uri("http://manifest.robertsspaceindustries.com/Launcher/_LauncherInfo"));
+                    labelCurrentStatus.Text = "Loading Manifest...Complete";
+                }
+                if (!string.IsNullOrEmpty(launcherInfoStr))
+                {
+                    using (StringReader reader = new StringReader(launcherInfoStr))
+                    {
+                        string line;
+                        var fields = typeof(LauncherInfo).GetProperties();
+                        while (!string.IsNullOrEmpty(line = reader.ReadLine())) 
+                        {
+                            string[] lineitems = Array.ConvertAll(line.Split('='), p => p.Trim());
+                            if (lineitems[0] == "universes")
+                            {
+                                string[] universes = Array.ConvertAll(lineitems[1].Split(','), p => p.Trim());
+                                foreach (var item in universes)
+                                {
+                                    launcherInfoDict.Add(item, new LauncherInfo());
+                                }
+                            }
+                            else
+                            {
+                                var info = launcherInfoDict.FirstOrDefault(x => lineitems[0].StartsWith(x.Key)).Value;
+                                foreach (var field in fields)
+                                {
+                                    if (lineitems[0].EndsWith(field.Name, StringComparison.CurrentCultureIgnoreCase))
+                                    {
+                                        field.SetValue(info, lineitems[1]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    comboReleaseSelector.Items.AddRange(launcherInfoDict.Keys.ToArray());
+                }
+
+                if (comboReleaseSelector.Items.Count > 0)
+                     comboReleaseSelector.SelectedIndex = 0;
+            }
+            catch (WebException)
+            {
+                MessageBox.Show("Unable to download manifest. Exiting.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
+        }
+
+
+        //download file list when version is selected
+        private async void SelectReleaseButtonClick(object sender, EventArgs e)
+        {
+            string requestedUniverse = comboReleaseSelector.SelectedItem as string;
+            string universeFileList = "";
+            urlList.Clear();
+            //file handling
+            string fileName = "fileList.json";
+
+            if (!string.IsNullOrEmpty(requestedUniverse))
+                foreach (Universe universe in versionList)
+                    if (requestedUniverse.Equals(universe.versionName))
+                        universeFileList = universe.fileIndex;
+            try
+            {
+                //get file list
+                if (!string.IsNullOrEmpty(universeFileList))
+                {
+                    using (client = new WebClient())
+                    {
+                        client.Proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
+                        labelCurrentStatus.Text = "Downloading file list";
+                        client.DownloadProgressChanged += Client_ProgressChanged;
+                        await client.DownloadFileTaskAsync(new Uri(universeFileList), fileName);
+                        
+                    }
+                    ProcessFileList(fileName);
+                    buttonDownloadStart.Enabled = true;
+
+                    File.Delete(fileName);
+                }
+                else
+                {
+                    MessageBox.Show("Unable to find file list", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (WebException)
+            {
+                MessageBox.Show("File list failed to download", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        //cancel download
+        private void CancelButtonClick(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to cancel?", "Cancel Download",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                client.CancelAsync();
+                labelCurrentStatus.Text = "Download Cancelled";
+            }
+        }
+
+        private void ProcessFileList(string fileName)
+        {
+            List<string> fileList = new List<string>();
+            List<string> baseURLS = new List<string>();
+            string prefix;
+
+            using (StreamReader reader = File.OpenText(fileName))
+            {
+                SeekToLine(reader, "file_list");
+                string line = reader.ReadLine();
+                while (!line.Contains("],"))
+                {
+                    fileList.Add(StripQuotations(line));
+                    line = reader.ReadLine();
+                }
+
+                labelCurrentStatus.Text = fileList.Count + " files are ready for download";
+
+                //find prefix
+                line = SeekToLine(reader, "key_prefix");
+                string[] parts = line.Split((char)34);
+                prefix = parts[3];
+
+                //base url
+                SeekToLine(reader, "webseed_urls");
+                line = reader.ReadLine();
+                while (!line.Contains("]"))
+                {
+                    baseURLS.Add(StripQuotations(line));
+                    line = reader.ReadLine();
+                }
+            }
+           
+           foreach (string i in fileList)
+           {
+                var rand = new Random();
+                int randomBase = rand.Next(0, baseURLS.Count - 1);
+                urlList.Add(baseURLS[randomBase] + "/" + prefix + "/" + i);
+           }
         }
 
         //download button
@@ -150,16 +305,16 @@ namespace SCPatchDownloader
                     MessageBox.Show("Unable to write to disk. Do you have enough space? Full Exception: " + x,
                         "IOException", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-               catch (WebException x)
-               {
-                   //Handle the cancel event
-                   if (x.Message == "The request was aborted: The request was canceled.")
-                   {
+                catch (WebException x)
+                {
+                    //Handle the cancel event
+                    if (x.Message == "The request was aborted: The request was canceled.")
+                    {
                         return;
-                   }
-                   MessageBox.Show($"Download failure, unable to continue. \nFull exception: {x.Message}", "WebException",
-                       MessageBoxButtons.OK, MessageBoxIcon.Error);
-               }
+                    }
+                    MessageBox.Show($"Download failure, unable to continue. \nFull exception: {x.Message}", "WebException",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
             else
                 MessageBox.Show("Please provide a valid download location", "Error", MessageBoxButtons.OK,
@@ -176,8 +331,8 @@ namespace SCPatchDownloader
         private void FileDownloadProgress(object sender, DownloadProgressChangedEventArgs e)
         {
             labelMegaBytes.Text = $"{e.BytesReceived / 1024d / 1024d / sw.Elapsed.TotalSeconds:0.00} MB/s";
-            progressBarFile.Maximum = (int) e.TotalBytesToReceive;
-            progressBarFile.Value = (int) e.BytesReceived;
+            progressBarFile.Maximum = (int)e.TotalBytesToReceive;
+            progressBarFile.Value = (int)e.BytesReceived;
         }
 
         //handle cancelled download
@@ -192,159 +347,10 @@ namespace SCPatchDownloader
             }
         }
 
-        //load available game version on application startup
-        private async Task DownloadPatchList()
-        {
-            string launcherInfoStr = string.Empty;
-            try
-            {
-                using (client = new WebClient())
-                {
-                    client.Proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
-                    client.DownloadProgressChanged += Client_ProgressChanged;
-                    launcherInfoStr = await client.DownloadStringTaskAsync(new Uri("http://manifest.robertsspaceindustries.com/Launcher/_LauncherInfo"));
-                    labelCurrentStatus.Text = "Loading Manifest...Complete";
-                }
-                if (!string.IsNullOrEmpty(launcherInfoStr))
-                {
-                    using (StringReader reader = new StringReader(launcherInfoStr))
-                    {
-                        string line;
-                        var fields = typeof(LauncherInfo).GetProperties();
-                        while (!string.IsNullOrEmpty(line = reader.ReadLine())) 
-                        {
-                            string[] lineitems = Array.ConvertAll(line.Split('='), p => p.Trim());
-                            if (lineitems[0] == "universes")
-                            {
-                                string[] universes = Array.ConvertAll(lineitems[1].Split(','), p => p.Trim());
-                                launcherinfo.universes = universes.ToList();
-                            }
-                            else
-                            {
-                                foreach (var row in fields)
-                                {
-                                    if (row.Name.Equals(lineitems[0], StringComparison.CurrentCultureIgnoreCase))
-                                    {
-                                        row.SetValue(launcherinfo, lineitems[1]);
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    comboReleaseSelector.Items.AddRange(launcherinfo.universes.ToArray());
-                }
-
-                if (comboReleaseSelector.Items.Count > 0)
-                     comboReleaseSelector.SelectedIndex = 0;
-            }
-            catch (WebException)
-            {
-                MessageBox.Show("Unable to download manifest. Exiting.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Application.Exit();
-            }
-        }
-
         //Change progress bar value on download progress change
         private void Client_ProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             progressBarStatus.Value = e.ProgressPercentage;
-        }
-
-        //download file list when version is selected
-        private async void SelectReleaseButtonClick(object sender, EventArgs e)
-        {
-            string requestedUniverse = comboReleaseSelector.SelectedItem as string;
-            string universeFileList = "";
-            buttonDownloadStart.Enabled = true;
-            urlList.Clear();
-            //file handling
-            string fileName = "fileList.json";
-
-            if (!string.IsNullOrEmpty(requestedUniverse))
-                foreach (Universe universe in versionList)
-                    if (requestedUniverse.Equals(universe.versionName))
-                        universeFileList = universe.fileIndex;
-            try
-            {
-                //get file list
-                if (!string.IsNullOrEmpty(universeFileList))
-                {
-                    using (client = new WebClient())
-                    {
-                        client.Proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
-                        labelCurrentStatus.Text = "Downloading file list";
-                        client.DownloadProgressChanged += Client_ProgressChanged;
-                        await client.DownloadFileTaskAsync(new Uri(universeFileList), fileName);
-                        
-                    }
-                    ProcessFileList(fileName);
-
-                    File.Delete(fileName);
-                }
-                else
-                {
-                    MessageBox.Show("Unable to find file list", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (WebException)
-            {
-                MessageBox.Show("File list failed to download", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        //cancel download
-        private void CancelButtonClick(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("Are you sure you want to cancel?", "Cancel Download",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                client.CancelAsync();
-                labelCurrentStatus.Text = "Download Cancelled";
-            }
-        }
-
-        private void ProcessFileList(string fileName)
-        {
-            List<string> fileList = new List<string>();
-            List<string> baseURLS = new List<string>();
-            string prefix;
-
-            using (StreamReader reader = File.OpenText(fileName))
-            {
-                SeekToLine(reader, "file_list");
-                string line = reader.ReadLine();
-                while (!line.Contains("],"))
-                {
-                    fileList.Add(StripQuotations(line));
-                    line = reader.ReadLine();
-                }
-
-                labelCurrentStatus.Text = fileList.Count + " files are ready for download";
-
-                //find prefix
-                line = SeekToLine(reader, "key_prefix");
-                string[] parts = line.Split((char)34);
-                prefix = parts[3];
-
-                //base url
-                SeekToLine(reader, "webseed_urls");
-                line = reader.ReadLine();
-                while (!line.Contains("]"))
-                {
-                    baseURLS.Add(StripQuotations(line));
-                    line = reader.ReadLine();
-                }
-            }
-           
-           foreach (string i in fileList)
-           {
-                var rand = new Random();
-                int randomBase = rand.Next(0, baseURLS.Count - 1);
-                urlList.Add(baseURLS[randomBase] + "/" + prefix + "/" + i);
-           }
         }
 
         //save directory on form close

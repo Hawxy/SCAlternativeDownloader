@@ -8,13 +8,9 @@ namespace SCPatchDownloader.Models
 {
     public class LauncherInfo
     {
-        public List<string> universes { get; set; }
-        public string Public_universeServer { get; set; }
-        public string Public_version { get; set; }
-        public string Public_fileIndex { get; set; }
-        public string Test_universeServer { get; set; }
-        public string Test_version { get; set; }
-        public string Test_fileIndex { get; set; }
+        public string UniverseServer { get; set; }
+        public string Version { get; set; }
+        public string FileIndex { get; set; }
 
     }
 }
