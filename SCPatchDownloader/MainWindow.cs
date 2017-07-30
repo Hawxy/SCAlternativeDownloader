@@ -239,7 +239,8 @@ namespace SCPatchDownloader
                     foreach (string file in selectedBuildData.file_list)
                     {
                         labelCurrentStatus.Text = $"Downloading file {fileNum} of {totfileNum}";
-                        var downloadurl = new Uri(new Uri(selectedBuildData.webseed_urls[randomws.Next(selectedBuildData.webseed_urls.Count)]), file.TrimStart('/'));
+                        var wsurl = new Uri(new Uri(selectedBuildData.webseed_urls[randomws.Next(selectedBuildData.webseed_urls.Count)]), selectedBuildData.key_prefix.TrimStart('/'));
+                        var downloadurl = new Uri(wsurl, file.TrimStart('/'));
 
                         //string filename = GetFileName(file);
                        // string filedir = GetCoreDirectory(file);
