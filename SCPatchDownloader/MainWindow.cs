@@ -41,7 +41,9 @@ namespace SCPatchDownloader
     {
         private readonly Dictionary<string, LauncherInfo> launcherInfoDict = new Dictionary<string, LauncherInfo>();
 
-        private readonly BuildData buildData = new BuildData();
+        private readonly Dictionary<string, BuildData> buildDataDict = new Dictionary<string, BuildData>();
+
+        private BuildData selectedBuildData = new BuildData();
 
         private readonly Stopwatch sw = new Stopwatch();
         //stores list of URLs
@@ -141,37 +143,33 @@ namespace SCPatchDownloader
             }
         }
 
-
-        //download file list when version is selected
-        private async void SelectReleaseButtonClick(object sender, EventArgs e)
+        private async void comboReleaseSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
             string requestedUniverse = comboReleaseSelector.SelectedItem as string;
-            string universeFileList = "";
-            urlList.Clear();
-            //file handling
-            string fileName = "fileList.json";
+            if (buildDataDict.TryGetValue(requestedUniverse, out BuildData checkedBuildData))
+            {
+                selectedBuildData = checkedBuildData;
+                labelCurrentStatus.Text = $"{checkedBuildData.file_count_total} files are ready for download";
+                buttonDownloadStart.Enabled = true;
+                return;
+            }
 
-            if (!string.IsNullOrEmpty(requestedUniverse))
-                foreach (Universe universe in versionList)
-                    if (requestedUniverse.Equals(universe.versionName))
-                        universeFileList = universe.fileIndex;
             try
             {
                 //get file list
-                if (!string.IsNullOrEmpty(universeFileList))
+                if (!string.IsNullOrEmpty(requestedUniverse))
                 {
+                    var buildDataURL = launcherInfoDict[requestedUniverse].FileIndex;
+                    string buildDataString;
                     using (client = new WebClient())
                     {
                         client.Proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
                         labelCurrentStatus.Text = "Downloading file list";
                         client.DownloadProgressChanged += Client_ProgressChanged;
-                        await client.DownloadFileTaskAsync(new Uri(universeFileList), fileName);
-                        
+                        buildDataString = await client.DownloadStringTaskAsync(new Uri(buildDataURL));
                     }
-                    ProcessFileList(fileName);
-                    buttonDownloadStart.Enabled = true;
-
-                    File.Delete(fileName);
+                    BuildData buildData = JsonConvert.DeserializeObject<BuildData>(buildDataString);
+                    AddNewBuildInfo(buildData, requestedUniverse);
                 }
                 else
                 {
@@ -182,6 +180,14 @@ namespace SCPatchDownloader
             {
                 MessageBox.Show("File list failed to download", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void AddNewBuildInfo(BuildData buildData, string requestedUniverse)
+        {
+            buildDataDict.Add(requestedUniverse, buildData);
+            labelCurrentStatus.Text = $"{buildData.file_count_total} files are ready for download";
+            selectedBuildData = buildData;
+            buttonDownloadStart.Enabled = true;
         }
 
         //cancel download
@@ -197,54 +203,12 @@ namespace SCPatchDownloader
             }
         }
 
-        private void ProcessFileList(string fileName)
-        {
-            List<string> fileList = new List<string>();
-            List<string> baseURLS = new List<string>();
-            string prefix;
-
-            using (StreamReader reader = File.OpenText(fileName))
-            {
-                SeekToLine(reader, "file_list");
-                string line = reader.ReadLine();
-                while (!line.Contains("],"))
-                {
-                    fileList.Add(StripQuotations(line));
-                    line = reader.ReadLine();
-                }
-
-                labelCurrentStatus.Text = fileList.Count + " files are ready for download";
-
-                //find prefix
-                line = SeekToLine(reader, "key_prefix");
-                string[] parts = line.Split((char)34);
-                prefix = parts[3];
-
-                //base url
-                SeekToLine(reader, "webseed_urls");
-                line = reader.ReadLine();
-                while (!line.Contains("]"))
-                {
-                    baseURLS.Add(StripQuotations(line));
-                    line = reader.ReadLine();
-                }
-            }
-           
-           foreach (string i in fileList)
-           {
-                var rand = new Random();
-                int randomBase = rand.Next(0, baseURLS.Count - 1);
-                urlList.Add(baseURLS[randomBase] + "/" + prefix + "/" + i);
-           }
-        }
-
         //download button
         private async void DownloadStartButtonClick(object sender, EventArgs e)
         {
             buttonCancel.Enabled = true;
             buttonDownloadStart.Enabled = false;
             comboReleaseSelector.Enabled = false;
-            buttonSelectRelease.Enabled = false;
             textBoxDownloadDirectory.Enabled = false;
             buttonBrowseDirectory.Enabled = false;
             checkBoxNativeFile.Enabled = false;
@@ -380,14 +344,13 @@ namespace SCPatchDownloader
                 {
                     buttonDownloadStart.Enabled = true;
                     comboReleaseSelector.Enabled = false;
-                    buttonSelectRelease.Enabled = false;
                     checkBoxNativeFile.Checked = false;
                     checkBoxNativeFile.Enabled = false;
                     comboReleaseSelector.Items.Clear();
                     comboReleaseSelector.Items.Add(Path.GetFileNameWithoutExtension(selectFileDialog.FileName));
                     comboReleaseSelector.SelectedIndex = 0;
                     urlList.Clear();
-                    ProcessFileList(selectFileDialog.FileName);
+                    //ProcessFileList(selectFileDialog.FileName);
                 }
             }
 

@@ -9,7 +9,7 @@ namespace SCPatchDownloader.Models
     class BuildData
     {
         public ulong byte_count_total { get; set; }
-        public int file_count_totle { get; set; }
+        public int file_count_total { get; set; }
         public List<string> file_list { get; set; }
         public string key_prefix { get; set; }
         public List<string> webseed_urls { get; set; }
