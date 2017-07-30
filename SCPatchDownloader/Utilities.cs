@@ -15,55 +15,31 @@
 
 //Move various functions out of main program and into seperate class
 
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using MaterialSkin.Controls;
 
 namespace SCPatchDownloader
 {
     public class Utilities
     {
-        //remove quotations from a line
-        public static string StripQuotations(string line)
+        //the bit that goes between the download dir and the files
+        public static string GetFileStructure(bool notnative, string selectedUniverse, string keyprefix)
         {
-            string[] parts = line.Split('"');
-            return parts[1];
-        }
-
-        //seek to specific line in file
-        public static string SeekToLine(StreamReader file, string lineContents)
-        {
-            string line = "";
-            while (!line.Contains(lineContents))
+            string filestructure;
+            if (notnative)
             {
-                line = file.ReadLine();
-            }
-            return line;
-        }
-
-        //get entire file structure
-        //cleanup this section at some point
-        public static string GetFileStructure(string url, bool native, ComboBox relSelector)
-        {
-            string[] parts = url.Split('/');
-            string filename = "";
-            if (native)
-            {
-                for (int i = 7; i < parts.Length - 1; i++)
-                {
-                    filename += "\\" + parts[i];
-                }
-                filename = "\\StarCitizen\\" + relSelector.SelectedItem + "\\" + filename;
+                filestructure = "\\StarCitizen\\" + selectedUniverse;
             }
             else
             {
-                for (int i = 5; i < parts.Length - 1; i++)
-                {
-                    filename += "\\" + parts[i];
-                }
+                string[] keysplit = keyprefix.Split('/');
+                filestructure = Path.Combine(keysplit[1], keysplit[2]);
             }
-
-            return filename;
+            return filestructure;
         }
 
         //last 3 parts of directory to display in the UI

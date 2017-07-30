@@ -48,9 +48,7 @@ namespace SCPatchDownloader
         private readonly Stopwatch sw = new Stopwatch();
         //stores list of URLs
         private readonly ArrayList urlList = new ArrayList();
-
-        private readonly List<Universe> versionList = new List<Universe>();
-
+        
         private WebClient client;
         private string fulldir;
 
@@ -218,10 +216,16 @@ namespace SCPatchDownloader
 
         private async Task DownloadGameFiles()
         {
-            bool native = checkBoxNativeFile.Checked;
+
+            bool notnative = checkBoxNativeFile.Checked;
             string downloadLocation = textBoxDownloadDirectory.Text;
+            string selectedUniverse = comboReleaseSelector.SelectedItem as string;
+
             int fileNum = 1;
-            int totfileNum = urlList.Count;
+            int totfileNum = selectedBuildData.file_count_total;
+            var randomws = new Random();
+
+            string coreFileStructure = Path.Combine(downloadLocation, GetFileStructure(notnative, selectedUniverse, selectedBuildData.key_prefix));
 
             var security = new DirectorySecurity();
             security.AddAccessRule(new FileSystemAccessRule(
@@ -229,27 +233,29 @@ namespace SCPatchDownloader
                 InheritanceFlags.ObjectInherit | InheritanceFlags.ContainerInherit,
                 PropagationFlags.NoPropagateInherit, AccessControlType.Allow));
 
-            if (urlList.Count > 0 && !string.IsNullOrWhiteSpace(downloadLocation))
+            if (!string.IsNullOrWhiteSpace(downloadLocation))
                 try
                 {
-                    foreach (string file in urlList)
+                    foreach (string file in selectedBuildData.file_list)
                     {
-                        string filename = GetFileName(file);
                         labelCurrentStatus.Text = $"Downloading file {fileNum} of {totfileNum}";
-                        string filedir = GetCoreDirectory(file);
-                        labelCurrentFile.Text = filedir + "\\" + filename;
-                        string dest = downloadLocation + GetFileStructure(file, native, comboReleaseSelector);
-                        fulldir = Path.Combine(dest, filename);
+                        var downloadurl = new Uri(new Uri(selectedBuildData.webseed_urls[randomws.Next(selectedBuildData.webseed_urls.Count)]), file.TrimStart('/'));
+
+                        //string filename = GetFileName(file);
+                       // string filedir = GetCoreDirectory(file);
+
+                        labelCurrentFile.Text = file;
+                        fulldir = Path.Combine(coreFileStructure, file);
                         if (!File.Exists(fulldir))
                         {
-                            Directory.CreateDirectory(dest, security);
+                            Directory.CreateDirectory(Path.GetDirectoryName(fulldir), security);
                             using (client = new WebClient())
                             {
                                 client.Proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
                                 client.DownloadProgressChanged += FileDownloadProgress;
                                 client.DownloadFileCompleted += Client_InstallFileCompleted;
                                 sw.Start();
-                                await client.DownloadFileTaskAsync(new Uri(file), fulldir);
+                                await client.DownloadFileTaskAsync(downloadurl, fulldir);
                             }
                         }
                         fileNum += 1;
