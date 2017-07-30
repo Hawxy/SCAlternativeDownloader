@@ -237,9 +237,9 @@
             this.labelDBH.Location = new System.Drawing.Point(16, 507);
             this.labelDBH.MouseState = MaterialSkin.MouseState.HOVER;
             this.labelDBH.Name = "labelDBH";
-            this.labelDBH.Size = new System.Drawing.Size(281, 19);
+            this.labelDBH.Size = new System.Drawing.Size(120, 19);
             this.labelDBH.TabIndex = 31;
-            this.labelDBH.Text = "Developed by Hawx. Based on work by NimmoG.";
+            this.labelDBH.Text = "Developed by Hawx";
             this.labelDBH.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             // 
             // labelZAS

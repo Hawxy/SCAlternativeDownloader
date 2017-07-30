@@ -13,14 +13,13 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-//Some components of this file are based on work by NimmoG
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Security.AccessControl;
 using System.Security.Principal;
@@ -28,7 +27,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
+using Newtonsoft.Json;
 using Ookii.Dialogs;
+using SCPatchDownloader.Models;
 using SCPatchDownloader.Properties;
 using static SCPatchDownloader.Utilities;
 
@@ -37,6 +38,9 @@ namespace SCPatchDownloader
 {
     public partial class MainWindow : MaterialForm
     {
+
+        private LauncherInfo launcherinfo = new LauncherInfo();
+
         private readonly Stopwatch sw = new Stopwatch();
         //stores list of URLs
         private readonly ArrayList urlList = new ArrayList();
@@ -191,57 +195,57 @@ namespace SCPatchDownloader
         //load available game version on application startup
         private async Task DownloadPatchList()
         {
-            string fileLocation = "LauncherInfo.txt";
+            string launcherInfoStr = string.Empty;
             try
             {
                 using (client = new WebClient())
                 {
                     client.Proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
                     client.DownloadProgressChanged += Client_ProgressChanged;
-                    await client.DownloadFileTaskAsync(
-                        new Uri("http://manifest.robertsspaceindustries.com/Launcher/_LauncherInfo"), fileLocation);
+                    launcherInfoStr = await client.DownloadStringTaskAsync(new Uri("http://manifest.robertsspaceindustries.com/Launcher/_LauncherInfo"));
                     labelCurrentStatus.Text = "Loading Manifest...Complete";
                 }
-                if (File.Exists(fileLocation))
+                if (!string.IsNullOrEmpty(launcherInfoStr))
                 {
-                    StreamReader reader = File.OpenText(fileLocation);
-                    //line in file
-                    string line = reader.ReadLine();
-                    string[] parts = line.Split('=');
-                    parts = parts[1].Split(',');
-                    //for each item in parts
-                    foreach (string word in parts)
+                    using (StringReader reader = new StringReader(launcherInfoStr))
                     {
-                        //get substring of each word
-                        string versionName = word.Substring(1);
-                        //get version name
-                        while (!line.StartsWith(versionName + "_fileIndex"))
-                            line = reader.ReadLine();
-                        parts = line.Split('=');
-                        string filePrefix = parts[1].Substring(1);
-                        //store version name and prefix in universe object
-                        Universe currentUniverse;
-                        currentUniverse.versionName = versionName;
-                        currentUniverse.fileIndex = filePrefix;
-                        versionList.Add(currentUniverse);
-                        //add version names to list
-                        comboReleaseSelector.Items.Add(versionName);
+                        string line;
+                        var fields = typeof(LauncherInfo).GetProperties();
+                        while (!string.IsNullOrEmpty(line = reader.ReadLine())) 
+                        {
+                            string[] lineitems = Array.ConvertAll(line.Split('='), p => p.Trim());
+                            if (lineitems[0] == "universes")
+                            {
+                                string[] universes = Array.ConvertAll(lineitems[1].Split(','), p => p.Trim());
+                                launcherinfo.universes = universes.ToList();
+                            }
+                            else
+                            {
+                                foreach (var row in fields)
+                                {
+                                    if (row.Name.Equals(lineitems[0], StringComparison.CurrentCultureIgnoreCase))
+                                    {
+                                        row.SetValue(launcherinfo, lineitems[1]);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
                     }
-
-                    if (comboReleaseSelector.Items.Count > 0)
-                        comboReleaseSelector.SelectedIndex = 0;
-
-                    reader.Close();
+                    comboReleaseSelector.Items.AddRange(launcherinfo.universes.ToArray());
                 }
-                File.Delete(fileLocation);
+
+                if (comboReleaseSelector.Items.Count > 0)
+                     comboReleaseSelector.SelectedIndex = 0;
             }
             catch (WebException)
             {
-                MessageBox.Show("Connection Timed out", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Unable to download manifest. Exiting.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
             }
         }
 
-        //application load
+        //Change progress bar value on download progress change
         private void Client_ProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             progressBarStatus.Value = e.ProgressPercentage;

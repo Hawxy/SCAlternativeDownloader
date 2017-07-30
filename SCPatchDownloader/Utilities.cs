@@ -13,8 +13,6 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-//Some components of this file are based on work by NimmoG
-
 //Move various functions out of main program and into seperate class
 
 using System.IO;
