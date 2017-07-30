@@ -32,7 +32,7 @@ namespace SCPatchDownloader
             string filestructure;
             if (notnative)
             {
-                filestructure = "\\StarCitizen\\" + selectedUniverse;
+                filestructure = $"StarCitizen\\{selectedUniverse}";
             }
             else
             {
@@ -41,27 +41,6 @@ namespace SCPatchDownloader
             }
             return filestructure;
         }
-
-        //last 3 parts of directory to display in the UI
-        public static string GetCoreDirectory(string url)
-        {
-            string[] parts = url.Split('/');
-            string filedir = "";
-            for (int i = parts.Length - 3; i < parts.Length - 1; i++)
-            {
-                filedir += "\\" + parts[i];
-            }
-            return filedir.Remove(0, 1);
-        }
-
-        //get name of downloading file
-        public static string GetFileName(string url)
-        {
-            string[] parts = url.Split('/');
-            string filename = parts[parts.Length - 1];
-            return filename;
-        }
-
         //general cleanup on form reset
         public static void ResetAllBoxes(Control form)
         {

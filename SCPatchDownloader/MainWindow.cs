@@ -46,10 +46,9 @@ namespace SCPatchDownloader
         private BuildData selectedBuildData = new BuildData();
 
         private readonly Stopwatch sw = new Stopwatch();
-        //stores list of URLs
-        private readonly ArrayList urlList = new ArrayList();
         
         private WebClient client;
+
         private string fulldir;
 
         public MainWindow()
@@ -242,9 +241,6 @@ namespace SCPatchDownloader
                         var wsurl = new Uri(new Uri(selectedBuildData.webseed_urls[randomws.Next(selectedBuildData.webseed_urls.Count)]), selectedBuildData.key_prefix.TrimStart('/'));
                         var downloadurl = new Uri($"{wsurl}/{file}");
 
-                        //string filename = GetFileName(file);
-                       // string filedir = GetCoreDirectory(file);
-
                         labelCurrentFile.Text = file;
                         fulldir = Path.Combine(coreFileStructure, file);
                         if (!File.Exists(fulldir))
@@ -290,7 +286,7 @@ namespace SCPatchDownloader
             else
                 MessageBox.Show("Please provide a valid download location", "Error", MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
-            if (fileNum - 1 == urlList.Count)
+            if (fileNum - 1 == selectedBuildData.webseed_urls.Count)
             {
                 MessageBox.Show("Download Complete!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 ResetAllBoxes(this);
@@ -336,13 +332,6 @@ namespace SCPatchDownloader
             Process.Start("https://github.com/Hawxy/SCAlternativePatcher/");
         }
 
-        //game versions
-        private struct Universe
-        {
-            public string versionName;
-            public string fileIndex;
-        }
-
         private void customBuildSelect_Click(object sender, EventArgs e)
         {
             using (var selectFileDialog = new OpenFileDialog{Title = "Select build JSON", Filter = "JSON files|*.json"})
@@ -356,7 +345,6 @@ namespace SCPatchDownloader
                     comboReleaseSelector.Items.Clear();
                     comboReleaseSelector.Items.Add(Path.GetFileNameWithoutExtension(selectFileDialog.FileName));
                     comboReleaseSelector.SelectedIndex = 0;
-                    urlList.Clear();
                     //ProcessFileList(selectFileDialog.FileName);
                 }
             }
