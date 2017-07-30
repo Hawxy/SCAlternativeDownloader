@@ -13,13 +13,10 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-//Move various functions out of main program and into seperate class
+//Static utility functions class
 
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using MaterialSkin.Controls;
 
 namespace SCPatchDownloader
