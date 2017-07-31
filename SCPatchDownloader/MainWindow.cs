@@ -336,14 +336,22 @@ namespace SCPatchDownloader
             {
                 if (selectFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    buttonDownloadStart.Enabled = true;
-                    comboReleaseSelector.Enabled = false;
+                    string buildnumber;
+                    try
+                    {
+                        var data = JsonConvert.DeserializeObject<BuildData>(File.ReadAllText(selectFileDialog.FileName));
+                        buildnumber = data.key_prefix.Split('/')[2];
+                        AddNewBuildInfo(data, buildnumber);
+                    }
+                    catch (Exception ex) when (ex is JsonException || ex is IndexOutOfRangeException)
+                    {
+                        MessageBox.Show("Invalid build file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                     checkBoxNativeFile.Checked = false;
                     checkBoxNativeFile.Enabled = false;
-                    comboReleaseSelector.Items.Clear();
-                    comboReleaseSelector.Items.Add(Path.GetFileNameWithoutExtension(selectFileDialog.FileName));
-                    comboReleaseSelector.SelectedIndex = 0;
-                    //ProcessFileList(selectFileDialog.FileName);
+                    comboReleaseSelector.Items.Add(buildnumber);
+                    comboReleaseSelector.SelectedIndex = comboReleaseSelector.Items.Count-1;
                 }
             }
 
