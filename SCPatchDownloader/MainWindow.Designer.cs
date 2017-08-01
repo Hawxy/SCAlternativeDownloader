@@ -53,6 +53,7 @@
             // 
             // comboReleaseSelector
             // 
+            this.comboReleaseSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboReleaseSelector.Font = new System.Drawing.Font("Roboto", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboReleaseSelector.FormattingEnabled = true;
             this.comboReleaseSelector.Location = new System.Drawing.Point(15, 105);

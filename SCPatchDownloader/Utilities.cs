@@ -15,6 +15,7 @@
 
 //Static utility functions class
 
+using System;
 using System.IO;
 using System.Windows.Forms;
 using MaterialSkin.Controls;
@@ -29,7 +30,7 @@ namespace SCPatchDownloader
             string filestructure;
             if (notnative)
             {
-                filestructure = $"StarCitizen\\{selectedUniverse}";
+                filestructure = $@"StarCitizen\{selectedUniverse}";
             }
             else
             {
@@ -37,47 +38,6 @@ namespace SCPatchDownloader
                 filestructure = Path.Combine(keysplit[1], keysplit[2]);
             }
             return filestructure;
-        }
-        //general cleanup on form reset
-        public static void ResetAllBoxes(Control form)
-        {
-            foreach (Control control in form.Controls)
-            {
-                if (control is MaterialSingleLineTextField x)
-                {
-                    x.Enabled = true;
-                }
-                if (control is ComboBox c)
-                {
-                    c.SelectedIndex = 0;
-                    c.Enabled = true;
-                }
-                if (control is ProgressBar p)
-                {
-                    p.Value = 0;
-                }
-                if (control is CheckBox b)
-                {
-                    b.Enabled = true;
-                }
-                //Gotta do this manually
-                if (control.Name.Equals("ButtonCancel"))
-                {
-                    control.Enabled = false;
-                }
-                if (control.Name.Equals("buttonSelectRelease") || control.Name.Equals("buttonBrowseDirectory"))
-                {
-                    control.Enabled = true;
-                }
-                if (control.Name.Equals("labelCurrentFile"))
-                {
-                    control.Text = "...";
-                }
-                if (control.Name.Equals("labelMegaBytes.Text"))
-                {
-                    control.Text = "N/A MB/s";
-                }
-            }
         }
     }
 }

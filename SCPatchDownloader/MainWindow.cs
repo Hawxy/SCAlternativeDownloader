@@ -37,6 +37,15 @@ namespace SCPatchDownloader
 {
     public partial class MainWindow : MaterialForm
     {
+        public enum ControlStates
+        {
+            Default,
+            Busy,
+            DownloadStart,
+            NormalBuild,
+            CustomBuild
+        }
+
         private readonly Dictionary<string, LauncherInfo> launcherInfoDict = new Dictionary<string, LauncherInfo>();
 
         private readonly Dictionary<string, BuildData> buildDataDict = new Dictionary<string, BuildData>();
@@ -66,7 +75,7 @@ namespace SCPatchDownloader
             if (!string.IsNullOrEmpty(Settings.Default.PrvDir))
                 textBoxDownloadDirectory.Text = Settings.Default.PrvDir;
             else
-                textBoxDownloadDirectory.Text = Directory.GetCurrentDirectory() + "\\SCDownload";
+                textBoxDownloadDirectory.Text = Directory.GetCurrentDirectory() + @"\SCDownload";
 
 
             toolTip_Native.SetToolTip(checkBoxNativeFile,
@@ -77,9 +86,11 @@ namespace SCPatchDownloader
         //on Browse Directory click
         private void BrowseDirectoryButtonClick(object sender, EventArgs e)
         {
-            var folderDir = new VistaFolderBrowserDialog {ShowNewFolderButton = true};
-            if (folderDir.ShowDialog() == DialogResult.OK)
-                textBoxDownloadDirectory.Text = folderDir.SelectedPath;
+            using (var folderDir = new VistaFolderBrowserDialog {ShowNewFolderButton = true})
+            {
+                if (folderDir.ShowDialog() == DialogResult.OK)
+                    textBoxDownloadDirectory.Text = folderDir.SelectedPath;
+            }
         }
 
         //load available game version on application startup
@@ -144,13 +155,14 @@ namespace SCPatchDownloader
             if (buildDataDict.TryGetValue(requestedUniverse, out BuildData checkedBuildData))
             {
                 selectedBuildData = checkedBuildData;
-                labelCurrentStatus.Text = $"{checkedBuildData.file_count_total} files are ready for download";
-                buttonDownloadStart.Enabled = true;
+                labelCurrentStatus.Text = $"{checkedBuildData.FileCount} files are ready for download";
+                SetWindowState(checkedBuildData.StoredControlState);
                 return;
             }
 
             try
             {
+                SetWindowState(ControlStates.Busy);
                 //get file list
                 if (!string.IsNullOrEmpty(requestedUniverse))
                 {
@@ -180,9 +192,9 @@ namespace SCPatchDownloader
         private void AddNewBuildInfo(BuildData buildData, string requestedUniverse)
         {
             buildDataDict.Add(requestedUniverse, buildData);
-            labelCurrentStatus.Text = $"{buildData.file_count_total} files are ready for download";
+            labelCurrentStatus.Text = $"{buildData.FileCount} files are ready for download";
             selectedBuildData = buildData;
-            buttonDownloadStart.Enabled = true;
+            SetWindowState(buildData.StoredControlState);
         }
 
         //cancel download
@@ -201,12 +213,12 @@ namespace SCPatchDownloader
         //download button
         private async void DownloadStartButtonClick(object sender, EventArgs e)
         {
-            buttonCancel.Enabled = true;
-            buttonDownloadStart.Enabled = false;
-            comboReleaseSelector.Enabled = false;
-            textBoxDownloadDirectory.Enabled = false;
-            buttonBrowseDirectory.Enabled = false;
-            checkBoxNativeFile.Enabled = false;
+            if (!Uri.IsWellFormedUriString(textBoxDownloadDirectory.Text, UriKind.Absolute))
+            {
+                MessageBox.Show("Directory is invalid", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            SetWindowState(ControlStates.DownloadStart);
             await DownloadGameFiles();
         }
 
@@ -219,10 +231,10 @@ namespace SCPatchDownloader
             string selectedUniverse = comboReleaseSelector.SelectedItem as string;
 
             int fileNum = 1;
-            int totfileNum = selectedBuildData.file_count_total;
+            int totfileNum = selectedBuildData.FileCount;
             var randomws = new Random();
 
-            string coreFileStructure = Path.Combine(downloadLocation, GetFileStructure(notnative, selectedUniverse, selectedBuildData.key_prefix));
+            string coreFileStructure = Path.Combine(downloadLocation, GetFileStructure(notnative, selectedUniverse, selectedBuildData.KeyPrefix));
 
             var security = new DirectorySecurity();
             security.AddAccessRule(new FileSystemAccessRule(
@@ -233,10 +245,10 @@ namespace SCPatchDownloader
             if (!string.IsNullOrWhiteSpace(downloadLocation))
                 try
                 {
-                    foreach (string file in selectedBuildData.file_list)
+                    foreach (string file in selectedBuildData.FileList)
                     {
                         labelCurrentStatus.Text = $"Downloading file {fileNum} of {totfileNum}";
-                        var wsurl = new Uri(new Uri(selectedBuildData.webseed_urls[randomws.Next(selectedBuildData.webseed_urls.Count)]), selectedBuildData.key_prefix.TrimStart('/'));
+                        var wsurl = new Uri(new Uri(selectedBuildData.WebseedURLs[randomws.Next(selectedBuildData.WebseedURLs.Count)]), selectedBuildData.KeyPrefix.TrimStart('/'));
                         var downloadurl = new Uri($"{wsurl}/{file}");
 
                         labelCurrentFile.Text = file;
@@ -284,10 +296,10 @@ namespace SCPatchDownloader
             else
                 MessageBox.Show("Please provide a valid download location", "Error", MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
-            if (fileNum - 1 == selectedBuildData.webseed_urls.Count)
+            if (fileNum - 1 == selectedBuildData.WebseedURLs.Count)
             {
                 MessageBox.Show("Download Complete!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ResetAllBoxes(this);
+                SetWindowState(ControlStates.Default);
                 labelCurrentStatus.Text = "Download Complete!";
             }
         }
@@ -307,8 +319,7 @@ namespace SCPatchDownloader
             {
                 client.Dispose();
                 if (fulldir != null) File.Delete(fulldir);
-                labelMegaBytes.Text = "N/A MB/s";
-                ResetAllBoxes(this);
+                SetWindowState(ControlStates.Default);
             }
         }
 
@@ -340,7 +351,8 @@ namespace SCPatchDownloader
                     try
                     {
                         var data = JsonConvert.DeserializeObject<BuildData>(File.ReadAllText(selectFileDialog.FileName));
-                        buildnumber = data.key_prefix.Split('/')[2];
+                        data.StoredControlState = ControlStates.CustomBuild;
+                        buildnumber = data.KeyPrefix.Split('/')[2];
                         AddNewBuildInfo(data, buildnumber);
                     }
                     catch (Exception ex) when (ex is JsonException || ex is IndexOutOfRangeException)
@@ -348,13 +360,58 @@ namespace SCPatchDownloader
                         MessageBox.Show("Invalid build file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    checkBoxNativeFile.Checked = false;
-                    checkBoxNativeFile.Enabled = false;
                     comboReleaseSelector.Items.Add(buildnumber);
-                    comboReleaseSelector.SelectedIndex = comboReleaseSelector.Items.Count-1;
+                    comboReleaseSelector.SelectedIndex = comboReleaseSelector.Items.Count - 1;
                 }
             }
 
         }
+
+        private void SetWindowState(ControlStates state)
+        {
+            switch (state)
+            {
+                case ControlStates.Default:
+                    textBoxDownloadDirectory.Enabled = true;
+                    comboReleaseSelector.SelectedItem = 0;
+                    comboReleaseSelector.Enabled = true;
+                    progressBarFile.Value = 0;
+                    progressBarStatus.Value = 0;
+                    checkBoxNativeFile.Enabled = true;
+                    buttonCancel.Enabled = false;
+                    buttonBrowseDirectory.Enabled = true;
+                    buttonDownloadStart.Enabled = true;
+                    customBuildSelect.Enabled = true;
+                    labelCurrentFile.Text = "...";
+                    labelMegaBytes.Text = "N/A MB/s";
+                    break;
+                case ControlStates.Busy:
+                    buttonDownloadStart.Enabled = false;
+                    break;
+                case ControlStates.DownloadStart:
+                    buttonCancel.Enabled = true;
+                    buttonDownloadStart.Enabled = false;
+                    comboReleaseSelector.Enabled = false;
+                    textBoxDownloadDirectory.Enabled = false;
+                    buttonBrowseDirectory.Enabled = false;
+                    checkBoxNativeFile.Enabled = false;
+                    customBuildSelect.Enabled = false;
+                    break;
+                case ControlStates.NormalBuild:
+                    checkBoxNativeFile.Checked = true;
+                    checkBoxNativeFile.Enabled = true;
+                    buttonDownloadStart.Enabled = true;
+                    break;
+                case ControlStates.CustomBuild:
+                    checkBoxNativeFile.Checked = false;
+                    checkBoxNativeFile.Enabled = false;
+                    buttonDownloadStart.Enabled = true;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            }
+        }
+
+
     }
 }

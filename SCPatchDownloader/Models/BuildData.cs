@@ -1,17 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace SCPatchDownloader.Models
 {
     class BuildData
     {
-        public ulong byte_count_total { get; set; }
-        public int file_count_total { get; set; }
-        public List<string> file_list { get; set; }
-        public string key_prefix { get; set; }
-        public List<string> webseed_urls { get; set; }
+        [JsonProperty("byte_count_total")]
+        public ulong ByteCountTotal { get; set; }
+        [JsonProperty("file_count_total")]
+        public int FileCount { get; set; }
+        [JsonProperty("file_list")]
+        public List<string> FileList { get; set; }
+        [JsonProperty("key_prefix")]
+        public string KeyPrefix { get; set; }
+        [JsonProperty("webseed_urls")]
+        public List<string> WebseedURLs { get; set; }
+        [JsonIgnore]
+        public MainWindow.ControlStates StoredControlState { get; set; } = MainWindow.ControlStates.NormalBuild;
     }
 }
