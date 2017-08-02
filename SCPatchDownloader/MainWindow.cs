@@ -338,7 +338,7 @@ namespace SCPatchDownloader
 
         private void GitHubButtonClick(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/Hawxy/SCAlternativePatcher/");
+            Process.Start("https://github.com/Hawxy/SCAlternativeDownloader/");
         }
 
         private void customBuildSelect_Click(object sender, EventArgs e)
