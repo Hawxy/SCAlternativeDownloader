@@ -13,121 +13,37 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-//Some components of this file are based on work by NimmoG
+//Static utility functions class
 
-//Move various functions out of main program and into seperate class
-
+using System;
 using System.IO;
-using System.Windows.Forms;
-using MaterialSkin.Controls;
 
 namespace SCPatchDownloader
 {
     public class Utilities
     {
-        //remove quotations from a line
-        public static string StripQuotations(string line)
+        //native vs build-based file structure
+        public static string GetFileStructure(bool notnative, string selectedUniverse, string keyprefix)
         {
-            string[] parts = line.Split('"');
-            return parts[1];
-        }
-
-        //seek to specific line in file
-        public static string SeekToLine(StreamReader file, string lineContents)
-        {
-            string line = "";
-            while (!line.Contains(lineContents))
+            string filestructure;
+            if (notnative)
             {
-                line = file.ReadLine();
-            }
-            return line;
-        }
-
-        //get entire file structure
-        //cleanup this section at some point
-        public static string GetFileStructure(string url, bool native, ComboBox relSelector)
-        {
-            string[] parts = url.Split('/');
-            string filename = "";
-            if (native)
-            {
-                for (int i = 7; i < parts.Length - 1; i++)
-                {
-                    filename += "\\" + parts[i];
-                }
-                filename = "\\StarCitizen\\" + relSelector.SelectedItem + "\\" + filename;
+                filestructure = $@"StarCitizen\{selectedUniverse}";
             }
             else
             {
-                for (int i = 5; i < parts.Length - 1; i++)
-                {
-                    filename += "\\" + parts[i];
-                }
+                string[] keysplit = keyprefix.Split('/');
+                filestructure = Path.Combine(keysplit[1], keysplit[2]);
             }
-
-            return filename;
+            return filestructure;
         }
 
-        //last 3 parts of directory to display in the UI
-        public static string GetCoreDirectory(string url)
+        //Verify download location is valid. Thanks to LamdaComplex on Stackoverflow
+        public static bool IsPathValidRootedLocal(String pathString)
         {
-            string[] parts = url.Split('/');
-            string filedir = "";
-            for (int i = parts.Length - 3; i < parts.Length - 1; i++)
-            {
-                filedir += "\\" + parts[i];
-            }
-            return filedir.Remove(0, 1);
-        }
-
-        //get name of downloading file
-        public static string GetFileName(string url)
-        {
-            string[] parts = url.Split('/');
-            string filename = parts[parts.Length - 1];
-            return filename;
-        }
-
-        //general cleanup on form reset
-        public static void ResetAllBoxes(Control form)
-        {
-            foreach (Control control in form.Controls)
-            {
-                if (control is MaterialSingleLineTextField x)
-                {
-                    x.Enabled = true;
-                }
-                if (control is ComboBox c)
-                {
-                    c.SelectedIndex = 0;
-                    c.Enabled = true;
-                }
-                if (control is ProgressBar p)
-                {
-                    p.Value = 0;
-                }
-                if (control is CheckBox b)
-                {
-                    b.Enabled = true;
-                }
-                //Gotta do this manually
-                if (control.Name.Equals("ButtonCancel"))
-                {
-                    control.Enabled = false;
-                }
-                if (control.Name.Equals("buttonSelectRelease") || control.Name.Equals("buttonBrowseDirectory"))
-                {
-                    control.Enabled = true;
-                }
-                if (control.Name.Equals("labelCurrentFile"))
-                {
-                    control.Text = "...";
-                }
-                if (control.Name.Equals("labelMegaBytes.Text"))
-                {
-                    control.Text = "N/A MB/s";
-                }
-            }
+            Uri pathUri;
+            Boolean isValidUri = Uri.TryCreate(pathString, UriKind.Absolute, out pathUri);
+            return isValidUri && pathUri != null && pathUri.IsLoopback;
         }
     }
 }

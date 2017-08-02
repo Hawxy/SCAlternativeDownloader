@@ -48,18 +48,20 @@
             this.toolTip_Native = new MaterialSkin.Controls.MaterialToolTip(this.components);
             this.progressBarFile = new MaterialSkin.Controls.MaterialProgressBar();
             this.labelCurrentFile = new MaterialSkin.Controls.MaterialLabel();
-            this.buttonSelectRelease = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.customBuildSelect = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.customBuildSelect = new MaterialSkin.Controls.MaterialFlatButton();
+            this.toolTip_custom = new MaterialSkin.Controls.MaterialToolTip(this.components);
             this.SuspendLayout();
             // 
             // comboReleaseSelector
             // 
+            this.comboReleaseSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboReleaseSelector.Font = new System.Drawing.Font("Roboto", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboReleaseSelector.FormattingEnabled = true;
             this.comboReleaseSelector.Location = new System.Drawing.Point(15, 105);
             this.comboReleaseSelector.Name = "comboReleaseSelector";
             this.comboReleaseSelector.Size = new System.Drawing.Size(141, 25);
             this.comboReleaseSelector.TabIndex = 0;
+            this.comboReleaseSelector.SelectedIndexChanged += new System.EventHandler(this.comboReleaseSelector_SelectedIndexChanged);
             // 
             // labelRT
             // 
@@ -237,9 +239,9 @@
             this.labelDBH.Location = new System.Drawing.Point(16, 507);
             this.labelDBH.MouseState = MaterialSkin.MouseState.HOVER;
             this.labelDBH.Name = "labelDBH";
-            this.labelDBH.Size = new System.Drawing.Size(281, 19);
+            this.labelDBH.Size = new System.Drawing.Size(120, 19);
             this.labelDBH.TabIndex = 31;
-            this.labelDBH.Text = "Developed by Hawx. Based on work by NimmoG.";
+            this.labelDBH.Text = "Developed by Hawx";
             this.labelDBH.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             // 
             // labelZAS
@@ -301,37 +303,28 @@
             this.labelCurrentFile.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.labelCurrentFile.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             // 
-            // buttonSelectRelease
-            // 
-            this.buttonSelectRelease.AutoSize = true;
-            this.buttonSelectRelease.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.buttonSelectRelease.Depth = 0;
-            this.buttonSelectRelease.Icon = null;
-            this.buttonSelectRelease.Location = new System.Drawing.Point(167, 98);
-            this.buttonSelectRelease.MouseState = MaterialSkin.MouseState.HOVER;
-            this.buttonSelectRelease.Name = "buttonSelectRelease";
-            this.buttonSelectRelease.Primary = true;
-            this.buttonSelectRelease.Size = new System.Drawing.Size(130, 36);
-            this.buttonSelectRelease.TabIndex = 36;
-            this.buttonSelectRelease.Text = "Select Release";
-            this.buttonSelectRelease.UseVisualStyleBackColor = true;
-            this.buttonSelectRelease.Click += new System.EventHandler(this.SelectReleaseButtonClick);
-            // 
             // customBuildSelect
             // 
             this.customBuildSelect.AutoSize = true;
             this.customBuildSelect.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.customBuildSelect.Depth = 0;
             this.customBuildSelect.Icon = null;
-            this.customBuildSelect.Location = new System.Drawing.Point(303, 98);
+            this.customBuildSelect.Location = new System.Drawing.Point(163, 98);
+            this.customBuildSelect.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.customBuildSelect.MouseState = MaterialSkin.MouseState.HOVER;
             this.customBuildSelect.Name = "customBuildSelect";
-            this.customBuildSelect.Primary = true;
-            this.customBuildSelect.Size = new System.Drawing.Size(32, 36);
-            this.customBuildSelect.TabIndex = 37;
-            this.customBuildSelect.Text = "...";
+            this.customBuildSelect.Primary = false;
+            this.customBuildSelect.Size = new System.Drawing.Size(158, 36);
+            this.customBuildSelect.TabIndex = 36;
+            this.customBuildSelect.Text = "Use custom build...";
             this.customBuildSelect.UseVisualStyleBackColor = true;
             this.customBuildSelect.Click += new System.EventHandler(this.customBuildSelect_Click);
+            // 
+            // toolTip_custom
+            // 
+            this.toolTip_custom.Depth = 0;
+            this.toolTip_custom.MouseState = MaterialSkin.MouseState.HOVER;
+            this.toolTip_custom.OwnerDraw = true;
             // 
             // MainWindow
             // 
@@ -339,7 +332,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(345, 571);
             this.Controls.Add(this.customBuildSelect);
-            this.Controls.Add(this.buttonSelectRelease);
             this.Controls.Add(this.labelCurrentFile);
             this.Controls.Add(this.progressBarFile);
             this.Controls.Add(this.buttonGithub);
@@ -389,8 +381,8 @@
         private MaterialSkin.Controls.MaterialToolTip toolTip_Native;
         private MaterialSkin.Controls.MaterialProgressBar progressBarFile;
         private MaterialSkin.Controls.MaterialLabel labelCurrentFile;
-        private MaterialSkin.Controls.MaterialRaisedButton buttonSelectRelease;
-        private MaterialSkin.Controls.MaterialRaisedButton customBuildSelect;
+        private MaterialSkin.Controls.MaterialFlatButton customBuildSelect;
+        private MaterialSkin.Controls.MaterialToolTip toolTip_custom;
     }
 }
 
