@@ -17,14 +17,12 @@
 
 using System;
 using System.IO;
-using System.Windows.Forms;
-using MaterialSkin.Controls;
 
 namespace SCPatchDownloader
 {
     public class Utilities
     {
-        //the bit that goes between the download dir and the files
+        //native vs build-based file structure
         public static string GetFileStructure(bool notnative, string selectedUniverse, string keyprefix)
         {
             string filestructure;
@@ -38,6 +36,14 @@ namespace SCPatchDownloader
                 filestructure = Path.Combine(keysplit[1], keysplit[2]);
             }
             return filestructure;
+        }
+
+        //Verify download location is valid. Thanks to LamdaComplex on Stackoverflow
+        public static bool IsPathValidRootedLocal(String pathString)
+        {
+            Uri pathUri;
+            Boolean isValidUri = Uri.TryCreate(pathString, UriKind.Absolute, out pathUri);
+            return isValidUri && pathUri != null && pathUri.IsLoopback;
         }
     }
 }

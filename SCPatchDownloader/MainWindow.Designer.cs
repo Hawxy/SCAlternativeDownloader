@@ -49,6 +49,7 @@
             this.progressBarFile = new MaterialSkin.Controls.MaterialProgressBar();
             this.labelCurrentFile = new MaterialSkin.Controls.MaterialLabel();
             this.customBuildSelect = new MaterialSkin.Controls.MaterialFlatButton();
+            this.toolTip_custom = new MaterialSkin.Controls.MaterialToolTip(this.components);
             this.SuspendLayout();
             // 
             // comboReleaseSelector
@@ -319,6 +320,12 @@
             this.customBuildSelect.UseVisualStyleBackColor = true;
             this.customBuildSelect.Click += new System.EventHandler(this.customBuildSelect_Click);
             // 
+            // toolTip_custom
+            // 
+            this.toolTip_custom.Depth = 0;
+            this.toolTip_custom.MouseState = MaterialSkin.MouseState.HOVER;
+            this.toolTip_custom.OwnerDraw = true;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -375,6 +382,7 @@
         private MaterialSkin.Controls.MaterialProgressBar progressBarFile;
         private MaterialSkin.Controls.MaterialLabel labelCurrentFile;
         private MaterialSkin.Controls.MaterialFlatButton customBuildSelect;
+        private MaterialSkin.Controls.MaterialToolTip toolTip_custom;
     }
 }
 

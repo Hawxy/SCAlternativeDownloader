@@ -80,6 +80,7 @@ namespace SCPatchDownloader
 
             toolTip_Native.SetToolTip(checkBoxNativeFile,
                 "Sorts files into public/test directories instead of using build number. Allows for easy copy/pasting or direct download into program files. Existing files will not be overwritten");
+            toolTip_custom.SetToolTip(customBuildSelect, "Allows you to add a custom build.json so you can download previous versions of SC");
             await DownloadPatchList();
         }
 
@@ -213,7 +214,7 @@ namespace SCPatchDownloader
         //download button
         private async void DownloadStartButtonClick(object sender, EventArgs e)
         {
-            if (!Uri.IsWellFormedUriString(textBoxDownloadDirectory.Text, UriKind.Absolute))
+            if (!IsPathValidRootedLocal(textBoxDownloadDirectory.Text))
             {
                 MessageBox.Show("Directory is invalid", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -221,7 +222,6 @@ namespace SCPatchDownloader
             SetWindowState(ControlStates.DownloadStart);
             await DownloadGameFiles();
         }
-
 
         private async Task DownloadGameFiles()
         {
