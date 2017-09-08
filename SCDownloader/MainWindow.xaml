@@ -73,7 +73,7 @@
                     <TextBox Name="DirectoryBox" Width="250" ></TextBox>
                     <Button Margin="10,3,3,3" Style="{DynamicResource MaterialDesignRaisedButton}" Height="27">...</Button>
                 </StackPanel>
-                <CheckBox Style="{DynamicResource MaterialDesignCheckBox}" IsChecked="True">Preserve Native File Structure</CheckBox>
+                <CheckBox Style="{DynamicResource MaterialDesignCheckBox}" IsChecked="True" ToolTip="Sorts files into public/test directories instead of using build number. Allows for easy copy/pasting or direct download into program files. Existing files will not be overwritten">Preserve Native File Structure</CheckBox>
             </StackPanel>
 
             <Border Grid.Row="3" Margin="0,16,0,16" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource MaterialDesignDivider}"></Border>
