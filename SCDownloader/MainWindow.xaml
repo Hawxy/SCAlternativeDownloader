@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SCDownloader"
+        xmlns:common="clr-namespace:SCDownloader.Common"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         GlowBrush="{DynamicResource AccentColorBrush}"
@@ -14,7 +15,7 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-        Title="" Height="540" Width="360" ResizeMode="CanMinimize">
+        Title="" Height="550" Width="370" ResizeMode="CanMinimize">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -70,10 +71,19 @@
             <StackPanel Grid.Row="2" HorizontalAlignment="Center">
                 <TextBlock HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignSubheadingTextBlock}">Directory</TextBlock>
                 <StackPanel Orientation="Horizontal">
-                    <TextBox Name="DirectoryBox" Width="250" ></TextBox>
+                    <materialDesign:PackIcon Kind="File" VerticalAlignment="Center" Margin="4,0,4,0" Foreground="{Binding ElementName=DirectoryBox, Path=BorderBrush}"/>
+                    <TextBox x:Name="DirectoryBox" Width="250" Loaded="DirectoryBox_OnLoaded">
+                        <TextBox.Text>
+                            <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <common:DirectoryFormatValidation ValidatesOnTargetUpdated="True"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                     <Button Margin="10,3,3,3" Style="{DynamicResource MaterialDesignRaisedButton}" Height="27">...</Button>
                 </StackPanel>
-                <CheckBox Style="{DynamicResource MaterialDesignCheckBox}" IsChecked="True" ToolTip="Sorts files into public/test directories instead of using build number. Allows for easy copy/pasting or direct download into program files. Existing files will not be overwritten">Preserve Native File Structure</CheckBox>
+                <CheckBox Style="{DynamicResource MaterialDesignCheckBox}" Margin="0,10,0,0" IsChecked="True" ToolTip="Sorts files into public/test directories instead of using build number. Allows for easy copy/pasting or direct download into program files. Existing files will not be overwritten">Preserve Native File Structure</CheckBox>
             </StackPanel>
 
             <Border Grid.Row="3" Margin="0,16,0,16" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource MaterialDesignDivider}"></Border>

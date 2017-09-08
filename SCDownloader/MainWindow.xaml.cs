@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Windows;
 using MaterialDesignThemes.Wpf;
 using SCDownloader.Models;
 using SCDownloader.Properties;
@@ -25,6 +26,7 @@ namespace SCDownloader
 {
     public partial class MainWindow 
     {
+        public string UserDirectory { get; set; }
         public enum ControlStates
         {
             Default,
@@ -49,11 +51,10 @@ namespace SCDownloader
         public MainWindow()
         {
             InitializeComponent();
-
-            Loaded += MainWindow_Loaded;
+            DataContext = this;
         }
 
-        private void MainWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private void DirectoryBox_OnLoaded(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrEmpty(Settings.Default.PrvDir))
                 DirectoryBox.Text = Settings.Default.PrvDir;
