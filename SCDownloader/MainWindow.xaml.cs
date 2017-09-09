@@ -13,20 +13,12 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Net;
-using System.Windows;
-using MaterialDesignThemes.Wpf;
-using SCDownloader.Models;
-using SCDownloader.Properties;
 
 namespace SCDownloader
 {
-    public partial class MainWindow 
+    public partial class MainWindow
     {
-        public string UserDirectory { get; set; }
         public enum ControlStates
         {
             Default,
@@ -35,31 +27,13 @@ namespace SCDownloader
             NormalBuild,
             CustomBuild
         }
-
-        private readonly Dictionary<string, LauncherInfo> launcherInfoDict = new Dictionary<string, LauncherInfo>();
-
-        private readonly Dictionary<string, BuildData> buildDataDict = new Dictionary<string, BuildData>();
-
-        private BuildData selectedBuildData = new BuildData();
-
         private readonly Stopwatch sw = new Stopwatch();
-
-        private WebClient client;
-
+        
         private string fulldir;
 
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = this;
-        }
-
-        private void DirectoryBox_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            if (!string.IsNullOrEmpty(Settings.Default.PrvDir))
-                DirectoryBox.Text = Settings.Default.PrvDir;
-            else
-                DirectoryBox.Text = Directory.GetCurrentDirectory() + @"\SCDownload";
         }
     }
 }

@@ -7,6 +7,7 @@
         xmlns:common="clr-namespace:SCDownloader.Common"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:vm="clr-namespace:SCDownloader.Models"
         GlowBrush="{DynamicResource AccentColorBrush}"
         BorderThickness="1"
         mc:Ignorable="d"
@@ -32,6 +33,9 @@
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource MaterialDesignToolTip}"/>
         </ResourceDictionary>
     </Window.Resources>
+    <Window.DataContext>
+        <vm:MainWindowVM/>
+    </Window.DataContext>
     <Grid>
         <!--ColorZone-->
         <Grid.RowDefinitions>
@@ -58,9 +62,7 @@
             <StackPanel HorizontalAlignment="Center">
                 <TextBlock HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignSubheadingTextBlock}">Release Type</TextBlock>
                 <StackPanel Orientation="Horizontal">
-                    <ComboBox Name="ReleaseCombo" Width="124" >
-                        <ComboBoxItem IsSelected="True">Public</ComboBoxItem>
-                        <ComboBoxItem>Test</ComboBoxItem>
+                    <ComboBox Name="ReleaseCombo" ItemsSource="{Binding LauncherInfoCollection}" DisplayMemberPath="UniverseServer" Width="124" SelectedItem="{Binding SelectedLauncherInfo, Mode=TwoWay}">
                     </ComboBox>
                     <Button Name="UseCustomBuildButton" Margin="10,3,3,3" Content="ADD CUSTOM BUILD..." Style="{DynamicResource MaterialDesignFlatButton}" ToolTip="Allows for the addition of a custom build.json from a previous version of SC"/>
                 </StackPanel>
@@ -72,9 +74,9 @@
                 <TextBlock HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignSubheadingTextBlock}">Directory</TextBlock>
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="File" VerticalAlignment="Center" Margin="4,0,4,0" Foreground="{Binding ElementName=DirectoryBox, Path=BorderBrush}"/>
-                    <TextBox x:Name="DirectoryBox" Width="250" Loaded="DirectoryBox_OnLoaded">
+                    <TextBox x:Name="DirectoryBox" Width="250">
                         <TextBox.Text>
-                            <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="UserDirectory" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <common:DirectoryFormatValidation ValidatesOnTargetUpdated="True"/>
                                 </Binding.ValidationRules>
@@ -101,8 +103,8 @@
             <!--ProgramStatus-->
             <StackPanel Grid.Row="6" HorizontalAlignment="Center">
                 <TextBlock Margin="0,0,0,5" Style="{DynamicResource MaterialDesignSubheadingTextBlock}" HorizontalAlignment="Center">Program Status</TextBlock>
-                <TextBlock Margin="0,0,0,5" Name="StatusBlock" Text="N/A" HorizontalAlignment="Center"></TextBlock>
-                <ProgressBar Name="TotalProgressBar" Style="{DynamicResource MaterialDesignLinearProgressBar}" Width="269"/>
+                <TextBlock Margin="0,0,0,5" Name="StatusBlock" Text="{Binding Path=CurrentStatus}" HorizontalAlignment="Center" ></TextBlock>
+                <ProgressBar Name="TotalProgressBar" Style="{DynamicResource MaterialDesignLinearProgressBar}" Width="269" Value="{Binding Path=PrimaryProgressValue}"/>
                 <TextBlock Margin="0,5,0,10" Name="CurrentFileBlock" Text="..." HorizontalAlignment="Center"></TextBlock>
                 <ProgressBar Name="FileProgressBar" Style="{DynamicResource MaterialDesignLinearProgressBar}" Width="269"/>
                 <TextBlock Margin="0,5,0,10" Name="SpeedBlock" Text="N/A MB/s" HorizontalAlignment="Center"></TextBlock>
