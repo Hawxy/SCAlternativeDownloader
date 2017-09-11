@@ -3,8 +3,10 @@ using Newtonsoft.Json;
 
 namespace SCDownloader.Models
 {
-    class BuildData
+    internal class BuildData
     {
+        [JsonIgnore]
+        public string UniverseType { get; set; }
         [JsonProperty("byte_count_total")]
         public ulong ByteCountTotal { get; set; }
         [JsonProperty("file_count_total")]

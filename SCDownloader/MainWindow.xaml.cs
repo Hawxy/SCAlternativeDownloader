@@ -13,8 +13,6 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using System.Diagnostics;
-
 namespace SCDownloader
 {
     public partial class MainWindow
@@ -27,9 +25,6 @@ namespace SCDownloader
             NormalBuild,
             CustomBuild
         }
-        private readonly Stopwatch sw = new Stopwatch();
-        
-        private string fulldir;
 
         public MainWindow()
         {

@@ -62,7 +62,7 @@
             <StackPanel HorizontalAlignment="Center">
                 <TextBlock HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignSubheadingTextBlock}">Release Type</TextBlock>
                 <StackPanel Orientation="Horizontal">
-                    <ComboBox Name="ReleaseCombo" ItemsSource="{Binding LauncherInfoCollection}" DisplayMemberPath="UniverseServer" Width="124" SelectedItem="{Binding SelectedLauncherInfo, Mode=TwoWay}">
+                    <ComboBox Name="ReleaseCombo" ItemsSource="{Binding LauncherInfoCollection}" DisplayMemberPath="UniverseType" Width="124" SelectedItem="{Binding SelectedLauncherInfo, Mode=TwoWay}">
                     </ComboBox>
                     <Button Name="UseCustomBuildButton" Margin="10,3,3,3" Content="ADD CUSTOM BUILD..." Style="{DynamicResource MaterialDesignFlatButton}" ToolTip="Allows for the addition of a custom build.json from a previous version of SC"/>
                 </StackPanel>
