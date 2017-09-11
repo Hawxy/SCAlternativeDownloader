@@ -1,6 +1,9 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
+using System.Windows.Data;
+using SCDownloader.Models;
 
+//https://stackoverflow.com/a/30910150
 namespace SCDownloader.Common
 {
     internal class DirectoryFormatValidation : ValidationRule
@@ -12,6 +15,14 @@ namespace SCDownloader.Common
                 return ValidationResult.ValidResult;
             }
             return new ValidationResult(false, "Directory must be a valid format");
+        }
+
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo, BindingExpressionBase owner)
+        {
+            ValidationResult result = base.Validate(value, cultureInfo, owner);
+            var vm = (MainWindowVM) ((BindingExpression) owner).DataItem;
+            vm.IsReadytoDownload = result.IsValid;
+            return result;
         }
     }
 }
