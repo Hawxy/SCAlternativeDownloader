@@ -96,8 +96,7 @@ namespace SCDownloader.Models
         private readonly Stopwatch sw = new Stopwatch();
         public string SpeedText { get; set; } = "N/A MB/s";
         private readonly IProgress<double> _bytesRecieved;
-        private void DownloadSpeedChanged(double b) =>
-            SpeedText = $"{b / 1024 / 1024 / sw.Elapsed.TotalSeconds:0.00} MB/s";
+        private void DownloadSpeedChanged(double b) => SpeedText = $"{b / 1024 / 1024 / sw.Elapsed.TotalSeconds:0.00} MB/s";
 
         //Download manifest on program startup
         public async Task DownloadPatchList()
@@ -230,6 +229,8 @@ namespace SCDownloader.Models
 
             try
             {
+                isDownloading = true;
+                _cancelDownloadSource = new CancellationTokenSource();
                 foreach (string file in SelectedBuildData.FileList)
                 {
                     CurrentStatus = $"Downloading file {fileNum} of {totalFileNum}";
@@ -242,7 +243,10 @@ namespace SCDownloader.Models
                     if (!File.Exists(_fulldir))
                     {
                         Directory.CreateDirectory(Path.GetDirectoryName(_fulldir), security);
+                        sw.Start();
                         await new DownloadHandlers().DownloadFile(_bytesRecieved, _fileProgress, downloadurl, _fulldir, _cancelDownloadSource.Token);
+                        if (_cancelDownloadSource.Token.IsCancellationRequested)
+                            return;
                     }
                     fileNum += 1;
 
@@ -290,6 +294,7 @@ namespace SCDownloader.Models
         {
             // DialogResult result = MessageBox.Show("Are you sure you want to cancel?", "Cancel Download",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
             _cancelDownloadSource.Cancel();
+            //TODO fix this
             if (_fulldir != null)
             {
                 File.Delete(_fulldir);
