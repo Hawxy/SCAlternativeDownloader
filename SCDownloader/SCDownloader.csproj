@@ -83,6 +83,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="ErrorDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -94,7 +98,11 @@
     <Compile Include="BoilerClasses\RelayCommand.cs" />
     <Compile Include="Common\DirectoryFormatValidation.cs" />
     <Compile Include="Common\DownloadHandlers.cs" />
+    <Compile Include="Common\ErrorDialogHandler.cs" />
     <Compile Include="Common\Utilities.cs" />
+    <Compile Include="ErrorDialog.xaml.cs">
+      <DependentUpon>ErrorDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -102,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\BuildData.cs" />
+    <Compile Include="Models\ErrorVM.cs" />
     <Compile Include="Models\LauncherInfo.cs" />
     <Compile Include="Models\MainWindowVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

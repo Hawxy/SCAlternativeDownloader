@@ -36,21 +36,24 @@ namespace SCDownloader.Models
     internal class MainWindowVM : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
         //User download directory
         public string UserDirectory { get; set; }
 
         private void SetUserDirectory()
         {
             if (!string.IsNullOrEmpty(Settings.Default.PrvDir))
-                UserDirectory= Settings.Default.PrvDir;
+                UserDirectory = Settings.Default.PrvDir;
             else
                 UserDirectory = Directory.GetCurrentDirectory() + @"\SCDownload";
         }
 
         //Collection of LauncherInfo
-        public ObservableCollection<LauncherInfo> LauncherInfoCollection { get; set; } = new ObservableCollection<LauncherInfo>();
+        public ObservableCollection<LauncherInfo> LauncherInfoCollection { get; set; } =
+            new ObservableCollection<LauncherInfo>();
 
         private LauncherInfo _selectedLauncherInfo;
+
         public LauncherInfo SelectedLauncherInfo
         {
             get => _selectedLauncherInfo;
@@ -60,12 +63,13 @@ namespace SCDownloader.Models
                 //Maybe find a better way to do this in the future
                 _ = SelectedLauncherInfoChanged();
             }
-            
         }
-       
+
 
         //Collection of build data
-        public ObservableCollection<BuildData> BuildDataCollection { get; set; } = new ObservableCollection<BuildData>();
+        public ObservableCollection<BuildData> BuildDataCollection { get; set; } =
+            new ObservableCollection<BuildData>();
+
         public BuildData SelectedBuildData { get; set; }
 
         //Current status of Program
@@ -77,33 +81,40 @@ namespace SCDownloader.Models
             _fileProgress = new Progress<double>(FileProgressChanged);
             _bytesRecieved = new Progress<double>(DownloadSpeedChanged);
             SetUserDirectory();
-           _ = DownloadPatchList();
+            _ = DownloadPatchList();
         }
 
         //Progress of main progress bar
         private readonly IProgress<double> _progress;
+
         public double PrimaryProgressValue { get; set; }
         private void PrimaryDownloadProgressChanged(double v) => PrimaryProgressValue = v;
 
         //Progress of file progress bar
         private readonly IProgress<double> _fileProgress;
+
         public double FileProgress { get; set; }
         private void FileProgressChanged(double f) => FileProgress = f;
 
         //Current file label
         public string CurrentFileText { get; set; } = "...";
+
         //Speed label
         private readonly Stopwatch sw = new Stopwatch();
+
         public string SpeedText { get; set; } = "N/A MB/s";
         private readonly IProgress<double> _bytesRecieved;
-        private void DownloadSpeedChanged(double b) => SpeedText = $"{b / 1024 / 1024 / sw.Elapsed.TotalSeconds:0.00} MB/s";
+
+        private void DownloadSpeedChanged(double b) => SpeedText =
+            $"{b / 1024 / 1024 / sw.Elapsed.TotalSeconds:0.00} MB/s";
 
         //Download manifest on program startup
         public async Task DownloadPatchList()
         {
             try
             {
-                string launcherInfoStr = await new DownloadHandlers().DownloadString(_progress, "http://manifest.robertsspaceindustries.com/Launcher/_LauncherInfo");
+                string launcherInfoStr = await new DownloadHandlers().DownloadString(_progress,
+                    "http://manifest.robertsspaceindustries.com/Launcher/_LauncherInfo");
                 CurrentStatus = "Loading Manifest Complete";
 
                 if (!string.IsNullOrEmpty(launcherInfoStr))
@@ -120,12 +131,13 @@ namespace SCDownloader.Models
                                 string[] universes = Array.ConvertAll(lineitems[1].Split(','), p => p.Trim());
                                 foreach (var item in universes)
                                 {
-                                    LauncherInfoCollection.Add(new LauncherInfo{UniverseType = item});
+                                    LauncherInfoCollection.Add(new LauncherInfo { UniverseType = item });
                                 }
                             }
                             else
                             {
-                                var info = LauncherInfoCollection.FirstOrDefault(x => lineitems[0].StartsWith(x.UniverseType));
+                                var info = LauncherInfoCollection.FirstOrDefault(x => lineitems[0]
+                                    .StartsWith(x.UniverseType));
                                 foreach (var field in fields)
                                 {
                                     if (lineitems[0].EndsWith(field.Name, StringComparison.CurrentCultureIgnoreCase))
@@ -145,7 +157,7 @@ namespace SCDownloader.Models
             catch (WebException)
             {
                 //TODO error dialog
-                // MessageBox.Show("Unable to download manifest. Exiting.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                await new ErrorDialogHandler().ShowErrorDialog("WebException");
                 Application.Current.Shutdown();
             }
         }
@@ -153,13 +165,14 @@ namespace SCDownloader.Models
         public async Task SelectedLauncherInfoChanged()
         {
             string requestedUniverse = SelectedLauncherInfo.UniverseType;
-            if (BuildDataCollection.ToDictionary(x => x.UniverseType).TryGetValue(requestedUniverse, out BuildData checkedBuildData))
+            if (BuildDataCollection.ToDictionary(x => x.UniverseType)
+                .TryGetValue(requestedUniverse, out BuildData checkedBuildData))
             {
-                    SelectedBuildData = checkedBuildData;
-                    CurrentStatus = $"{checkedBuildData.FileCount} files are ready for download";
-                    //TODO re-implement window states
-                    //SetWindowState(checkedBuildData.StoredControlState);
-                    return;
+                SelectedBuildData = checkedBuildData;
+                CurrentStatus = $"{checkedBuildData.FileCount} files are ready for download";
+                //TODO re-implement window states
+                //SetWindowState(checkedBuildData.StoredControlState);
+                return;
             }
             try
             {
@@ -179,8 +192,8 @@ namespace SCDownloader.Models
                 //TODO error dialog
                 //MessageBox.Show("File list failed to download", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
+
         private void AddNewBuildInfo(BuildData buildData)
         {
             BuildDataCollection.Add(buildData);
@@ -199,7 +212,8 @@ namespace SCDownloader.Models
             get
             {
                 if (_downloadCommand == null)
-                    _downloadCommand = new RelayCommand(c => !isDownloading && IsReadytoDownload, c => DownloadGameFiles());
+                    _downloadCommand = new RelayCommand(c => !isDownloading && IsReadytoDownload,
+                        c => DownloadGameFiles());
                 return _downloadCommand;
             }
         }
@@ -212,6 +226,7 @@ namespace SCDownloader.Models
 
         //the full path of the file
         private string _fulldir;
+
         //Download the selected build
         private async Task DownloadGameFiles()
         {
@@ -219,7 +234,8 @@ namespace SCDownloader.Models
             double totalFileNum = SelectedBuildData.FileCount;
             var randomws = new Random();
 
-            string coreFileStructure = Path.Combine(UserDirectory, Utilities.GetFileStructure(notNative, SelectedBuildData.UniverseType, SelectedBuildData.KeyPrefix));
+            string coreFileStructure = Path.Combine(UserDirectory,
+                Utilities.GetFileStructure(notNative, SelectedBuildData.UniverseType, SelectedBuildData.KeyPrefix));
 
             var security = new DirectorySecurity();
             security.AddAccessRule(new FileSystemAccessRule(
@@ -233,8 +249,11 @@ namespace SCDownloader.Models
                 _cancelDownloadSource = new CancellationTokenSource();
                 foreach (string file in SelectedBuildData.FileList)
                 {
+                    FileProgress = 0;
                     CurrentStatus = $"Downloading file {fileNum} of {totalFileNum}";
-                    var wsurl = new Uri(new Uri(SelectedBuildData.WebseedURLs[randomws.Next(SelectedBuildData.WebseedURLs.Count)]), SelectedBuildData.KeyPrefix.TrimStart('/'));
+                    var wsurl = new Uri(
+                        new Uri(SelectedBuildData.WebseedURLs[randomws.Next(SelectedBuildData.WebseedURLs.Count)]),
+                        SelectedBuildData.KeyPrefix.TrimStart('/'));
                     var downloadurl = new Uri($"{wsurl}/{file}");
 
                     CurrentFileText = file;
@@ -244,9 +263,17 @@ namespace SCDownloader.Models
                     {
                         Directory.CreateDirectory(Path.GetDirectoryName(_fulldir), security);
                         sw.Start();
-                        await new DownloadHandlers().DownloadFile(_bytesRecieved, _fileProgress, downloadurl, _fulldir, _cancelDownloadSource.Token);
+                        await new DownloadHandlers().DownloadFile(_bytesRecieved, _fileProgress, downloadurl, _fulldir,
+                            _cancelDownloadSource.Token);
                         if (_cancelDownloadSource.Token.IsCancellationRequested)
+                        {
+                            if (_fulldir != null)
+                            {
+                                File.Delete(_fulldir);
+                            }
                             return;
+                        }
+
                     }
                     fileNum += 1;
 
@@ -254,19 +281,18 @@ namespace SCDownloader.Models
                     PrimaryProgressValue = 100 * fileNum / totalFileNum;
                     sw.Reset();
                 }
-
             }
             catch (DirectoryNotFoundException)
             {
-               // MessageBox.Show("Unable to write to location, do you have permission?","DirectoryNotFoundException",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // MessageBox.Show("Unable to write to location, do you have permission?","DirectoryNotFoundException",MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (IOException x)
             {
-              //  MessageBox.Show("Unable to write to disk. Do you have enough space? Full Exception: " + x,"IOException", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //  MessageBox.Show("Unable to write to disk. Do you have enough space? Full Exception: " + x,"IOException", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (WebException x)
             {
-              // MessageBox.Show($"Download failure, unable to continue. \nFull exception: {x.Message}", "WebException",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // MessageBox.Show($"Download failure, unable to continue. \nFull exception: {x.Message}", "WebException",MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             if ((int)fileNum - 1 == SelectedBuildData.WebseedURLs.Count)
             {
@@ -274,8 +300,8 @@ namespace SCDownloader.Models
                 //SetWindowState(ControlStates.Default);
                 CurrentStatus = "Download Complete!";
             }
-
         }
+
         //Download Cancel
         private ICommand _cancelCommand;
 
@@ -290,15 +316,11 @@ namespace SCDownloader.Models
         }
 
         private CancellationTokenSource _cancelDownloadSource;
+
         private void CancelDownload()
         {
             // DialogResult result = MessageBox.Show("Are you sure you want to cancel?", "Cancel Download",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
             _cancelDownloadSource.Cancel();
-            //TODO fix this
-            if (_fulldir != null)
-            {
-                File.Delete(_fulldir);
-            }
             CurrentStatus = "Download Cancelled";
             isDownloading = false;
         }
