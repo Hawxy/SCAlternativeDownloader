@@ -12,16 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using SCDownloader.Models;
 
-namespace SCDownloader
+namespace SCDownloader.Dialogs
 {
     /// <summary>
-    /// Interaction logic for ErrorDialog.xaml
+    /// Interaction logic for YesNoDialog.xaml
     /// </summary>
-    public partial class ErrorDialog : UserControl
+    public partial class YesNoDialog : UserControl
     {
-        public ErrorDialog()
+        public YesNoDialog()
         {
             InitializeComponent();
         }

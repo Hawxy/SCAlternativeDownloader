@@ -29,6 +29,7 @@ using System.Windows.Input;
 using Newtonsoft.Json;
 using SCDownloader.BoilerClasses;
 using SCDownloader.Common;
+using SCDownloader.Dialogs;
 using SCDownloader.Properties;
 
 namespace SCDownloader.Models
@@ -154,10 +155,9 @@ namespace SCDownloader.Models
                     }
                 }
             }
-            catch (WebException)
+            catch (WebException ex)
             {
-                //TODO error dialog
-                await new ErrorDialogHandler().ShowErrorDialog("WebException");
+                await new DialogHandler().ShowErrorDialog($"WebException: {ex.Message}");
                 Application.Current.Shutdown();
             }
         }
@@ -189,8 +189,7 @@ namespace SCDownloader.Models
             }
             catch (WebException e)
             {
-                //TODO error dialog
-                //MessageBox.Show("File list failed to download", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                await new DialogHandler().ShowErrorDialog($"File list failed to download: {e.Message}");
             }
         }
 
@@ -282,17 +281,17 @@ namespace SCDownloader.Models
                     sw.Reset();
                 }
             }
-            catch (DirectoryNotFoundException)
+            catch (DirectoryNotFoundException x)
             {
-                // MessageBox.Show("Unable to write to location, do you have permission?","DirectoryNotFoundException",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                await new DialogHandler().ShowErrorDialog($"DirectoryNotFoundException: Something has gone seriously wrong here. {x.Message}");
             }
             catch (IOException x)
             {
-                //  MessageBox.Show("Unable to write to disk. Do you have enough space? Full Exception: " + x,"IOException", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                await new DialogHandler().ShowErrorDialog($"Unable to write to disk. Full exception: {x.Message}");
             }
             catch (WebException x)
             {
-                // MessageBox.Show($"Download failure, unable to continue. \nFull exception: {x.Message}", "WebException",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                await new DialogHandler().ShowErrorDialog($"Download failure, unable to continue. Full exception: {x.Message}");
             }
             if ((int)fileNum - 1 == SelectedBuildData.WebseedURLs.Count)
             {
@@ -317,12 +316,15 @@ namespace SCDownloader.Models
 
         private CancellationTokenSource _cancelDownloadSource;
 
-        private void CancelDownload()
+        private async void CancelDownload()
         {
-            // DialogResult result = MessageBox.Show("Are you sure you want to cancel?", "Cancel Download",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
-            _cancelDownloadSource.Cancel();
-            CurrentStatus = "Download Cancelled";
-            isDownloading = false;
+            bool DialogResult = await new DialogHandler().ShowQuestionDialog("Are you sure you want to cancel?");
+            if (DialogResult)
+            {
+                _cancelDownloadSource.Cancel();
+                CurrentStatus = "Download Cancelled";
+                isDownloading = false;
+            }
         }
     }
 }
