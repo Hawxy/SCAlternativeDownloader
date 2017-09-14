@@ -53,25 +53,22 @@ namespace SCDownloader.Models
         public ObservableCollection<LauncherInfo> LauncherInfoCollection { get; set; } =
             new ObservableCollection<LauncherInfo>();
 
-        private LauncherInfo _selectedLauncherInfo;
-
-        public LauncherInfo SelectedLauncherInfo
-        {
-            get => _selectedLauncherInfo;
-            set
-            {
-                _selectedLauncherInfo = value;
-                //Maybe find a better way to do this in the future
-                _ = SelectedLauncherInfoChanged();
-            }
-        }
-
-
         //Collection of build data
         public ObservableCollection<BuildData> BuildDataCollection { get; set; } =
             new ObservableCollection<BuildData>();
 
-        public BuildData SelectedBuildData { get; set; }
+        //ComboBox Selection
+        private BuildData _selectedBuildData;
+        public BuildData SelectedBuildData
+        {
+            get => _selectedBuildData;
+            set
+            {
+                _selectedBuildData = value;
+                 SelectedBuildDataChanged();
+            }
+            
+        }
 
         //Current status of Program
         public string CurrentStatus { get; set; } = "N/A";
@@ -150,7 +147,10 @@ namespace SCDownloader.Models
                         }
                         if (LauncherInfoCollection.Count > 0)
                         {
-                            SelectedLauncherInfo = LauncherInfoCollection[0];
+                            foreach (var i in LauncherInfoCollection)
+                            {
+                               await DownloadBuildData(i);
+                            }
                         }
                     }
                 }
@@ -162,41 +162,22 @@ namespace SCDownloader.Models
             }
         }
 
-        public async Task SelectedLauncherInfoChanged()
+        private async Task DownloadBuildData(LauncherInfo info)
         {
-            string requestedUniverse = SelectedLauncherInfo.UniverseType;
-            if (BuildDataCollection.ToDictionary(x => x.UniverseType)
-                .TryGetValue(requestedUniverse, out BuildData checkedBuildData))
-            {
-                SelectedBuildData = checkedBuildData;
-                CurrentStatus = $"{checkedBuildData.FileCount} files are ready for download";
-                //TODO re-implement window states
-                //SetWindowState(checkedBuildData.StoredControlState);
-                return;
-            }
-            try
-            {
-                //SetWindowState(ControlStates.Busy);
+            var buildDataURL = info.FileIndex;
+            string buildDataString = await new DownloadHandlers().DownloadString(_progress, buildDataURL);
+            BuildData buildData = JsonConvert.DeserializeObject<BuildData>(buildDataString);
+            AddNewBuildInfo(buildData);
+        }
 
-                if (!string.IsNullOrEmpty(requestedUniverse))
-                {
-                    var buildDataURL = SelectedLauncherInfo.FileIndex;
-                    string buildDataString = await new DownloadHandlers().DownloadString(_progress, buildDataURL);
-                    BuildData buildData = JsonConvert.DeserializeObject<BuildData>(buildDataString);
-                    buildData.UniverseType = requestedUniverse;
-                    AddNewBuildInfo(buildData);
-                }
-            }
-            catch (WebException e)
-            {
-                await new DialogHandler().ShowErrorDialog($"File list failed to download: {e.Message}");
-            }
+        private void SelectedBuildDataChanged()
+        {
+            CurrentStatus = $"{SelectedBuildData.FileCount} files are ready for download";
         }
 
         private void AddNewBuildInfo(BuildData buildData)
         {
             BuildDataCollection.Add(buildData);
-            CurrentStatus = $"{buildData.FileCount} files are ready for download";
             SelectedBuildData = buildData;
             //SetWindowState(buildData.StoredControlState);
         }

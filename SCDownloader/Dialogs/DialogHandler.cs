@@ -22,7 +22,7 @@ namespace SCDownloader.Dialogs
                 DataContext = new YesNoVM(questionMessage)
             };
 
-            var result = await DialogHost.Show(view, "MainWindowDialogHost");
+            var result = await DialogHost.Show(view, "MainWindowDialog");
 
             if (result is bool b)
             {
