@@ -18,6 +18,6 @@ namespace SCDownloader.Models
         [JsonProperty("webseed_urls")]
         public List<string> WebseedURLs { get; set; }
         [JsonIgnore]
-        public MainWindow.ControlStates StoredControlState { get; set; } = MainWindow.ControlStates.NormalBuild;
+        public bool isCustom { get; set; } = false;
     }
 }

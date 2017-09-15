@@ -22,8 +22,6 @@ namespace SCDownloader
             Default,
             Busy,
             DownloadStart,
-            NormalBuild,
-            CustomBuild
         }
 
         public MainWindow()

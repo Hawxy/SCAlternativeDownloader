@@ -65,9 +65,8 @@ namespace SCDownloader.Models
             set
             {
                 _selectedBuildData = value;
-                 SelectedBuildDataChanged();
+                CurrentStatus = $"{value.FileCount} files are ready for download";
             }
-            
         }
 
         //Current status of Program
@@ -123,6 +122,7 @@ namespace SCDownloader.Models
                         var fields = typeof(LauncherInfo).GetProperties();
                         while (!string.IsNullOrEmpty(line = reader.ReadLine()))
                         {
+                            //TODO: Clean this up and get rid of the properties I don't need
                             string[] lineitems = Array.ConvertAll(line.Split('='), p => p.Trim());
                             if (lineitems[0] == "universes")
                             {
@@ -168,11 +168,6 @@ namespace SCDownloader.Models
             string buildDataString = await new DownloadHandlers().DownloadString(_progress, buildDataURL);
             BuildData buildData = JsonConvert.DeserializeObject<BuildData>(buildDataString);
             AddNewBuildInfo(buildData);
-        }
-
-        private void SelectedBuildDataChanged()
-        {
-            CurrentStatus = $"{SelectedBuildData.FileCount} files are ready for download";
         }
 
         private void AddNewBuildInfo(BuildData buildData)
