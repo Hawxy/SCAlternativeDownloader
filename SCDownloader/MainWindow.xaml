@@ -64,9 +64,9 @@
                 <StackPanel HorizontalAlignment="Center">
                     <TextBlock HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignSubheadingTextBlock}">Release Type</TextBlock>
                     <StackPanel Orientation="Horizontal">
-                        <ComboBox Name="ReleaseCombo" ItemsSource="{Binding BuildDataCollection}" DisplayMemberPath="UniverseType" Width="124" SelectedItem="{Binding SelectedBuildData, Mode=TwoWay}">
+                        <ComboBox Name="ReleaseCombo" ItemsSource="{Binding BuildDataCollection}" DisplayMemberPath="UniverseType" Width="124" SelectedItem="{Binding SelectedBuildData, Mode=TwoWay}" IsEnabled="{Binding Path=IsSecondaryControlsEnabled}">
                         </ComboBox>
-                        <Button Name="UseCustomBuildButton" Margin="10,3,3,3" Content="ADD CUSTOM BUILD..." Style="{DynamicResource MaterialDesignFlatButton}" ToolTip="Allows for the addition of a custom build.json from a previous version of SC"/>
+                        <Button Name="UseCustomBuildButton" Margin="10,3,3,3" Content="ADD CUSTOM BUILD..." Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding Path=CustomBuildCommand}" ToolTip="Allows for the addition of a custom build.json from a previous version of SC"/>
                     </StackPanel>
                 </StackPanel>
                 <Border Grid.Row="1" Margin="0,16,0,5" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource MaterialDesignDivider}"></Border>
@@ -76,7 +76,7 @@
                     <TextBlock HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignSubheadingTextBlock}">Directory</TextBlock>
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="File" VerticalAlignment="Center" Margin="4,0,4,0" Foreground="{Binding ElementName=DirectoryBox, Path=BorderBrush}"/>
-                        <TextBox x:Name="DirectoryBox" Width="250">
+                        <TextBox x:Name="DirectoryBox" Width="250" IsEnabled="{Binding Path=IsSecondaryControlsEnabled}">
                             <TextBox.Text>
                                 <Binding Path="UserDirectory" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -85,7 +85,7 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <Button Margin="10,3,3,3" Style="{DynamicResource MaterialDesignRaisedButton}" Height="27">...</Button>
+                        <Button Margin="10,3,3,3" Style="{DynamicResource MaterialDesignRaisedButton}" Height="27" Command="{Binding Path=PickDirectoryCommand}">...</Button>
                     </StackPanel>
                     <CheckBox Style="{DynamicResource MaterialDesignCheckBox}" Margin="0,10,0,0" IsChecked="{Binding notNative}" IsEnabled="{Binding isNativeCheckEnabled}" ToolTip="Sorts files into public/test directories instead of using build number. Allows for easy copy/pasting or direct download into program files. Existing files will not be overwritten">Preserve Native File Structure</CheckBox>
                 </StackPanel>

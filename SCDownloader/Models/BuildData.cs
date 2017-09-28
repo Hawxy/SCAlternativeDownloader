@@ -18,6 +18,6 @@ namespace SCDownloader.Models
         [JsonProperty("webseed_urls")]
         public List<string> WebseedURLs { get; set; }
         [JsonIgnore]
-        public bool isCustom { get; set; } = false;
+        public bool IsCustom { get; set; } = false;
     }
 }

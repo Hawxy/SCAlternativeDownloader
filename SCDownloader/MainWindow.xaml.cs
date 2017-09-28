@@ -17,14 +17,7 @@ namespace SCDownloader
 {
     public partial class MainWindow
     {
-        public enum ControlStates
-        {
-            Default,
-            Busy,
-            DownloadStart,
-        }
-
-        public MainWindow()
+       public MainWindow()
         {
             InitializeComponent();
         }

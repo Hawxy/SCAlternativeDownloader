@@ -21,7 +21,7 @@ namespace SCDownloader.Common
         {
             ValidationResult result = base.Validate(value, cultureInfo, owner);
             var vm = (MainWindowVM) ((BindingExpression) owner).DataItem;
-            vm.IsReadytoDownload = result.IsValid;
+            vm.IsReadyToDownload = result.IsValid;
             return result;
         }
     }

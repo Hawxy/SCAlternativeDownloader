@@ -26,7 +26,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
+using Microsoft.Win32;
 using Newtonsoft.Json;
+using Ookii.Dialogs.Wpf;
 using SCDownloader.BoilerClasses;
 using SCDownloader.Common;
 using SCDownloader.Dialogs;
@@ -66,6 +69,7 @@ namespace SCDownloader.Models
             {
                 _selectedBuildData = value;
                 CurrentStatus = $"{value.FileCount} files are ready for download";
+                isNativeCheckEnabled = !value.IsCustom;
             }
         }
 
@@ -167,18 +171,36 @@ namespace SCDownloader.Models
             var buildDataURL = info.FileIndex;
             string buildDataString = await new DownloadHandlers().DownloadString(_progress, buildDataURL);
             BuildData buildData = JsonConvert.DeserializeObject<BuildData>(buildDataString);
-            AddNewBuildInfo(buildData);
+            AddNewBuildInfo(buildData, info.UniverseType);
+
         }
 
-        private void AddNewBuildInfo(BuildData buildData)
+        private void AddNewBuildInfo(BuildData buildData, string universeType)
         {
+            buildData.UniverseType = universeType;
             BuildDataCollection.Add(buildData);
-            SelectedBuildData = buildData;
-            //SetWindowState(buildData.StoredControlState);
+            if (SelectedBuildData == null)
+                SelectedBuildData = buildData;
+            else if (buildData.IsCustom)
+                SelectedBuildData = buildData;
         }
 
-        private bool isDownloading;
-        public bool IsReadytoDownload = true;
+        private bool _isDownloading;
+
+        public bool IsDownloading
+        {
+            get => _isDownloading;
+            set
+            {
+                _isDownloading = value;
+                IsSecondaryControlsEnabled = !value;
+                if (!SelectedBuildData.IsCustom)
+                    isNativeCheckEnabled = !value;
+            }
+        }
+
+        public bool IsSecondaryControlsEnabled { get; set; } = true;
+        public bool IsReadyToDownload = true;
 
         private ICommand _downloadCommand;
 
@@ -187,7 +209,7 @@ namespace SCDownloader.Models
             get
             {
                 if (_downloadCommand == null)
-                    _downloadCommand = new RelayCommand(c => !isDownloading && IsReadytoDownload,
+                    _downloadCommand = new RelayCommand(c => !IsDownloading && IsReadyToDownload,
                         c => DownloadGameFiles());
                 return _downloadCommand;
             }
@@ -198,9 +220,6 @@ namespace SCDownloader.Models
         public bool notNative { get; set; } = true;
 
         public bool isNativeCheckEnabled { get; set; } = true;
-
-        //the full path of the file
-        private string _fulldir;
 
         //Download the selected build
         private async Task DownloadGameFiles()
@@ -220,7 +239,7 @@ namespace SCDownloader.Models
 
             try
             {
-                isDownloading = true;
+                IsDownloading = true;
                 _cancelDownloadSource = new CancellationTokenSource();
                 foreach (string file in SelectedBuildData.FileList)
                 {
@@ -232,23 +251,21 @@ namespace SCDownloader.Models
                     var downloadurl = new Uri($"{wsurl}/{file}");
 
                     CurrentFileText = file;
-                    _fulldir = Path.Combine(coreFileStructure, file);
+                    string _fulldir = Path.Combine(coreFileStructure, file);
 
                     if (!File.Exists(_fulldir))
                     {
                         Directory.CreateDirectory(Path.GetDirectoryName(_fulldir), security);
                         sw.Start();
-                        await new DownloadHandlers().DownloadFile(_bytesRecieved, _fileProgress, downloadurl, _fulldir,
-                            _cancelDownloadSource.Token);
+                        await new DownloadHandlers().DownloadFile(_bytesRecieved, _fileProgress, downloadurl, _fulldir,_cancelDownloadSource.Token);
                         if (_cancelDownloadSource.Token.IsCancellationRequested)
                         {
-                            if (_fulldir != null)
+                            if (File.Exists(_fulldir))
                             {
                                 File.Delete(_fulldir);
                             }
                             return;
                         }
-
                     }
                     fileNum += 1;
 
@@ -272,7 +289,6 @@ namespace SCDownloader.Models
             if ((int)fileNum - 1 == SelectedBuildData.WebseedURLs.Count)
             {
                 // MessageBox.Show("Download Complete!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //SetWindowState(ControlStates.Default);
                 CurrentStatus = "Download Complete!";
             }
         }
@@ -285,7 +301,7 @@ namespace SCDownloader.Models
             get
             {
                 if (_cancelCommand == null)
-                    _cancelCommand = new RelayCommand(c => isDownloading, c => CancelDownload());
+                    _cancelCommand = new RelayCommand(c => IsDownloading, c => CancelDownload());
                 return _cancelCommand;
             }
         }
@@ -299,8 +315,59 @@ namespace SCDownloader.Models
             {
                 _cancelDownloadSource.Cancel();
                 CurrentStatus = "Download Cancelled";
-                isDownloading = false;
+                IsDownloading = false;
             }
+        }
+
+        private ICommand _customBuildCommand;
+
+        public ICommand CustomBuildCommand
+        {
+            get
+            {
+                if(_customBuildCommand == null)
+                    _customBuildCommand = new RelayCommand(c => !IsDownloading, c=> CustomBuildAdd());
+                return _customBuildCommand;
+            }
+        }
+
+        private async Task CustomBuildAdd()
+        {
+            var selectFileDialog = new OpenFileDialog {Title = "Select build JSON", Filter = "JSON files|*.json"};
+            if (selectFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    var data = JsonConvert.DeserializeObject<BuildData>(File.ReadAllText(selectFileDialog.FileName));
+                    string buildnumber = data.KeyPrefix.Split('/')[2];
+                    data.IsCustom = true;
+                    AddNewBuildInfo(data, buildnumber);
+                }
+                catch (Exception ex) when (ex is JsonException || ex is IndexOutOfRangeException)
+                {
+                    await new DialogHandler().ShowErrorDialog("Invalid build file");
+                }
+            }
+
+        }
+
+        private ICommand _pickDirectoryCommand;
+
+        public ICommand PickDirectoryCommand
+        {
+            get
+            {
+                if(_pickDirectoryCommand == null)
+                    _pickDirectoryCommand = new RelayCommand(c => !IsDownloading, c=> PickDirectory());
+                return _pickDirectoryCommand;
+            }
+        }
+
+        private void PickDirectory()
+        {
+            var folderDir = new VistaFolderBrowserDialog { ShowNewFolderButton = true };
+            if (folderDir.ShowDialog() == true)
+                UserDirectory = folderDir.SelectedPath;
         }
     }
 }
