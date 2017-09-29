@@ -14,6 +14,7 @@
 //limitations under the License.
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -26,7 +27,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Navigation;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using Ookii.Dialogs.Wpf;
@@ -52,10 +52,6 @@ namespace SCDownloader.Models
                 UserDirectory = Directory.GetCurrentDirectory() + @"\SCDownload";
         }
 
-        //Collection of LauncherInfo
-        public ObservableCollection<LauncherInfo> LauncherInfoCollection { get; set; } =
-            new ObservableCollection<LauncherInfo>();
-
         //Collection of build data
         public ObservableCollection<BuildData> BuildDataCollection { get; set; } =
             new ObservableCollection<BuildData>();
@@ -74,7 +70,8 @@ namespace SCDownloader.Models
         }
 
         //Current status of Program
-        public string CurrentStatus { get; set; } = "N/A";
+        private const string DefaultCurrentStatus = "N/A";
+        public string CurrentStatus { get; set; } = DefaultCurrentStatus;
 
         public MainWindowVM()
         {
@@ -98,16 +95,19 @@ namespace SCDownloader.Models
         private void FileProgressChanged(double f) => FileProgress = f;
 
         //Current file label
-        public string CurrentFileText { get; set; } = "...";
+        private const string DefaultCurrentFileText = "...";
+        public string CurrentFileText { get; set; } = DefaultCurrentFileText;
 
         //Speed label
         private readonly Stopwatch sw = new Stopwatch();
 
-        public string SpeedText { get; set; } = "N/A MB/s";
+        private const string DefaultSpeedText = "N/A MB/s";
+        public string SpeedText { get; set; } = DefaultSpeedText;
         private readonly IProgress<double> _bytesRecieved;
 
         private void DownloadSpeedChanged(double b) => SpeedText =
             $"{b / 1024 / 1024 / sw.Elapsed.TotalSeconds:0.00} MB/s";
+       
 
         //Download manifest on program startup
         public async Task DownloadPatchList()
@@ -122,8 +122,9 @@ namespace SCDownloader.Models
                 {
                     using (StringReader reader = new StringReader(launcherInfoStr))
                     {
-                        string line;
+                        List<LauncherInfo> LauncherInfoCollection = new List<LauncherInfo>();
                         var fields = typeof(LauncherInfo).GetProperties();
+                        string line;
                         while (!string.IsNullOrEmpty(line = reader.ReadLine()))
                         {
                             //TODO: Clean this up and get rid of the properties I don't need
@@ -215,7 +216,6 @@ namespace SCDownloader.Models
             }
         }
 
-
         //checkbox
         public bool notNative { get; set; } = true;
 
@@ -264,6 +264,10 @@ namespace SCDownloader.Models
                             {
                                 File.Delete(_fulldir);
                             }
+                            CurrentStatus = "Download Cancelled";
+                            IsDownloading = false;
+                            CurrentFileText = DefaultCurrentFileText;
+                            SpeedText = DefaultSpeedText;
                             return;
                         }
                     }
@@ -314,8 +318,6 @@ namespace SCDownloader.Models
             if (DialogResult)
             {
                 _cancelDownloadSource.Cancel();
-                CurrentStatus = "Download Cancelled";
-                IsDownloading = false;
             }
         }
 
