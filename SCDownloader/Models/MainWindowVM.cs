@@ -371,5 +371,22 @@ namespace SCDownloader.Models
             if (folderDir.ShowDialog() == true)
                 UserDirectory = folderDir.SelectedPath;
         }
+
+        private ICommand _githubCommand;
+
+        public ICommand GithubCommand
+        {
+            get
+            {
+                if(_githubCommand == null)
+                    _githubCommand = new RelayCommand(c => true, c=> OpenGithub());
+                return _githubCommand;
+            }
+        }
+
+        private void OpenGithub()
+        {
+            Process.Start("https://github.com/Hawxy/SCAlternativeDownloader");
+        }
     }
 }

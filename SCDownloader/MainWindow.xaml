@@ -119,7 +119,7 @@
                     <TextBlock Margin="0,0,0,10" Style="{DynamicResource MaterialDesignCaptionTextBlock}">Developed by Hawx</TextBlock>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="0,0,40,0" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignCaptionTextBlock}">Supported by Zephyr Auxiliary Services</TextBlock>
-                        <Button Name="GithubButton" Style="{DynamicResource MaterialDesignFlatButton}">GITHUB</Button>
+                        <Button Name="GithubButton" Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding Path=GithubCommand}">GITHUB</Button>
                     </StackPanel>
 
                 </StackPanel>
