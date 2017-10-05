@@ -1,0 +1,130 @@
+﻿<metro:MetroWindow x:Class="SCDownloader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SCDownloader"
+        xmlns:common="clr-namespace:SCDownloader.Common"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:vm="clr-namespace:SCDownloader.Models"
+        GlowBrush="{DynamicResource AccentColorBrush}"
+        BorderThickness="1"
+        mc:Ignorable="d"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        Title="" Height="565" Width="370" ResizeMode="CanMinimize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ComboBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToolTip.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
+                <Setter Property="Margin" Value="0 8 0 8" />
+            </Style>
+            <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MaterialDesignComboBox}">
+                <Setter Property="Margin" Value="5 8 0 8" />
+            </Style>
+            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource MaterialDesignToolTip}"/>
+        </ResourceDictionary>
+
+    </Window.Resources>
+    <Window.DataContext>
+        <vm:MainWindowVM/>
+    </Window.DataContext>
+    <materialDesign:DialogHost Identifier="MainWindowDialog" >
+        <Grid>
+            <!--ColorZone-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <materialDesign:ColorZone Mode="PrimaryMid">
+                <TextBlock Padding="10" FontSize="16" HorizontalAlignment="Center">Star Citizen Alternative Downloader</TextBlock>
+            </materialDesign:ColorZone>
+            <!--Content-->
+            <Grid Grid.Row="1" Margin="16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <!--Release-->
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignSubheadingTextBlock}">Release Type</TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox Name="ReleaseCombo" ItemsSource="{Binding BuildDataCollection}" DisplayMemberPath="UniverseType" Width="124" SelectedItem="{Binding SelectedBuildData, Mode=TwoWay}" IsEnabled="{Binding Path=IsSecondaryControlsEnabled}">
+                        </ComboBox>
+                        <Button Name="UseCustomBuildButton" Margin="10,3,3,3" Content="ADD CUSTOM BUILD..." Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding Path=CustomBuildCommand}" ToolTip="Allows for the addition of a custom build.json from a previous version of SC"/>
+                    </StackPanel>
+                </StackPanel>
+                <Border Grid.Row="1" Margin="0,16,0,5" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource MaterialDesignDivider}"></Border>
+
+                <!--Directory-->
+                <StackPanel Grid.Row="2" HorizontalAlignment="Center">
+                    <TextBlock HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignSubheadingTextBlock}">Directory</TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="File" VerticalAlignment="Center" Margin="4,0,4,0" Foreground="{Binding ElementName=DirectoryBox, Path=BorderBrush}"/>
+                        <TextBox x:Name="DirectoryBox" Width="250" IsEnabled="{Binding Path=IsSecondaryControlsEnabled}">
+                            <TextBox.Text>
+                                <Binding Path="UserDirectory" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <common:DirectoryFormatValidation ValidatesOnTargetUpdated="True"/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Button Margin="10,3,3,3" Style="{DynamicResource MaterialDesignRaisedButton}" Height="27" Command="{Binding Path=PickDirectoryCommand}">...</Button>
+                    </StackPanel>
+                    <CheckBox Style="{DynamicResource MaterialDesignCheckBox}" Margin="0,10,0,0" IsChecked="{Binding notNative}" IsEnabled="{Binding isNativeCheckEnabled}" ToolTip="Sorts files into public/test directories instead of using build number. Allows for easy copy/pasting or direct download into program files. Existing files will not be overwritten">Preserve Native File Structure</CheckBox>
+                </StackPanel>
+
+                <Border Grid.Row="3" Margin="0,16,0,16" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource MaterialDesignDivider}"/>
+
+                <!--DownloadButtons-->
+                <StackPanel Grid.Row="4" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Name="DownloadButton" Margin="0,0,20,0" Style="{DynamicResource MaterialDesignRaisedDarkButton}" Content="DOWNLOAD" Command="{Binding DownloadCommand}"/>
+                        <Button Name="CancelButton" Margin="3" Style="{DynamicResource MaterialDesignRaisedButton}" Command="{Binding CancelCommand}">CANCEL</Button>
+                    </StackPanel>
+                </StackPanel>
+
+                <Border Grid.Row="5" Margin="0,16,0,5" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource MaterialDesignDivider}"></Border>
+
+                <!--ProgramStatus-->
+                <StackPanel Grid.Row="6" HorizontalAlignment="Center">
+                    <TextBlock Margin="0,0,0,5" Style="{DynamicResource MaterialDesignSubheadingTextBlock}" HorizontalAlignment="Center">Program Status</TextBlock>
+                    <TextBlock Margin="0,0,0,5" Name="StatusBlock" Text="{Binding Path=CurrentStatus}" HorizontalAlignment="Center" ></TextBlock>
+                    <ProgressBar Name="TotalProgressBar" Style="{DynamicResource MaterialDesignLinearProgressBar}" Width="269" Value="{Binding Path=PrimaryProgressValue}"/>
+                    <TextBlock Margin="0,5,0,10" Name="CurrentFileBlock" Text="{Binding CurrentFileText}" HorizontalAlignment="Center"></TextBlock>
+                    <ProgressBar Name="FileProgressBar" Style="{DynamicResource MaterialDesignLinearProgressBar}" Width="269" Value="{Binding Path=FileProgress}"/>
+                    <TextBlock Margin="0,5,0,10" Name="SpeedBlock" Text="{Binding SpeedText}" HorizontalAlignment="Center"></TextBlock>
+                </StackPanel>
+
+                <Border Grid.Row="7" Margin="0,16,0,5" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource MaterialDesignDivider}"></Border>
+
+                <!--Creditsetc-->
+                <StackPanel Grid.Row="8">
+                    <TextBlock Margin="0,0,0,10" Style="{DynamicResource MaterialDesignCaptionTextBlock}">Developed by Hawx</TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="0,0,40,0" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignCaptionTextBlock}">Supported by Zephyr Auxiliary Services</TextBlock>
+                        <Button Name="GithubButton" Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding Path=GithubCommand}">GITHUB</Button>
+                    </StackPanel>
+
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </materialDesign:DialogHost>
+</metro:MetroWindow>
+

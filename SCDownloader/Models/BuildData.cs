@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace SCPatchDownloader.Models
+namespace SCDownloader.Models
 {
-    class BuildData
+    internal class BuildData
     {
+        [JsonIgnore]
+        public string UniverseType { get; set; }
         [JsonProperty("byte_count_total")]
         public ulong ByteCountTotal { get; set; }
         [JsonProperty("file_count_total")]
@@ -16,6 +18,6 @@ namespace SCPatchDownloader.Models
         [JsonProperty("webseed_urls")]
         public List<string> WebseedURLs { get; set; }
         [JsonIgnore]
-        public MainWindow.ControlStates StoredControlState { get; set; } = MainWindow.ControlStates.NormalBuild;
+        public bool IsCustom { get; set; } = false;
     }
 }

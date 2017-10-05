@@ -18,7 +18,7 @@
 using System;
 using System.IO;
 
-namespace SCPatchDownloader
+namespace SCDownloader.Common
 {
     public class Utilities
     {
@@ -41,8 +41,7 @@ namespace SCPatchDownloader
         //Verify download location is valid. Thanks to LamdaComplex on Stackoverflow
         public static bool IsPathValidRootedLocal(String pathString)
         {
-            Uri pathUri;
-            Boolean isValidUri = Uri.TryCreate(pathString, UriKind.Absolute, out pathUri);
+            Boolean isValidUri = Uri.TryCreate(pathString, UriKind.Absolute, out var pathUri);
             return isValidUri && pathUri != null && pathUri.IsLoopback;
         }
     }

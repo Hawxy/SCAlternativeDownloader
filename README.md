@@ -10,7 +10,6 @@ Core features:
 - Option to use a custom build file from old versions of SC
 - Directory saving on exit
 - Download speed/file indicator
-- Proper file dialog
 - Works behind proxy server
 - Material design
 - Other random stuff
@@ -20,9 +19,8 @@ Platform:
 - 64-bit only
 
 Contributions are welcome:
-- .NET 4.7 | C# 7.0 | Visual Studio 2017 
+- .NET 4.7 | WPF MVVM | C# 7.1 | Visual Studio 2017 (v15.3)
 - Please run any major modifications by me first on the ZephyrDev server: https://discord.gg/Mjb8Pda
-- To use the material library, drag the MaterialSkin.dll in the "ref" folder to your toolbox
 
 This is a personal project of mine so you'll probably see some pointless overengineering
 
