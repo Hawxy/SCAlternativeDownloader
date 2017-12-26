@@ -1,4 +1,5 @@
 # Star Citizen Downloader with GUI
+### Note (26/12): With the launch of 3.0, this downloader is now obsolete. The new launcher is fairly stable and game files are now protected by user auth, so there's no need, and no possible way for me to continue development of this project. 
 
 Downloadable binaries are available in [releases](https://github.com/Hawxy/SCAlternativePatcher/releases)
 
